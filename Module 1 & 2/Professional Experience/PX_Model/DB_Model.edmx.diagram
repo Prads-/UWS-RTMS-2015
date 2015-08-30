@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cdb0a8d4d5b84c1da358d356eea8745b" Name="Diagram1">
+        <EntityTypeShape EntityType="PX_Model.Administrator" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Assessment_Type" Width="1.5" PointX="8.25" PointY="20.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Assessment_Type_Option" Width="1.5" PointX="12.75" PointY="22.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Assessment_Type_Question" Width="1.5" PointX="10.5" PointY="22.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Assessment_Type_Question_Answer" Width="1.5" PointX="12.75" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Clinician" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Intervention_Area" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Intervention_Area_Test" Width="1.5" PointX="8.25" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Intervention_Area_Test_Question" Width="1.5" PointX="10.5" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Intervention_Area_Test_Question_Answer" Width="1.5" PointX="12.75" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Intervention_Area_Test_Question_Option" Width="1.5" PointX="12.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Investigator" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Investigator_Intervention_Area" Width="1.5" PointX="5.25" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Participant" Width="1.5" PointX="3" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Participant_Clinician" Width="1.5" PointX="5.25" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Participant_Group" Width="1.5" PointX="8.25" PointY="23.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Participant_Group_Intervention_Area" Width="1.5" PointX="15.5" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Participant_Screening_Criteria" Width="1.5" PointX="5.25" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Person" Width="1.5" PointX="0.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Screening_Criteria" Width="1.5" PointX="3" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Screening_Criteria_Option" Width="1.5" PointX="5.25" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Trial" Width="1.5" PointX="6" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Trial_Investigator" Width="1.5" PointX="8.25" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Trial_Participant" Width="1.5" PointX="8.25" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Trial_Participant_Assessment_Type" Width="1.5" PointX="10.5" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Trial_Participant_Intervention_Area_Test" Width="1.5" PointX="10.5" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Trial_Participant_Participant_Group" Width="1.5" PointX="10.5" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PX_Model.Trial_Screening_Criteria" Width="1.5" PointX="13.25" PointY="10.25" IsExpanded="true" />
+        <AssociationConnector Association="PX_Model.FK__Administr__Perso__1273C1CD" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Assessmen__Asses__7D439ABD" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Trial_Par__Asses__787EE5A0" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Assessmen__Asses__02084FDA" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Assessmen__Asses__06CD04F7" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Assessmen__Trial__07C12930" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Clinician__Perso__08EA5793" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Participa__Clini__182C9B23" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Intervent__Inter__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Investiga__Inter__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Participa__Inter__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Intervent__Inter__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Trial_Par__Inter__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Intervent__Inter__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Intervent__Inter__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Intervent__Trial__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Investiga__Inves__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Investiga__Perso__2C3393D0" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Trial_Inv__Inves__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Participa__Parti__173876EA" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Participa__Parti__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Participa__Perso__0DAF0CB0" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Trial_Par__Parti__1DE57479" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Participa__Parti__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Trial_Par__Parti__276EDEB3" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Participa__Scree__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Screening__Scree__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Trial_Scr__Scree__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Trial_Inv__Trial__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Trial_Par__Trial__1CF15040" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Trial_Scr__Trial__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Trial_Par__Trial__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Trial_Par__Trial__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="PX_Model.FK__Trial_Par__Trial__778AC167" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
