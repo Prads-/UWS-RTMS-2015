@@ -51,6 +51,18 @@
     <Compile Include="Administrator.cs">
       <DependentUpon>DB_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="AspNetRole.cs">
+      <DependentUpon>DB_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetUser.cs">
+      <DependentUpon>DB_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetUserClaim.cs">
+      <DependentUpon>DB_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetUserLogin.cs">
+      <DependentUpon>DB_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Assessment_Type.cs">
       <DependentUpon>DB_Model.tt</DependentUpon>
     </Compile>
@@ -64,6 +76,9 @@
       <DependentUpon>DB_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Clinician.cs">
+      <DependentUpon>DB_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>DB_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Model.Context.cs">

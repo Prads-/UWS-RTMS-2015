@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Professional_Experience.Models
 {
@@ -49,9 +51,8 @@ namespace Professional_Experience.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Username")]
+        public string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -62,12 +63,56 @@ namespace Professional_Experience.Models
         public bool RememberMe { get; set; }
     }
 
-    public class RegisterViewModel
+    public class RegisterParticipantViewModel
     {
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Phone Number")]
+        [Phone]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Street")]
+        public string Street { get; set; }
+
+        [Required]
+        [Display(Name = "Suburb")]
+        public string Suburb { get; set; }
+
+        [Required]
+        [Display(Name = "State")]
+        public string State { get; set; }
+
+        [Required]
+        [Display(Name = "Postcode")]
+        public string Postcode { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Date of Birth")]
+        public DateTime DateOfBirth { get; set; }
+
+        [Required]
+        [Display(Name = "Gender")]
+        public string Gender { get; set; }
+
+        public SelectList GenderList { get; set; }
+
+        [Required]
+        [Display(Name = "Username")]
+        public string Username { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -77,7 +122,59 @@ namespace Professional_Experience.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.Web.Mvc.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+    }
+
+    public class RegisterAdministratorViewModel
+    {
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Phone Number")]
+        [Phone]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Street")]
+        public string Street { get; set; }
+
+        [Required]
+        [Display(Name = "Suburb")]
+        public string Suburb { get; set; }
+
+        [Required]
+        [Display(Name = "State")]
+        public string State { get; set; }
+
+        [Required]
+        [Display(Name = "Postcode")]
+        public string Postcode { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Username")]
+        public string Username { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [System.Web.Mvc.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -96,7 +193,7 @@ namespace Professional_Experience.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.Web.Mvc.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

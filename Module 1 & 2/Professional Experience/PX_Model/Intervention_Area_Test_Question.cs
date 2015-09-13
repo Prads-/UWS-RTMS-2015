@@ -25,6 +25,7 @@ namespace PX_Model
         public Nullable<int> Intervention_Area_Test_Id { get; set; }
         public string Question { get; set; }
         public Nullable<int> Question_Type { get; set; }
+        public Nullable<int> Sequence { get; set; }
     
         public virtual Intervention_Area_Test Intervention_Area_Test { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

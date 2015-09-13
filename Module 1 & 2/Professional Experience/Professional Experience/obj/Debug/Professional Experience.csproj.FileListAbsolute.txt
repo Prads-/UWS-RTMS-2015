@@ -53,3 +53,5 @@ C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional 
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\obj\Debug\Professional Experience.csprojResolveAssemblyReference.cache
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\obj\Debug\Professional Experience.dll
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\obj\Debug\Professional Experience.pdb
+C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\PX_Model.dll
+C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\PX_Model.pdb

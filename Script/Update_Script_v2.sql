@@ -1,0 +1,1 @@
+ALTER TABLE Person ADD Username VARCHAR(256) NOT NULL;

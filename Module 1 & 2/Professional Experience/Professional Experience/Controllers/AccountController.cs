@@ -9,11 +9,12 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Professional_Experience.Models;
+using System.Collections;
 
 namespace Professional_Experience.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : UIController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -26,6 +27,117 @@ namespace Professional_Experience.Controllers
         {
             UserManager = userManager;
             SignInManager = signInManager;
+        }
+
+        [AllowAnonymous]
+        public ActionResult RegisterParticipant()
+        {
+            RegisterParticipantViewModel m = new RegisterParticipantViewModel();
+            ArrayList gList = new ArrayList();
+            gList.Add("Male");
+            gList.Add("Female");
+            m.GenderList = new SelectList(gList);
+            m.DateOfBirth = DateTime.Now;
+            return View(m);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> RegisterParticipant(RegisterParticipantViewModel m)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = m.Username, Email = m.Email };
+                var result = await UserManager.CreateAsync(user, m.Password);
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    var person = new PX_Model.Person();
+
+                    person.First_Name = m.FirstName;
+                    person.Last_Name = m.LastName;
+                    person.Phone_Number = m.PhoneNumber;
+                    person.Postcode = m.Postcode;
+                    person.State = m.State;
+                    person.Street = m.Street;
+                    person.Suburb = m.Suburb;
+                    person.Email = m.Email;
+                    person.Username = m.Username;
+
+                    _db.People.Add(person);
+                    _db.SaveChanges();
+
+                    var participant = new PX_Model.Participant();
+
+                    participant.Person_Id = person.Id;
+                    participant.Gender = m.Gender;
+                    participant.Date_Of_Birth = m.DateOfBirth;
+
+                    _db.Participants.Add(participant);
+                    _db.SaveChanges();
+
+                    var u = UserManager.FindByName(m.Username);
+                    UserManager.AddToRole(u.Id, "Participant");
+
+                    return RedirectToAction("Index", "Participant");
+                }
+                AddErrors(result);
+            }
+            ArrayList gList = new ArrayList();
+            gList.Add("Male");
+            gList.Add("Female");
+            m.GenderList = new SelectList(gList);
+            return View(m);
+        }
+
+        [AllowAnonymous]
+        public ActionResult RegisterAdministrator()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> RegisterAdministrator(RegisterAdministratorViewModel m)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = m.Username, Email = m.Email };
+                var result = await UserManager.CreateAsync(user, m.Password);
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    var person = new PX_Model.Person();
+
+                    person.First_Name = m.FirstName;
+                    person.Last_Name = m.LastName;
+                    person.Phone_Number = m.PhoneNumber;
+                    person.Postcode = m.Postcode;
+                    person.State = m.State;
+                    person.Street = m.Street;
+                    person.Suburb = m.Suburb;
+                    person.Email = m.Email;
+                    person.Username = m.Username;
+
+                    _db.People.Add(person);
+                    _db.SaveChanges();
+
+                    PX_Model.Administrator admin = new PX_Model.Administrator();
+                    admin.Person_Id = person.Id;
+                   
+                    _db.Administrators.Add(admin);
+                    _db.SaveChanges();
+
+                    var u = UserManager.FindByName(m.Username);
+                    UserManager.AddToRole(u.Id, "Admin");
+
+                    return RedirectToAction("Index", "Administrator");
+                }
+                AddErrors(result);
+            }
+            return View(m);
         }
 
         public ApplicationSignInManager SignInManager
@@ -75,11 +187,11 @@ namespace Professional_Experience.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("RedirectToLocal", new { returnUrl = returnUrl });
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -147,7 +259,7 @@ namespace Professional_Experience.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterParticipantViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -443,11 +555,19 @@ namespace Professional_Experience.Controllers
             }
         }
 
-        private ActionResult RedirectToLocal(string returnUrl)
+        public ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
+            }
+            if (User.IsInRole("Participant"))
+            {
+                return RedirectToAction("Index", "Participant");
+            }
+            else if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Administrator");
             }
             return RedirectToAction("Index", "Home");
         }

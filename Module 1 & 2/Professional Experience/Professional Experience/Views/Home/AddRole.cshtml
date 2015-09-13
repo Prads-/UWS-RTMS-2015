@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "AddRole";
+}
+
+<h2>Add Role</h2>
+
+@using (Html.BeginForm())
+{
+    <div>
+        Role Name
+    </div>
+    <p>
+        @Html.TextBox("roleName")
+    </p>
+    <input type="submit" value="Save" />
+}
+
