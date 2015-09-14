@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Professional Experience", "Professional Experience\Professional Experience.csproj", "{C1BBC6D9-E967-472B-9C52-AE68D790EAA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PX_Model", "PX_Model\PX_Model.csproj", "{C8FB5548-9BDD-474A-B8FA-ACA73428B878}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1BBC6D9-E967-472B-9C52-AE68D790EAA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1BBC6D9-E967-472B-9C52-AE68D790EAA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1BBC6D9-E967-472B-9C52-AE68D790EAA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1BBC6D9-E967-472B-9C52-AE68D790EAA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8FB5548-9BDD-474A-B8FA-ACA73428B878}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8FB5548-9BDD-474A-B8FA-ACA73428B878}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8FB5548-9BDD-474A-B8FA-ACA73428B878}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8FB5548-9BDD-474A-B8FA-ACA73428B878}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

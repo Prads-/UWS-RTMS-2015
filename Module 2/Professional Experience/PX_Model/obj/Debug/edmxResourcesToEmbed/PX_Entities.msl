@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PX_ModelStoreContainer" CdmEntityContainer="PX_Entities">
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="PX_Model.C__MigrationHistory">
+        <MappingFragment StoreEntitySet="__MigrationHistory">
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Administrators">
+      <EntityTypeMapping TypeName="PX_Model.Administrator">
+        <MappingFragment StoreEntitySet="Administrator">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Person_Id" ColumnName="Person_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="PX_Model.AspNetRole">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="PX_Model.AspNetUserClaim">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="PX_Model.AspNetUserLogin">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="PX_Model.AspNetUser">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Assessment_Type">
+      <EntityTypeMapping TypeName="PX_Model.Assessment_Type">
+        <MappingFragment StoreEntitySet="Assessment_Type">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Assessment_Type_Option">
+      <EntityTypeMapping TypeName="PX_Model.Assessment_Type_Option">
+        <MappingFragment StoreEntitySet="Assessment_Type_Option">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Assessment_Type_Question_Id" ColumnName="Assessment_Type_Question_Id" />
+          <ScalarProperty Name="Opt" ColumnName="Opt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Assessment_Type_Question">
+      <EntityTypeMapping TypeName="PX_Model.Assessment_Type_Question">
+        <MappingFragment StoreEntitySet="Assessment_Type_Question">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Assessment_Type_Id" ColumnName="Assessment_Type_Id" />
+          <ScalarProperty Name="Question" ColumnName="Question" />
+          <ScalarProperty Name="Question_Type" ColumnName="Question_Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Assessment_Type_Question_Answer">
+      <EntityTypeMapping TypeName="PX_Model.Assessment_Type_Question_Answer">
+        <MappingFragment StoreEntitySet="Assessment_Type_Question_Answer">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Assessment_Type_Question_Id" ColumnName="Assessment_Type_Question_Id" />
+          <ScalarProperty Name="Trial_Participant_Assessment_Type_Id" ColumnName="Trial_Participant_Assessment_Type_Id" />
+          <ScalarProperty Name="Answer" ColumnName="Answer" />
+          <ScalarProperty Name="Answer_Type" ColumnName="Answer_Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clinicians">
+      <EntityTypeMapping TypeName="PX_Model.Clinician">
+        <MappingFragment StoreEntitySet="Clinician">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Person_Id" ColumnName="Person_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Intervention_Area">
+      <EntityTypeMapping TypeName="PX_Model.Intervention_Area">
+        <MappingFragment StoreEntitySet="Intervention_Area">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Intervention_Area_Test">
+      <EntityTypeMapping TypeName="PX_Model.Intervention_Area_Test">
+        <MappingFragment StoreEntitySet="Intervention_Area_Test">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Intervention_Area_Id" ColumnName="Intervention_Area_Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Intervention_Area_Test_Question">
+      <EntityTypeMapping TypeName="PX_Model.Intervention_Area_Test_Question">
+        <MappingFragment StoreEntitySet="Intervention_Area_Test_Question">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Intervention_Area_Test_Id" ColumnName="Intervention_Area_Test_Id" />
+          <ScalarProperty Name="Question" ColumnName="Question" />
+          <ScalarProperty Name="Question_Type" ColumnName="Question_Type" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Intervention_Area_Test_Question_Answer">
+      <EntityTypeMapping TypeName="PX_Model.Intervention_Area_Test_Question_Answer">
+        <MappingFragment StoreEntitySet="Intervention_Area_Test_Question_Answer">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Intervention_Area_Test_Question_Id" ColumnName="Intervention_Area_Test_Question_Id" />
+          <ScalarProperty Name="Trial_Participant_Intervention_Area_Test_Id" ColumnName="Trial_Participant_Intervention_Area_Test_Id" />
+          <ScalarProperty Name="Answer" ColumnName="Answer" />
+          <ScalarProperty Name="Answer_Type" ColumnName="Answer_Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Intervention_Area_Test_Question_Option">
+      <EntityTypeMapping TypeName="PX_Model.Intervention_Area_Test_Question_Option">
+        <MappingFragment StoreEntitySet="Intervention_Area_Test_Question_Option">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Intervention_Area_Test_Question_Id" ColumnName="Intervention_Area_Test_Question_Id" />
+          <ScalarProperty Name="Opt" ColumnName="Opt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Investigators">
+      <EntityTypeMapping TypeName="PX_Model.Investigator">
+        <MappingFragment StoreEntitySet="Investigator">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Person_Id" ColumnName="Person_Id" />
+          <ScalarProperty Name="Institution" ColumnName="Institution" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Investigator_Intervention_Area">
+      <EntityTypeMapping TypeName="PX_Model.Investigator_Intervention_Area">
+        <MappingFragment StoreEntitySet="Investigator_Intervention_Area">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Investigator_Id" ColumnName="Investigator_Id" />
+          <ScalarProperty Name="Intervention_Area_Id" ColumnName="Intervention_Area_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Participants">
+      <EntityTypeMapping TypeName="PX_Model.Participant">
+        <MappingFragment StoreEntitySet="Participant">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Person_Id" ColumnName="Person_Id" />
+          <ScalarProperty Name="Date_Of_Birth" ColumnName="Date_Of_Birth" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Participant_Clinician">
+      <EntityTypeMapping TypeName="PX_Model.Participant_Clinician">
+        <MappingFragment StoreEntitySet="Participant_Clinician">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Participant_Id" ColumnName="Participant_Id" />
+          <ScalarProperty Name="Clinician_Id" ColumnName="Clinician_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Participant_Group">
+      <EntityTypeMapping TypeName="PX_Model.Participant_Group">
+        <MappingFragment StoreEntitySet="Participant_Group">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Participant_Group_Intervention_Area">
+      <EntityTypeMapping TypeName="PX_Model.Participant_Group_Intervention_Area">
+        <MappingFragment StoreEntitySet="Participant_Group_Intervention_Area">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Participant_Group_Id" ColumnName="Participant_Group_Id" />
+          <ScalarProperty Name="Intervention_Area_Id" ColumnName="Intervention_Area_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Participant_Screening_Criteria">
+      <EntityTypeMapping TypeName="PX_Model.Participant_Screening_Criteria">
+        <MappingFragment StoreEntitySet="Participant_Screening_Criteria">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Participant_Id" ColumnName="Participant_Id" />
+          <ScalarProperty Name="Screening_Criteria_Id" ColumnName="Screening_Criteria_Id" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="People">
+      <EntityTypeMapping TypeName="PX_Model.Person">
+        <MappingFragment StoreEntitySet="Person">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+          <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+          <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+          <ScalarProperty Name="Street" ColumnName="Street" />
+          <ScalarProperty Name="Suburb" ColumnName="Suburb" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Screening_Criteria">
+      <EntityTypeMapping TypeName="PX_Model.Screening_Criteria">
+        <MappingFragment StoreEntitySet="Screening_Criteria">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Screening_Criteria_Option">
+      <EntityTypeMapping TypeName="PX_Model.Screening_Criteria_Option">
+        <MappingFragment StoreEntitySet="Screening_Criteria_Option">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Screening_Criteria_Id" ColumnName="Screening_Criteria_Id" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trials">
+      <EntityTypeMapping TypeName="PX_Model.Trial">
+        <MappingFragment StoreEntitySet="Trial">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Start_Date" ColumnName="Start_Date" />
+          <ScalarProperty Name="End_Date" ColumnName="End_Date" />
+          <ScalarProperty Name="Objectives" ColumnName="Objectives" />
+          <ScalarProperty Name="Hypothesis" ColumnName="Hypothesis" />
+          <ScalarProperty Name="Outcome" ColumnName="Outcome" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trial_Investigator">
+      <EntityTypeMapping TypeName="PX_Model.Trial_Investigator">
+        <MappingFragment StoreEntitySet="Trial_Investigator">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Investigator_Id" ColumnName="Investigator_Id" />
+          <ScalarProperty Name="Trial_Id" ColumnName="Trial_Id" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trial_Participant">
+      <EntityTypeMapping TypeName="PX_Model.Trial_Participant">
+        <MappingFragment StoreEntitySet="Trial_Participant">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Trial_Id" ColumnName="Trial_Id" />
+          <ScalarProperty Name="Participant_Id" ColumnName="Participant_Id" />
+          <ScalarProperty Name="Classification" ColumnName="Classification" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trial_Participant_Assessment_Type">
+      <EntityTypeMapping TypeName="PX_Model.Trial_Participant_Assessment_Type">
+        <MappingFragment StoreEntitySet="Trial_Participant_Assessment_Type">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Trial_Participant_Id" ColumnName="Trial_Participant_Id" />
+          <ScalarProperty Name="Assessment_Type_Id" ColumnName="Assessment_Type_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trial_Participant_Intervention_Area_Test">
+      <EntityTypeMapping TypeName="PX_Model.Trial_Participant_Intervention_Area_Test">
+        <MappingFragment StoreEntitySet="Trial_Participant_Intervention_Area_Test">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Trial_Participant_Id" ColumnName="Trial_Participant_Id" />
+          <ScalarProperty Name="Intervention_Area_Test_Id" ColumnName="Intervention_Area_Test_Id" />
+          <ScalarProperty Name="DateTaken" ColumnName="DateTaken" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trial_Participant_Participant_Group">
+      <EntityTypeMapping TypeName="PX_Model.Trial_Participant_Participant_Group">
+        <MappingFragment StoreEntitySet="Trial_Participant_Participant_Group">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Trial_Participant_Id" ColumnName="Trial_Participant_Id" />
+          <ScalarProperty Name="Participant_Group_Id" ColumnName="Participant_Group_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trial_Screening_Criteria">
+      <EntityTypeMapping TypeName="PX_Model.Trial_Screening_Criteria">
+        <MappingFragment StoreEntitySet="Trial_Screening_Criteria">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Trial_Id" ColumnName="Trial_Id" />
+          <ScalarProperty Name="Screening_Criteria_Id" ColumnName="Screening_Criteria_Id" />
+          <ScalarProperty Name="OperatorType" ColumnName="OperatorType" />
+          <ScalarProperty Name="OperatorValue" ColumnName="OperatorValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="PX_Model.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetRoles">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

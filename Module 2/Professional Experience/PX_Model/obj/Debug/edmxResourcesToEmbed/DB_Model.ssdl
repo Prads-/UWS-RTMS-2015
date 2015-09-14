@@ -1,0 +1,962 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PX_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Administrator">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Person_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ClaimType" Type="nvarchar(max)" />
+    <Property Name="ClaimValue" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Assessment_Type">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Assessment_Type_Option">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Assessment_Type_Question_Id" Type="int" />
+    <Property Name="Opt" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Assessment_Type_Question">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Assessment_Type_Id" Type="int" />
+    <Property Name="Question" Type="varchar" MaxLength="1000" />
+    <Property Name="Question_Type" Type="int" />
+  </EntityType>
+  <EntityType Name="Assessment_Type_Question_Answer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Assessment_Type_Question_Id" Type="int" />
+    <Property Name="Trial_Participant_Assessment_Type_Id" Type="int" />
+    <Property Name="Answer" Type="varchar" MaxLength="5000" />
+    <Property Name="Answer_Type" Type="int" />
+  </EntityType>
+  <EntityType Name="Clinician">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Person_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="Intervention_Area">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="255" />
+    <Property Name="Description" Type="varchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="Intervention_Area_Test">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Intervention_Area_Id" Type="int" />
+    <Property Name="Name" Type="varchar" MaxLength="255" />
+    <Property Name="Description" Type="varchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="Intervention_Area_Test_Question">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Intervention_Area_Test_Id" Type="int" />
+    <Property Name="Question" Type="varchar" MaxLength="1000" />
+    <Property Name="Question_Type" Type="int" />
+    <Property Name="Sequence" Type="int" />
+  </EntityType>
+  <EntityType Name="Intervention_Area_Test_Question_Answer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Intervention_Area_Test_Question_Id" Type="int" />
+    <Property Name="Trial_Participant_Intervention_Area_Test_Id" Type="int" />
+    <Property Name="Answer" Type="varchar" MaxLength="5000" />
+    <Property Name="Answer_Type" Type="int" />
+  </EntityType>
+  <EntityType Name="Intervention_Area_Test_Question_Option">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Intervention_Area_Test_Question_Id" Type="int" />
+    <Property Name="Opt" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Investigator">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Person_Id" Type="int" />
+    <Property Name="Institution" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Investigator_Intervention_Area">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Investigator_Id" Type="int" />
+    <Property Name="Intervention_Area_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="Participant">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Person_Id" Type="int" />
+    <Property Name="Date_Of_Birth" Type="date" />
+    <Property Name="Gender" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Participant_Clinician">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Participant_Id" Type="int" />
+    <Property Name="Clinician_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="Participant_Group">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Participant_Group_Intervention_Area">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Participant_Group_Id" Type="int" />
+    <Property Name="Intervention_Area_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="Participant_Screening_Criteria">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Participant_Id" Type="int" />
+    <Property Name="Screening_Criteria_Id" Type="int" />
+    <Property Name="Value" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="First_Name" Type="varchar" MaxLength="255" />
+    <Property Name="Last_Name" Type="varchar" MaxLength="255" />
+    <Property Name="Phone_Number" Type="varchar" MaxLength="15" />
+    <Property Name="Street" Type="varchar" MaxLength="255" />
+    <Property Name="Suburb" Type="varchar" MaxLength="255" />
+    <Property Name="State" Type="varchar" MaxLength="255" />
+    <Property Name="Postcode" Type="varchar" MaxLength="4" />
+    <Property Name="Email" Type="varchar" MaxLength="255" />
+    <Property Name="Username" Type="varchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Screening_Criteria">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Screening_Criteria_Option">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Screening_Criteria_Id" Type="int" />
+    <Property Name="Description" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Trial">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="255" />
+    <Property Name="Description" Type="varchar" MaxLength="1000" />
+    <Property Name="Start_Date" Type="date" />
+    <Property Name="End_Date" Type="date" />
+    <Property Name="Objectives" Type="varchar" MaxLength="1000" />
+    <Property Name="Hypothesis" Type="varchar" MaxLength="1000" />
+    <Property Name="Outcome" Type="varchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="Trial_Investigator">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Investigator_Id" Type="int" />
+    <Property Name="Trial_Id" Type="int" />
+    <Property Name="Type" Type="int" />
+  </EntityType>
+  <EntityType Name="Trial_Participant">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Trial_Id" Type="int" />
+    <Property Name="Participant_Id" Type="int" />
+    <Property Name="Classification" Type="int" />
+  </EntityType>
+  <EntityType Name="Trial_Participant_Assessment_Type">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Trial_Participant_Id" Type="int" />
+    <Property Name="Assessment_Type_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="Trial_Participant_Intervention_Area_Test">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Trial_Participant_Id" Type="int" />
+    <Property Name="Intervention_Area_Test_Id" Type="int" />
+    <Property Name="DateTaken" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Trial_Participant_Participant_Group">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Trial_Participant_Id" Type="int" />
+    <Property Name="Participant_Group_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="Trial_Screening_Criteria">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Trial_Id" Type="int" />
+    <Property Name="Screening_Criteria_Id" Type="int" />
+    <Property Name="OperatorType" Type="int" />
+    <Property Name="OperatorValue" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <Association Name="FK__Administr__Perso__1273C1CD">
+    <End Role="Person" Type="Self.Person" Multiplicity="0..1" />
+    <End Role="Administrator" Type="Self.Administrator" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Administrator">
+        <PropertyRef Name="Person_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Assessmen__Asses__02084FDA">
+    <End Role="Assessment_Type_Question" Type="Self.Assessment_Type_Question" Multiplicity="0..1" />
+    <End Role="Assessment_Type_Option" Type="Self.Assessment_Type_Option" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Assessment_Type_Question">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assessment_Type_Option">
+        <PropertyRef Name="Assessment_Type_Question_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Assessmen__Asses__06CD04F7">
+    <End Role="Assessment_Type_Question" Type="Self.Assessment_Type_Question" Multiplicity="0..1" />
+    <End Role="Assessment_Type_Question_Answer" Type="Self.Assessment_Type_Question_Answer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Assessment_Type_Question">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assessment_Type_Question_Answer">
+        <PropertyRef Name="Assessment_Type_Question_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Assessmen__Asses__7D439ABD">
+    <End Role="Assessment_Type" Type="Self.Assessment_Type" Multiplicity="0..1" />
+    <End Role="Assessment_Type_Question" Type="Self.Assessment_Type_Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Assessment_Type">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assessment_Type_Question">
+        <PropertyRef Name="Assessment_Type_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Assessmen__Trial__07C12930">
+    <End Role="Trial_Participant_Assessment_Type" Type="Self.Trial_Participant_Assessment_Type" Multiplicity="0..1" />
+    <End Role="Assessment_Type_Question_Answer" Type="Self.Assessment_Type_Question_Answer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trial_Participant_Assessment_Type">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assessment_Type_Question_Answer">
+        <PropertyRef Name="Trial_Participant_Assessment_Type_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Clinician__Perso__08EA5793">
+    <End Role="Person" Type="Self.Person" Multiplicity="0..1" />
+    <End Role="Clinician" Type="Self.Clinician" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Clinician">
+        <PropertyRef Name="Person_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Intervent__Inter__4E88ABD4">
+    <End Role="Intervention_Area" Type="Self.Intervention_Area" Multiplicity="0..1" />
+    <End Role="Intervention_Area_Test" Type="Self.Intervention_Area_Test" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Intervention_Area">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Intervention_Area_Test">
+        <PropertyRef Name="Intervention_Area_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Intervent__Inter__534D60F1">
+    <End Role="Intervention_Area_Test" Type="Self.Intervention_Area_Test" Multiplicity="0..1" />
+    <End Role="Intervention_Area_Test_Question" Type="Self.Intervention_Area_Test_Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Intervention_Area_Test">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Intervention_Area_Test_Question">
+        <PropertyRef Name="Intervention_Area_Test_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Intervent__Inter__5812160E">
+    <End Role="Intervention_Area_Test_Question" Type="Self.Intervention_Area_Test_Question" Multiplicity="0..1" />
+    <End Role="Intervention_Area_Test_Question_Option" Type="Self.Intervention_Area_Test_Question_Option" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Intervention_Area_Test_Question">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Intervention_Area_Test_Question_Option">
+        <PropertyRef Name="Intervention_Area_Test_Question_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Intervent__Inter__628FA481">
+    <End Role="Intervention_Area_Test_Question" Type="Self.Intervention_Area_Test_Question" Multiplicity="0..1" />
+    <End Role="Intervention_Area_Test_Question_Answer" Type="Self.Intervention_Area_Test_Question_Answer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Intervention_Area_Test_Question">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Intervention_Area_Test_Question_Answer">
+        <PropertyRef Name="Intervention_Area_Test_Question_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Intervent__Trial__6383C8BA">
+    <End Role="Trial_Participant_Intervention_Area_Test" Type="Self.Trial_Participant_Intervention_Area_Test" Multiplicity="0..1" />
+    <End Role="Intervention_Area_Test_Question_Answer" Type="Self.Intervention_Area_Test_Question_Answer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trial_Participant_Intervention_Area_Test">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Intervention_Area_Test_Question_Answer">
+        <PropertyRef Name="Trial_Participant_Intervention_Area_Test_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Investiga__Inter__6EF57B66">
+    <End Role="Intervention_Area" Type="Self.Intervention_Area" Multiplicity="0..1" />
+    <End Role="Investigator_Intervention_Area" Type="Self.Investigator_Intervention_Area" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Intervention_Area">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Investigator_Intervention_Area">
+        <PropertyRef Name="Intervention_Area_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Investiga__Inves__6E01572D">
+    <End Role="Investigator" Type="Self.Investigator" Multiplicity="0..1" />
+    <End Role="Investigator_Intervention_Area" Type="Self.Investigator_Intervention_Area" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Investigator">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Investigator_Intervention_Area">
+        <PropertyRef Name="Investigator_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Investiga__Perso__2C3393D0">
+    <End Role="Person" Type="Self.Person" Multiplicity="0..1" />
+    <End Role="Investigator" Type="Self.Investigator" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Investigator">
+        <PropertyRef Name="Person_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Participa__Clini__182C9B23">
+    <End Role="Clinician" Type="Self.Clinician" Multiplicity="0..1" />
+    <End Role="Participant_Clinician" Type="Self.Participant_Clinician" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clinician">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Participant_Clinician">
+        <PropertyRef Name="Clinician_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Participa__Inter__693CA210">
+    <End Role="Intervention_Area" Type="Self.Intervention_Area" Multiplicity="0..1" />
+    <End Role="Participant_Group_Intervention_Area" Type="Self.Participant_Group_Intervention_Area" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Intervention_Area">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Participant_Group_Intervention_Area">
+        <PropertyRef Name="Intervention_Area_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Participa__Parti__173876EA">
+    <End Role="Participant" Type="Self.Participant" Multiplicity="0..1" />
+    <End Role="Participant_Clinician" Type="Self.Participant_Clinician" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Participant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Participant_Clinician">
+        <PropertyRef Name="Participant_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Participa__Parti__45F365D3">
+    <End Role="Participant" Type="Self.Participant" Multiplicity="0..1" />
+    <End Role="Participant_Screening_Criteria" Type="Self.Participant_Screening_Criteria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Participant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Participant_Screening_Criteria">
+        <PropertyRef Name="Participant_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Participa__Parti__68487DD7">
+    <End Role="Participant_Group" Type="Self.Participant_Group" Multiplicity="0..1" />
+    <End Role="Participant_Group_Intervention_Area" Type="Self.Participant_Group_Intervention_Area" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Participant_Group">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Participant_Group_Intervention_Area">
+        <PropertyRef Name="Participant_Group_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Participa__Perso__0DAF0CB0">
+    <End Role="Person" Type="Self.Person" Multiplicity="0..1" />
+    <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Participant">
+        <PropertyRef Name="Person_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Participa__Scree__44FF419A">
+    <End Role="Screening_Criteria" Type="Self.Screening_Criteria" Multiplicity="0..1" />
+    <End Role="Participant_Screening_Criteria" Type="Self.Participant_Screening_Criteria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Screening_Criteria">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Participant_Screening_Criteria">
+        <PropertyRef Name="Screening_Criteria_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Screening__Scree__3A81B327">
+    <End Role="Screening_Criteria" Type="Self.Screening_Criteria" Multiplicity="0..1" />
+    <End Role="Screening_Criteria_Option" Type="Self.Screening_Criteria_Option" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Screening_Criteria">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Screening_Criteria_Option">
+        <PropertyRef Name="Screening_Criteria_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trial_Inv__Inves__30F848ED">
+    <End Role="Investigator" Type="Self.Investigator" Multiplicity="0..1" />
+    <End Role="Trial_Investigator" Type="Self.Trial_Investigator" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Investigator">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Trial_Investigator">
+        <PropertyRef Name="Investigator_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trial_Inv__Trial__31EC6D26">
+    <End Role="Trial" Type="Self.Trial" Multiplicity="0..1" />
+    <End Role="Trial_Investigator" Type="Self.Trial_Investigator" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trial">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Trial_Investigator">
+        <PropertyRef Name="Trial_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trial_Par__Asses__787EE5A0">
+    <End Role="Assessment_Type" Type="Self.Assessment_Type" Multiplicity="0..1" />
+    <End Role="Trial_Participant_Assessment_Type" Type="Self.Trial_Participant_Assessment_Type" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Assessment_Type">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Trial_Participant_Assessment_Type">
+        <PropertyRef Name="Assessment_Type_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trial_Par__Inter__5DCAEF64">
+    <End Role="Intervention_Area_Test" Type="Self.Intervention_Area_Test" Multiplicity="0..1" />
+    <End Role="Trial_Participant_Intervention_Area_Test" Type="Self.Trial_Participant_Intervention_Area_Test" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Intervention_Area_Test">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Trial_Participant_Intervention_Area_Test">
+        <PropertyRef Name="Intervention_Area_Test_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trial_Par__Parti__1DE57479">
+    <End Role="Participant" Type="Self.Participant" Multiplicity="0..1" />
+    <End Role="Trial_Participant" Type="Self.Trial_Participant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Participant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Trial_Participant">
+        <PropertyRef Name="Participant_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trial_Par__Parti__276EDEB3">
+    <End Role="Participant_Group" Type="Self.Participant_Group" Multiplicity="0..1" />
+    <End Role="Trial_Participant_Participant_Group" Type="Self.Trial_Participant_Participant_Group" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Participant_Group">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Trial_Participant_Participant_Group">
+        <PropertyRef Name="Participant_Group_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trial_Par__Trial__1CF15040">
+    <End Role="Trial" Type="Self.Trial" Multiplicity="0..1" />
+    <End Role="Trial_Participant" Type="Self.Trial_Participant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trial">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Trial_Participant">
+        <PropertyRef Name="Trial_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trial_Par__Trial__267ABA7A">
+    <End Role="Trial_Participant" Type="Self.Trial_Participant" Multiplicity="0..1" />
+    <End Role="Trial_Participant_Participant_Group" Type="Self.Trial_Participant_Participant_Group" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trial_Participant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Trial_Participant_Participant_Group">
+        <PropertyRef Name="Trial_Participant_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trial_Par__Trial__5CD6CB2B">
+    <End Role="Trial_Participant" Type="Self.Trial_Participant" Multiplicity="0..1" />
+    <End Role="Trial_Participant_Intervention_Area_Test" Type="Self.Trial_Participant_Intervention_Area_Test" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trial_Participant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Trial_Participant_Intervention_Area_Test">
+        <PropertyRef Name="Trial_Participant_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trial_Par__Trial__778AC167">
+    <End Role="Trial_Participant" Type="Self.Trial_Participant" Multiplicity="0..1" />
+    <End Role="Trial_Participant_Assessment_Type" Type="Self.Trial_Participant_Assessment_Type" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trial_Participant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Trial_Participant_Assessment_Type">
+        <PropertyRef Name="Trial_Participant_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trial_Scr__Scree__403A8C7D">
+    <End Role="Screening_Criteria" Type="Self.Screening_Criteria" Multiplicity="0..1" />
+    <End Role="Trial_Screening_Criteria" Type="Self.Trial_Screening_Criteria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Screening_Criteria">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Trial_Screening_Criteria">
+        <PropertyRef Name="Screening_Criteria_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trial_Scr__Trial__3F466844">
+    <End Role="Trial" Type="Self.Trial" Multiplicity="0..1" />
+    <End Role="Trial_Screening_Criteria" Type="Self.Trial_Screening_Criteria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trial">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Trial_Screening_Criteria">
+        <PropertyRef Name="Trial_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PX_ModelStoreContainer">
+    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Administrator" EntityType="Self.Administrator" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Assessment_Type" EntityType="Self.Assessment_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Assessment_Type_Option" EntityType="Self.Assessment_Type_Option" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Assessment_Type_Question" EntityType="Self.Assessment_Type_Question" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Assessment_Type_Question_Answer" EntityType="Self.Assessment_Type_Question_Answer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Clinician" EntityType="Self.Clinician" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Intervention_Area" EntityType="Self.Intervention_Area" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Intervention_Area_Test" EntityType="Self.Intervention_Area_Test" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Intervention_Area_Test_Question" EntityType="Self.Intervention_Area_Test_Question" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Intervention_Area_Test_Question_Answer" EntityType="Self.Intervention_Area_Test_Question_Answer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Intervention_Area_Test_Question_Option" EntityType="Self.Intervention_Area_Test_Question_Option" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Investigator" EntityType="Self.Investigator" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Investigator_Intervention_Area" EntityType="Self.Investigator_Intervention_Area" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Participant" EntityType="Self.Participant" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Participant_Clinician" EntityType="Self.Participant_Clinician" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Participant_Group" EntityType="Self.Participant_Group" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Participant_Group_Intervention_Area" EntityType="Self.Participant_Group_Intervention_Area" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Participant_Screening_Criteria" EntityType="Self.Participant_Screening_Criteria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Screening_Criteria" EntityType="Self.Screening_Criteria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Screening_Criteria_Option" EntityType="Self.Screening_Criteria_Option" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trial" EntityType="Self.Trial" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trial_Investigator" EntityType="Self.Trial_Investigator" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trial_Participant" EntityType="Self.Trial_Participant" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trial_Participant_Assessment_Type" EntityType="Self.Trial_Participant_Assessment_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trial_Participant_Intervention_Area_Test" EntityType="Self.Trial_Participant_Intervention_Area_Test" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trial_Participant_Participant_Group" EntityType="Self.Trial_Participant_Participant_Group" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trial_Screening_Criteria" EntityType="Self.Trial_Screening_Criteria" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Administr__Perso__1273C1CD" Association="Self.FK__Administr__Perso__1273C1CD">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="Administrator" EntitySet="Administrator" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Assessmen__Asses__02084FDA" Association="Self.FK__Assessmen__Asses__02084FDA">
+      <End Role="Assessment_Type_Question" EntitySet="Assessment_Type_Question" />
+      <End Role="Assessment_Type_Option" EntitySet="Assessment_Type_Option" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Assessmen__Asses__06CD04F7" Association="Self.FK__Assessmen__Asses__06CD04F7">
+      <End Role="Assessment_Type_Question" EntitySet="Assessment_Type_Question" />
+      <End Role="Assessment_Type_Question_Answer" EntitySet="Assessment_Type_Question_Answer" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Assessmen__Asses__7D439ABD" Association="Self.FK__Assessmen__Asses__7D439ABD">
+      <End Role="Assessment_Type" EntitySet="Assessment_Type" />
+      <End Role="Assessment_Type_Question" EntitySet="Assessment_Type_Question" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Assessmen__Trial__07C12930" Association="Self.FK__Assessmen__Trial__07C12930">
+      <End Role="Trial_Participant_Assessment_Type" EntitySet="Trial_Participant_Assessment_Type" />
+      <End Role="Assessment_Type_Question_Answer" EntitySet="Assessment_Type_Question_Answer" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Clinician__Perso__08EA5793" Association="Self.FK__Clinician__Perso__08EA5793">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="Clinician" EntitySet="Clinician" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Intervent__Inter__4E88ABD4" Association="Self.FK__Intervent__Inter__4E88ABD4">
+      <End Role="Intervention_Area" EntitySet="Intervention_Area" />
+      <End Role="Intervention_Area_Test" EntitySet="Intervention_Area_Test" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Intervent__Inter__534D60F1" Association="Self.FK__Intervent__Inter__534D60F1">
+      <End Role="Intervention_Area_Test" EntitySet="Intervention_Area_Test" />
+      <End Role="Intervention_Area_Test_Question" EntitySet="Intervention_Area_Test_Question" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Intervent__Inter__5812160E" Association="Self.FK__Intervent__Inter__5812160E">
+      <End Role="Intervention_Area_Test_Question" EntitySet="Intervention_Area_Test_Question" />
+      <End Role="Intervention_Area_Test_Question_Option" EntitySet="Intervention_Area_Test_Question_Option" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Intervent__Inter__628FA481" Association="Self.FK__Intervent__Inter__628FA481">
+      <End Role="Intervention_Area_Test_Question" EntitySet="Intervention_Area_Test_Question" />
+      <End Role="Intervention_Area_Test_Question_Answer" EntitySet="Intervention_Area_Test_Question_Answer" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Intervent__Trial__6383C8BA" Association="Self.FK__Intervent__Trial__6383C8BA">
+      <End Role="Trial_Participant_Intervention_Area_Test" EntitySet="Trial_Participant_Intervention_Area_Test" />
+      <End Role="Intervention_Area_Test_Question_Answer" EntitySet="Intervention_Area_Test_Question_Answer" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Investiga__Inter__6EF57B66" Association="Self.FK__Investiga__Inter__6EF57B66">
+      <End Role="Intervention_Area" EntitySet="Intervention_Area" />
+      <End Role="Investigator_Intervention_Area" EntitySet="Investigator_Intervention_Area" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Investiga__Inves__6E01572D" Association="Self.FK__Investiga__Inves__6E01572D">
+      <End Role="Investigator" EntitySet="Investigator" />
+      <End Role="Investigator_Intervention_Area" EntitySet="Investigator_Intervention_Area" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Investiga__Perso__2C3393D0" Association="Self.FK__Investiga__Perso__2C3393D0">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="Investigator" EntitySet="Investigator" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Participa__Clini__182C9B23" Association="Self.FK__Participa__Clini__182C9B23">
+      <End Role="Clinician" EntitySet="Clinician" />
+      <End Role="Participant_Clinician" EntitySet="Participant_Clinician" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Participa__Inter__693CA210" Association="Self.FK__Participa__Inter__693CA210">
+      <End Role="Intervention_Area" EntitySet="Intervention_Area" />
+      <End Role="Participant_Group_Intervention_Area" EntitySet="Participant_Group_Intervention_Area" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Participa__Parti__173876EA" Association="Self.FK__Participa__Parti__173876EA">
+      <End Role="Participant" EntitySet="Participant" />
+      <End Role="Participant_Clinician" EntitySet="Participant_Clinician" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Participa__Parti__45F365D3" Association="Self.FK__Participa__Parti__45F365D3">
+      <End Role="Participant" EntitySet="Participant" />
+      <End Role="Participant_Screening_Criteria" EntitySet="Participant_Screening_Criteria" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Participa__Parti__68487DD7" Association="Self.FK__Participa__Parti__68487DD7">
+      <End Role="Participant_Group" EntitySet="Participant_Group" />
+      <End Role="Participant_Group_Intervention_Area" EntitySet="Participant_Group_Intervention_Area" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Participa__Perso__0DAF0CB0" Association="Self.FK__Participa__Perso__0DAF0CB0">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="Participant" EntitySet="Participant" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Participa__Scree__44FF419A" Association="Self.FK__Participa__Scree__44FF419A">
+      <End Role="Screening_Criteria" EntitySet="Screening_Criteria" />
+      <End Role="Participant_Screening_Criteria" EntitySet="Participant_Screening_Criteria" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Screening__Scree__3A81B327" Association="Self.FK__Screening__Scree__3A81B327">
+      <End Role="Screening_Criteria" EntitySet="Screening_Criteria" />
+      <End Role="Screening_Criteria_Option" EntitySet="Screening_Criteria_Option" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trial_Inv__Inves__30F848ED" Association="Self.FK__Trial_Inv__Inves__30F848ED">
+      <End Role="Investigator" EntitySet="Investigator" />
+      <End Role="Trial_Investigator" EntitySet="Trial_Investigator" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trial_Inv__Trial__31EC6D26" Association="Self.FK__Trial_Inv__Trial__31EC6D26">
+      <End Role="Trial" EntitySet="Trial" />
+      <End Role="Trial_Investigator" EntitySet="Trial_Investigator" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trial_Par__Asses__787EE5A0" Association="Self.FK__Trial_Par__Asses__787EE5A0">
+      <End Role="Assessment_Type" EntitySet="Assessment_Type" />
+      <End Role="Trial_Participant_Assessment_Type" EntitySet="Trial_Participant_Assessment_Type" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trial_Par__Inter__5DCAEF64" Association="Self.FK__Trial_Par__Inter__5DCAEF64">
+      <End Role="Intervention_Area_Test" EntitySet="Intervention_Area_Test" />
+      <End Role="Trial_Participant_Intervention_Area_Test" EntitySet="Trial_Participant_Intervention_Area_Test" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trial_Par__Parti__1DE57479" Association="Self.FK__Trial_Par__Parti__1DE57479">
+      <End Role="Participant" EntitySet="Participant" />
+      <End Role="Trial_Participant" EntitySet="Trial_Participant" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trial_Par__Parti__276EDEB3" Association="Self.FK__Trial_Par__Parti__276EDEB3">
+      <End Role="Participant_Group" EntitySet="Participant_Group" />
+      <End Role="Trial_Participant_Participant_Group" EntitySet="Trial_Participant_Participant_Group" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trial_Par__Trial__1CF15040" Association="Self.FK__Trial_Par__Trial__1CF15040">
+      <End Role="Trial" EntitySet="Trial" />
+      <End Role="Trial_Participant" EntitySet="Trial_Participant" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trial_Par__Trial__267ABA7A" Association="Self.FK__Trial_Par__Trial__267ABA7A">
+      <End Role="Trial_Participant" EntitySet="Trial_Participant" />
+      <End Role="Trial_Participant_Participant_Group" EntitySet="Trial_Participant_Participant_Group" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trial_Par__Trial__5CD6CB2B" Association="Self.FK__Trial_Par__Trial__5CD6CB2B">
+      <End Role="Trial_Participant" EntitySet="Trial_Participant" />
+      <End Role="Trial_Participant_Intervention_Area_Test" EntitySet="Trial_Participant_Intervention_Area_Test" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trial_Par__Trial__778AC167" Association="Self.FK__Trial_Par__Trial__778AC167">
+      <End Role="Trial_Participant" EntitySet="Trial_Participant" />
+      <End Role="Trial_Participant_Assessment_Type" EntitySet="Trial_Participant_Assessment_Type" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trial_Scr__Scree__403A8C7D" Association="Self.FK__Trial_Scr__Scree__403A8C7D">
+      <End Role="Screening_Criteria" EntitySet="Screening_Criteria" />
+      <End Role="Trial_Screening_Criteria" EntitySet="Trial_Screening_Criteria" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trial_Scr__Trial__3F466844" Association="Self.FK__Trial_Scr__Trial__3F466844">
+      <End Role="Trial" EntitySet="Trial" />
+      <End Role="Trial_Screening_Criteria" EntitySet="Trial_Screening_Criteria" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
