@@ -15,6 +15,10 @@ namespace Professional_Experience.Controllers
             return View();
         }
 
+       public ActionResult InterventionSetup()
+        {
+            return View();
+        }
         public ActionResult Reporting()
         {
             return View();
