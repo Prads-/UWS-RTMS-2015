@@ -20,11 +20,18 @@
                 @Html.ActionLink("Research Trial Management System", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+                @if (User.IsInRole("Participant")) {
+                    //Add menu items for participant here
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                }
+                else if (User.IsInRole("Admin"))
+                {
+                    //Add menu item for Admin here
+                }
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
