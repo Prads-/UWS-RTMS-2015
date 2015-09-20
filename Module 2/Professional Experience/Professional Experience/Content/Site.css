@@ -22,3 +22,62 @@ select,
 textarea {
     max-width: 280px;
 }
+
+span.neutral{
+	color:white;
+	background-color:#668DFA;
+	padding: 10px;
+	font-weight: 600;
+	border:solid 2px #000;
+}
+
+span.success{
+	color:white;
+	background-color:#7ED676;
+	padding: 10px;
+	font-weight: 600;
+	border:solid 2px #000;
+}
+
+span.success:hover{
+	color:#000000;
+}
+
+span.success:empty{
+	padding: 0px;
+	border: none;
+}
+
+span.fail{
+	color:white;
+	background-color:#EB6767;
+	padding: 10px;
+	font-weight: 600;
+	border:solid 2px #000;
+}
+
+span.fail:hover{
+	color:#000000;
+}
+
+span.fail:empty{
+	padding: 0px;
+	border: none;
+}
+
+span.edit{
+	color:white;
+	background-color:#668DFA;
+	padding: 10px;
+	font-weight: 600;
+	border:solid 2px #000;
+}
+
+span.edit:hover{
+	color:#000000;
+}
+
+span.edit:empty{
+	padding: 0px;
+	border: none;
+}

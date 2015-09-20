@@ -146,6 +146,7 @@ C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Profe
 C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\Professional Experience\bin\WebGrease.dll
 C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\Professional Experience\bin\WebMatrix.Data.dll
 C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\Professional Experience\bin\PX_Model.pdb
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\Professional Experience\bin\Newtonsoft.Json.xml
 C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\Professional Experience\bin\System.Web.Helpers.xml
 C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\Professional Experience\bin\System.Web.Mvc.xml
 C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\Professional Experience\bin\System.Web.Optimization.xml
@@ -155,7 +156,6 @@ C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Profe
 C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\Professional Experience\bin\System.Web.WebPages.Razor.xml
 C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\Professional Experience\bin\Antlr3.Runtime.pdb
 C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\Professional Experience\bin\WebMatrix.Data.xml
-C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\Professional Experience\bin\Newtonsoft.Json.xml
 C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\Professional Experience\bin\EntityFramework.xml
 C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\Professional Experience\bin\EntityFramework.SqlServer.xml
 C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\Professional Experience\bin\Microsoft.AspNet.Identity.Core.xml

@@ -38,3 +38,32 @@ C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 1 & 2\P
 C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 1 & 2\Professional Experience\PX_Model\bin\Debug\System.Web.WebPages.xml
 C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 1 & 2\Professional Experience\PX_Model\bin\Debug\System.Web.WebPages.Deployment.xml
 C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 1 & 2\Professional Experience\PX_Model\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\PX_Model.dll.config
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\PX_Model.dll
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\PX_Model.pdb
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\EntityFramework.dll
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\MvcSiteMapProvider.dll
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\MvcSiteMapProvider.WebActivator.dll
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\System.Web.Helpers.dll
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\System.Web.Mvc.dll
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\System.Web.Razor.dll
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\System.Web.WebPages.dll
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\WebActivatorEx.dll
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\WebMatrix.Data.dll
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\EntityFramework.xml
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\MvcSiteMapProvider.xml
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\MvcSiteMapProvider.WebActivator.xml
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\System.Web.Helpers.xml
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\System.Web.Mvc.xml
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\System.Web.Razor.xml
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\System.Web.WebPages.xml
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\bin\Debug\WebMatrix.Data.xml
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\obj\Debug\PX_Model.dll
+C:\Users\Nassim\Desktop\UWS\Professional Experience\UWS-RTMS-2015\Module 2\Professional Experience\PX_Model\obj\Debug\PX_Model.pdb
