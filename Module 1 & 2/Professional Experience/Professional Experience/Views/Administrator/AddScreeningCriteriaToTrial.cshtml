@@ -1,0 +1,62 @@
+﻿@model Professional_Experience.Models.AddScreeningCriteriaToTrialViewModel
+
+@{
+    ViewBag.Title = "Add Screening Criteria To Trial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Screening Criteria To Trial</h2>
+
+@using (Html.BeginForm("AddScreeningCriteriaToTrial", "Administrator", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Add Participant to Trial.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.TrialId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <select name="TrialId">
+                @foreach (var trial in Model.Trials)
+                {
+                    <option value="@trial.Id">@trial.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ScreeningCriteriaId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <select name="ScreeningCriteriaId">
+                @foreach (var selectionCriteria in Model.ScreeningCriteria)
+                {
+                    <option value="@selectionCriteria.Id">@selectionCriteria.Description</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.OperatorType, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <select name="OperatorType">
+                <option value="@PX_Model.Screening_Criteria.OPERATOR_RANGE">Range</option>
+                <option value="@PX_Model.Screening_Criteria.OPERATOR_EQUALS">Equals</option>
+                <option value="@PX_Model.Screening_Criteria.OPERATOR_GREATER_THAN">Greater Than</option>
+                <option value="@PX_Model.Screening_Criteria.OPERATOR_GREATER_THAN_OR_EQUAL">Greater Than or Equal</option>
+                <option value="@PX_Model.Screening_Criteria.OPERATOR_LESS_THAN">Less Than</option>
+                <option value="@PX_Model.Screening_Criteria.OPERATOR_LESS_THAN_OR_EQUAL">Less Than or Equal</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.OperatorValue, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.OperatorValue, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Submit" />
+        </div>
+    </div>
+}

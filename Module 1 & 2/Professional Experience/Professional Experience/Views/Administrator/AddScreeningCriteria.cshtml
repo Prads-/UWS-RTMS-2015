@@ -1,0 +1,47 @@
+﻿@model Professional_Experience.Models.AddScreeningCriteriaViewModel
+
+@{
+    ViewBag.Title = "Add Screening Criteria";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Screening Criteria</h2>
+
+@using (Html.BeginForm("AddScreeningCriteria", "Administrator", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create new screening criteria.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Options, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <input type="text" id="txtOption" class="form-control" />
+            <input style="margin-top:5px" type="button" class="btn btn-default" value="Add Option" onclick="addOption()" />
+            <div id="optDiv"></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Add Screening Criteria" />
+        </div>
+    </div>
+}
+
+@section scripts {
+    <script type="text/javascript">
+        function addOption() {
+            var optionStr = document.getElementById("txtOption").value;
+            var optDivHTML = document.getElementById("optDiv").innerHTML;
+            var newOptDivHTML = "<input type='checkbox' name='Options' value='" + optionStr + "' checked>" + optionStr + "<br />";
+
+            document.getElementById("optDiv").innerHTML = optDivHTML + newOptDivHTML;
+        }
+    </script>
+}

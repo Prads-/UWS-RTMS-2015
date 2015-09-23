@@ -1,0 +1,14 @@
+﻿@model IEnumerable<PX_Model.Trial>
+
+@{
+    ViewBag.Title = "Edit Trials";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Trials</h2>
+
+@foreach (var trial in Model)
+{
+    @Html.ActionLink(trial.Name, "EditTrial", "Administrator", new { id = trial.Id }, new { });
+    <br />
+}

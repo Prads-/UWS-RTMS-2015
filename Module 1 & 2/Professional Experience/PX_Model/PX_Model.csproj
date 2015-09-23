@@ -117,6 +117,7 @@
     <Compile Include="Investigator_Intervention_Area.cs">
       <DependentUpon>DB_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Partials\Screening_Criteria.cs" />
     <Compile Include="Participant.cs">
       <DependentUpon>DB_Model.tt</DependentUpon>
     </Compile>

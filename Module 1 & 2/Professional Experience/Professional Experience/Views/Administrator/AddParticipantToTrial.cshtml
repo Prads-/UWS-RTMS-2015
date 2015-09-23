@@ -1,0 +1,43 @@
+﻿@model Professional_Experience.Models.AddParticipantToTrialViewModel
+
+@{
+    ViewBag.Title = "Add Participant To Trial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Participant To Trial</h2>
+
+@using (Html.BeginForm("AddParticipantToTrial", "Administrator", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Add Participant to Trial.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.TrialId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <select name="TrialId">
+                @foreach (var trial in Model.Trials)
+                {
+                    <option value="@trial.Id">@trial.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ParticipantId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <select name="ParticipantId">
+                @foreach (var participant in Model.Participants)
+                {
+                    <option value="@participant.Id">@participant.Person.First_Name @participant.Person.Last_Name (@participant.Person.Username)</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Add Participant" />
+        </div>
+    </div>
+}

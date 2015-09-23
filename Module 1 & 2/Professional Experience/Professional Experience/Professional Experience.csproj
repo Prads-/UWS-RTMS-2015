@@ -168,7 +168,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddParticipantToTrialViewModel.cs" />
+    <Compile Include="Models\AddScreeningCriteriaToTrialViewModel.cs" />
+    <Compile Include="Models\AddScreeningCriteriaViewModel.cs" />
     <Compile Include="Models\CreateTrialViewModel.cs" />
+    <Compile Include="Models\EditTrialViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -236,6 +240,12 @@
     <Content Include="Views\Account\RegisterAdministrator.cshtml" />
     <Content Include="Views\Administrator\Index.cshtml" />
     <Content Include="Views\Administrator\CreateTrial.cshtml" />
+    <Content Include="Views\Administrator\EditTrial.cshtml" />
+    <Content Include="Views\Administrator\EditTrials.cshtml" />
+    <Content Include="Views\Administrator\AddParticipantToTrial.cshtml" />
+    <Content Include="Views\Administrator\ScreeningCriteria.cshtml" />
+    <Content Include="Views\Administrator\AddScreeningCriteria.cshtml" />
+    <Content Include="Views\Administrator\AddScreeningCriteriaToTrial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

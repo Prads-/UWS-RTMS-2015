@@ -31,6 +31,9 @@
                 else if (User.IsInRole("Admin"))
                 {
                     //Add menu item for Admin here
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Dashboard", "Index", "Administrator")</li>
+                    </ul>
                 }
                 @Html.Partial("_LoginPartial")
             </div>
