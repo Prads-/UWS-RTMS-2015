@@ -171,10 +171,15 @@
     <Compile Include="Models\AddParticipantToTrialViewModel.cs" />
     <Compile Include="Models\AddScreeningCriteriaToTrialViewModel.cs" />
     <Compile Include="Models\AddScreeningCriteriaViewModel.cs" />
+    <Compile Include="Models\AssignInvestigatorToTrialViewModel.cs" />
     <Compile Include="Models\CreateTrialViewModel.cs" />
+    <Compile Include="Models\EditInvestigatorViewModel.cs" />
     <Compile Include="Models\EditTrialViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ParticipateTrialListViewModel.cs" />
+    <Compile Include="Models\RegisterInvestigatorViewModel.cs" />
+    <Compile Include="Models\ScreeningCriteriaViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -246,6 +251,14 @@
     <Content Include="Views\Administrator\ScreeningCriteria.cshtml" />
     <Content Include="Views\Administrator\AddScreeningCriteria.cshtml" />
     <Content Include="Views\Administrator\AddScreeningCriteriaToTrial.cshtml" />
+    <Content Include="Views\Administrator\CreateInvestigator.cshtml" />
+    <Content Include="Views\Administrator\EditInvestigators.cshtml" />
+    <Content Include="Views\Administrator\EditInvestigator.cshtml" />
+    <Content Include="Views\Administrator\AssignInvestigatorToTrial.cshtml" />
+    <Content Include="Views\Participant\ParticipateTrialList.cshtml" />
+    <Content Include="Views\Participant\ParticipateTrial.cshtml" />
+    <Content Include="Views\Participant\ScreeningCriteriaFailed.cshtml" />
+    <Content Include="Views\Participant\ScreeningCriteriaSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

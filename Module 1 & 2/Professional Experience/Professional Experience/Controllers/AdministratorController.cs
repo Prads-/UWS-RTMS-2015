@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using System.Threading.Tasks;
 
 namespace Professional_Experience.Controllers
 {
@@ -82,12 +86,7 @@ namespace Professional_Experience.Controllers
         {
             var trial = _db.Trials.FirstOrDefault(t => t.Id == m.Id);
 
-            if (trial == null)
-            {
-                ModelState.AddModelError("Edit", "Trial was not found!");
-            }
-
-            if (ModelState.IsValid)
+            if (trial != null)
             {
                 trial.Name = m.Name;
                 trial.Description = m.Description;
@@ -98,10 +97,9 @@ namespace Professional_Experience.Controllers
                 trial.Outcome = m.Outcome;
 
                 _db.SaveChanges();
-                return View("Index");
             }
 
-            return View(m);
+            return View("Index");
         }
 
         public ActionResult AddParticipantToTrial()
@@ -163,14 +161,17 @@ namespace Professional_Experience.Controllers
                 _db.Screening_Criteria.Add(screeningCriteria);
                 _db.SaveChanges();
 
-                foreach (var option in m.Options)
+                if (m.Options != null)
                 {
-                    var opt = new PX_Model.Screening_Criteria_Option();
-                    opt.Screening_Criteria_Id = screeningCriteria.Id;
-                    opt.Description = option;
-                    _db.Screening_Criteria_Option.Add(opt);
+                    foreach (var option in m.Options)
+                    {
+                        var opt = new PX_Model.Screening_Criteria_Option();
+                        opt.Screening_Criteria_Id = screeningCriteria.Id;
+                        opt.Description = option;
+                        _db.Screening_Criteria_Option.Add(opt);
+                    }
+                    _db.SaveChanges();
                 }
-                _db.SaveChanges();
 
                 return View("ScreeningCriteria");
             }
@@ -258,6 +259,134 @@ namespace Professional_Experience.Controllers
             m.ScreeningCriteria = _db.Screening_Criteria.OrderBy(s => s.Description).ToArray();
 
             return View(m);
+        }
+
+        public ActionResult CreateInvestigator()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateInvestigator(RegisterInvestigatorViewModel m)
+        {
+            if (ModelState.IsValid)
+            {
+                var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var user = new ApplicationUser { UserName = m.Username, Email = m.Email };
+                var result = await UserManager.CreateAsync(user, m.Password);
+                if (result.Succeeded)
+                {
+                    var person = new PX_Model.Person();
+
+                    person.First_Name = m.FirstName;
+                    person.Last_Name = m.LastName;
+                    person.Email = m.Email;
+                    person.Phone_Number = m.PhoneNumber;
+                    person.Postcode = m.Postcode;
+                    person.State = m.State;
+                    person.Street = m.Street;
+                    person.Suburb = m.Suburb;
+                    person.Username = m.Username;
+
+                    _db.People.Add(person);
+                    _db.SaveChanges();
+
+                    var investigator = new PX_Model.Investigator();
+
+                    investigator.Person_Id = person.Id;
+                    investigator.Institution = m.Institution;
+
+                    _db.Investigators.Add(investigator);
+                    _db.SaveChanges();
+
+                    return View("Index");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+            }
+
+            return View(m);
+        }
+
+        public ActionResult EditInvestigators()
+        {
+            IEnumerable<PX_Model.Investigator> m = _db.Investigators.ToArray();
+            return View(m);
+        }
+
+        public ActionResult EditInvestigator(int id)
+        {
+            var investigator = _db.Investigators.FirstOrDefault(i => i.Id == id);
+
+            if (investigator == null)
+            {
+                return View("Index");
+            }
+
+            var m = new EditInvestigatorViewModel();
+            
+            m.Id = id;
+            m.Email = investigator.Person.Email;
+            m.FirstName = investigator.Person.First_Name;
+            m.Institution = investigator.Institution;
+            m.LastName = investigator.Person.Last_Name;
+            m.PhoneNumber = investigator.Person.Phone_Number;
+            m.Postcode = investigator.Person.Postcode;
+            m.State = investigator.Person.State;
+            m.Street = investigator.Person.Street;
+            m.Suburb = investigator.Person.Suburb;
+            
+            return View(m);
+        }
+
+        [HttpPost]
+        public ActionResult EditInvestigator(EditInvestigatorViewModel m)
+        {
+            var investigator = _db.Investigators.FirstOrDefault(i => i.Id == m.Id);
+
+            if (investigator != null)
+            {
+                investigator.Institution = m.Institution;
+                investigator.Person.Email = m.Email;
+                investigator.Person.First_Name = m.FirstName;
+                investigator.Person.Last_Name = m.LastName;
+                investigator.Person.Phone_Number = m.PhoneNumber;
+                investigator.Person.Postcode = m.Postcode;
+                investigator.Person.State = m.State;
+                investigator.Person.Street = m.Street;
+                investigator.Person.Suburb = m.Suburb;
+
+                _db.SaveChanges();
+            }
+
+            return View("Index");
+        }
+
+        public ActionResult AssignInvestigatorToTrial()
+        {
+            var m = new AssignInvestigatorToTrialViewModel();
+
+            m.Investigators = _db.Investigators.OrderBy(i => i.Person.First_Name).ToArray();
+            m.Trials = _db.Trials.OrderBy(t => t.Name).ToArray();
+
+            return View(m);
+        }
+
+        [HttpPost]
+        public ActionResult AssignInvestigatorToTrial(AssignInvestigatorToTrialViewModel m)
+        {
+            var trialInvestigator = new PX_Model.Trial_Investigator();
+
+            trialInvestigator.Investigator_Id = m.InvestigatorId;
+            trialInvestigator.Trial_Id = m.TrialId;
+            trialInvestigator.Type = m.Type;
+
+            _db.Trial_Investigator.Add(trialInvestigator);
+            _db.SaveChanges();
+
+            return View("Index");
         }
     }
 }
