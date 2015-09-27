@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "InterventionResults";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src="~/Javascript/InterventionResultsApp.js"> </script>
+}
+<h2>Intervention Results</h2>
+<div id="main" class="container" ng-app="InterventionResultsApp" ng-controller="InterventionResultsController">
+ 
+    <h2>Trial: @ViewBag.TrialName</h2>
+    <p>
+        <b>Trial Description:</b>
+        @ViewBag.TrialDescription
+        <br />
+        The @ViewBag.TrialName trial began on <b>@ViewBag.TrialStartDate</b> and will be ending on <b>@ViewBag.TrialEndDate</b>
+    </p>
+    <br />
+    Hi, <b>@ViewBag.Username</b> please select an assigned intervention and a test to record your results, Thank you for participating! <br />
+    @{
+        List<String> interventionList = new List<String>();
+        interventionList.Add("Physical Exercise");
+        interventionList.Add("Healthy Balanced Diet");
+        interventionList.Add("Pharmacalogical");
+        interventionList.Add("Brain Training");
+        List<String> testList = new List<String>();
+        testList.Add("Daily Walking");
+        testList.Add("Weekly Swim");
+        testList.Add("Weekly Cylcing");
+        testList.Add("Luminosity");
+    }
+
+    <div class="row">
+        <div class="col-md-4">
+            <ul class="nav nav-pills nav-stacked">
+                @{
+                    <li><h3>Interventions</h3></li>
+                    for (int i = 0; i < ViewBag.Interventions.Count; i++)
+                    {
+                        <li><a href ng-click="setIndex(@i)">@ViewBag.Interventions[i].Intervention_Name</a></li>
+                    }
+                }
+
+            </ul>
+        </div>
+    @{
+        for (int i = 0; i < ViewBag.Interventions.Count; i++)
+        {
+        <div id="@ViewBag.Interventions[i]" ng-show="check(@i)" class="col-md-8" style="display:none">
+            <h3>Intervention: @ViewBag.Interventions[i].Intervention_Name</h3>
+            <p><b>Description:</b> @ViewBag.Interventions[i].Intervention_Description</p>
+            You must record your results for the tests below:
+            @{
+                <h4>Please select a test:</h4>
+            for (int j = 0; j < ViewBag.Interventions[i].Tests.Count; j++)
+            {
+                String testName = ViewBag.Interventions[i].Tests[j].Test_Name;
+                int testId = ViewBag.Interventions[i].Tests[j].Test_Id;
+                <button id="@testName" class="btn-sm btn-primary" onclick="location.href = '/Participant/CompleteTest/?testName=@testName&testId=@testId';">@testName</button><br />
+                <b>Description:</b> @ViewBag.Interventions[i].Tests[j].Test_Description <br />
+            }
+}
+        </div>
+        }
+}
+     </div>
+
+</div>

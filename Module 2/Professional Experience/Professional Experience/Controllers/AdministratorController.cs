@@ -33,25 +33,22 @@ namespace Professional_Experience.Controllers
             return View();
         }
 
-        struct MyObj
-        {
-            public string test { get; set; }
-        }
         [HttpPost]
-        public String SubmitIntervention()
+        public JsonResult SubmitIntervention()
         {
             HttpContext.Request.InputStream.Position = 0;
             var result = new System.IO.StreamReader(HttpContext.Request.InputStream).ReadToEnd().ToString();
             dynamic intervention = Newtonsoft.Json.JsonConvert.DeserializeObject(result);
 
-            if (validIntervention(intervention))
+            List<string> validInterventionErrors = validIntervention(intervention);
+            if (validInterventionErrors.Count == 0)
             {
                 insertIntervention(intervention);
-                return "The intervention was successfully created";
+                return Json("The intervention was saved successfully", JsonRequestBehavior.AllowGet);
             }
             else
             {
-                return "The intervention was not created due to validation errors!";
+                return Json(validInterventionErrors, JsonRequestBehavior.AllowGet);
             }
         }
         public string GetInvestigators()
@@ -116,13 +113,106 @@ namespace Professional_Experience.Controllers
             }
                 conn.Close();
         }
-        private bool validIntervention(dynamic intervention)
+        private List<string> validIntervention(dynamic intervention)
         {
-            bool validForm = true;
-            if (validForm)
-                return true;
+            List<string> formErrors = new List<string>();
+            int x = 0;
+            int y = 0;
+            int a;
+
+            if (intervention.Intervention_Name == "")
+                formErrors.Add("Intervention name is empty");
+            string Intervention_Name = intervention.Intervention_Name.ToObject<string>();
+            bool isNumeric = int.TryParse(Intervention_Name, out a);
+            if (isNumeric == true)
+            {
+                formErrors.Add("Intervention name is a number.");
+            }
+
+            if (intervention.Intervention_Description == "")
+                formErrors.Add("Intervention description is empty");
+            string Intervention_Description = intervention.Intervention_Description.ToObject<string>();
+            isNumeric = int.TryParse(Intervention_Description, out a);
+            if (isNumeric == true)
+            {
+                formErrors.Add("Intervention description is a number");
+            }
+
+            //int[] Investigators = intervention.Investigators.ToObject<int[]>();
+            //if (Investigators == null || Investigators.Length == 0)
+            //    validForm = false;
+
+            dynamic[] Tests = intervention.Tests.ToObject<dynamic[]>();
+            if (Tests == null || Tests.Length == 0)
+            {
+                formErrors.Add("No tests assigned to intervention");
+            }
             else
-                return false;
+            {
+                for (int i = 0; i < Tests.Length; i++)
+                {
+                    x = i + 1;
+                    if (Tests[i].Test_Name == "")
+                    {
+                        formErrors.Add("Test " + x + " name is empty");
+                    }
+                    string Test_Name = Tests[i].Test_Name.ToObject<string>();
+                    isNumeric = int.TryParse(Test_Name, out a);
+                    if (isNumeric == true)
+                    {
+                        formErrors.Add("Test " + x + " name is a number");
+                    }
+
+
+                    if (Tests[i].Test_Description == "")
+                    {
+                        formErrors.Add("Test " + x + " description is empty");
+
+                    }
+                    string Test_Description = Tests[i].Test_Description.ToObject<string>();
+                    isNumeric = int.TryParse(Test_Description, out a);
+                    if (isNumeric == true)
+                    {
+                        formErrors.Add("Test " + x + " description is a number");
+                    }
+
+
+                    dynamic[] Questions = intervention.Tests[i].Questions.ToObject<dynamic[]>();
+                    if (Questions == null || Questions.Length == 0)
+                    {
+                        formErrors.Add("No questions assigned to test " + x);
+                    }
+                    else
+                    {
+                        for (int j = 0; j < Questions.Length; j++)
+                        {
+                            y = j + 1;
+                            if (Questions[j].Question_Title == "")
+                            {
+                                formErrors.Add("Question " + y + " of test " + x + " is empty");
+                            }
+                            string question = Questions[j].Question_Title.ToObject<string>();
+                            isNumeric = int.TryParse(question, out a);
+                            if (isNumeric == true)
+                            {
+                                formErrors.Add("Question " + y + " of test " + x + " is a number");
+                            }
+
+
+
+                            if (Questions[j].Answer_Type == "1" || Questions[j].Answer_Type == "2")
+                            {
+                                dynamic[] Answers = intervention.Tests[i].Questions[j].Answers.ToObject<dynamic[]>();
+                                if (Answers == null || Answers.Length == 0)
+                                {
+                                    formErrors.Add("Question " + y + " of test " + x + " has no answer choices");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return formErrors;
         }
         public string ConvertDataTabletoString(DataTable dt)
         {

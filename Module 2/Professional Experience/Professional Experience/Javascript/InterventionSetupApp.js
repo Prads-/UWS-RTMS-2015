@@ -20,6 +20,8 @@ var editingTest = false;
 var editingQuestion = false;
 var editNotSelected = false;
 var externalTest = 0;
+var tempTest = new Test();
+var tempQuestion = new Question();
 
 function createTest()
 {
@@ -56,6 +58,7 @@ function editTest()
         editingTest = true;
         currentTestId = testSelect.options[testSelect.selectedIndex].value; //set currentTestId to test selected from list
         testIndex = getTestIndex(currentTestId);
+        tempTest = clone(intervention.Tests[testIndex]);
         document.getElementById("testName").value = intervention.Tests[testIndex].Test_Name;
         document.getElementById("testDescription").value = intervention.Tests[testIndex].Test_Description;
         var questionSelect = document.getElementById("questionSelect");
@@ -103,6 +106,7 @@ function editQuestion()
         currentQuestionId = questionSelect.options[questionSelect.selectedIndex].value;
         testIndex = getTestIndex(currentTestId);
         questionIndex = getQuestionIndex(testIndex, currentQuestionId);
+        tempQuestion = clone(intervention.Tests[testIndex].Questions[questionIndex])
         document.getElementById("questionTitle").value = intervention.Tests[testIndex].Questions[questionIndex].Question_Title; //prefill questionTitle
         document.getElementById("answerType").value = intervention.Tests[testIndex].Questions[questionIndex].Answer_Type; //prefill answerType
         questionTypeChange(intervention.Tests[testIndex].Questions[questionIndex].Answer_Type);
@@ -294,21 +298,21 @@ function questionTypeChange(selectedOption) {
     var testIndex = getTestIndex(currentTestId);
     var questionIndex = getQuestionIndex(testIndex, currentQuestionId);
     if (selectedOption == "3") {
-        document.getElementById("answer").style.visibility = "hidden";
-        document.getElementById("addAnswerBtn").style.visibility = "hidden";
-        document.getElementById("measurementType").style.visibility = "visible";
+        document.getElementById("answer").style.display = "none";
+        document.getElementById("addAnswerBtn").style.display = "hidden";
+        document.getElementById("measurementType").style.display = "block";
         emptySelect(document.getElementById("answersSelect"));
         intervention.Tests[testIndex].Questions[questionIndex].Answers = [];
     } else if (selectedOption == "4") {
-        document.getElementById("answer").style.visibility = "hidden";
-        document.getElementById("addAnswerBtn").style.visibility = "hidden";
-        document.getElementById("measurementType").style.visibility = "hidden";
+        document.getElementById("answer").style.display = "none";
+        document.getElementById("addAnswerBtn").style.display = "none";
+        document.getElementById("measurementType").style.display = "none";
         emptySelect(document.getElementById("answersSelect"));
         intervention.Tests[testIndex].Questions[questionIndex].Answers = [];
     } else {
-        document.getElementById("answer").style.visibility = "visible";
-        document.getElementById("addAnswerBtn").style.visibility = "visible";
-        document.getElementById("measurementType").style.visibility = "hidden";
+        document.getElementById("answer").style.display = "block";
+        document.getElementById("addAnswerBtn").style.display = "block";
+        document.getElementById("measurementType").style.display = "none";
     }
 }
 
@@ -317,6 +321,8 @@ function backTest()
     if(editingTest)
     {
         resetTestView();
+        var testIndex = getTestIndex(currentTestId);
+        intervention.Tests[testIndex] = clone(tempTest);
         currentTestId = 0;
         printMessage("Test was not edited", "fail");
         editingTest = false;
@@ -348,6 +354,9 @@ function backQuestion()
     if(editingQuestion)
     {
         resetQuestionView();
+        var testIndex = getTestIndex(currentTestId);
+        var questionIndex = getQuestionIndex(testIndex, currentQuestionId);
+        intervention.Tests[testIndex].Questions[questionIndex] = clone(tempQuestion);
         currentQuestionId = 0;
         printMessage("Question was not edited", "fail");
         editingQuestion = false;
@@ -379,9 +388,9 @@ function resetQuestionView()
     emptySelect(document.getElementById("answersSelect"));
     document.getElementById("measurementType").selectedIndex = 0;
     document.getElementById("answer").value = "";
-    document.getElementById("answer").style.visibility = "visible";
-    document.getElementById("addAnswerBtn").style.visibility = "visible";
-    document.getElementById("measurementType").style.visibility = "hidden";
+    document.getElementById("answer").style.display = "block";
+    document.getElementById("addAnswerBtn").style.display = "block";
+    document.getElementById("measurementType").style.display = "none";
 }
 
 function getTestIndex(testId) {
@@ -440,22 +449,29 @@ function printMessage(message, status)
         default:
             break;
     }
-    messageElement.style.visibility = "visible";
+    messageElement.style.display = "inline";
     messageElement.innerHTML = message;
     setTimeout(function () {
         messageElement.innerHTML = "";
-        messageElement.style.visibility = "hidden";
+        messageElement.style.display = "none";
     }, 3000);
+}
+
+function clone(obj)
+{
+    var newObj = JSON.parse(JSON.stringify(obj))
+    return newObj;
 }
 
 function onStart()
 {
-    document.getElementById('Investigators').style.visibility = "visible";
-    document.getElementById('Tests').style.visibility = "visible";
-    document.getElementById('ExternalTest').style.visibility = "visible";
-    document.getElementById('AddQuestion').style.visibility = "visible";
-    document.getElementById("message").style.visibility = "hidden";
-    document.getElementById('measurementType').style.visibility = "hidden";
+    document.getElementById('Investigators').style.display = "block";
+    document.getElementById('Tests').style.display = "block";
+    document.getElementById('ExternalTest').style.display = "block";
+    document.getElementById('AddQuestion').style.display = "block";
+    document.getElementById("message").style.display = "block";
+    document.getElementById('measurementType').style.display = "none";
+    printMessage("Intervention setup has started!", "success");
 }
 
 //--------------------------------------------------AngularJS--------------------------------------------------
@@ -480,11 +496,9 @@ InterventionSetupApp.controller('InterventionSetupController', function ($scope,
     };
 
     $scope.submitIntervention = function () {
-        alert("submitted");
         createIntervention();
         $http.post('/Administrator/SubmitIntervention', JSON.stringify(intervention)).
             then(function (response) {
-                alert(response.data);
                 printMessage("Response:" + response.data, "success");
             }, function (error) {
         });

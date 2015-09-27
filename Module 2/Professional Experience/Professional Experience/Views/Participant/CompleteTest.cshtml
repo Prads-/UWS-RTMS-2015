@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "CompleteTest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src="~/Javascript/CompleteTestApp.js"> </script>
+}
+<h2>Complete Test</h2>
+TESTID: @ViewBag.TestId
+<br />
+@{
+}
+<h3>Test: @ViewBag.TestName</h3>
+
+<p>Please record your results for the following questions:</p>
+<div ng-app="CompleteTestApp" ng-controller="CompleteTestController">
+    <form id="testForm">
+        @{
+            for (int i = 1; i < ViewBag.Questions.Count + 1; i++)
+            {
+                <p>AnswerType: @ViewBag.Questions[i - 1].Answer_Type</p>
+                switch ((int)ViewBag.Questions[i - 1].Answer_Type)
+                {
+                    case 1: //Multiple choice type
+                        <p>Question @i: @ViewBag.Questions[i - 1].Question_Title</p>
+                        for (int j = 1; j < ViewBag.Questions[i - 1].Answers.Count + 1; j++)
+                        {
+                            <input type="radio" name="@ViewBag.Questions[i - 1].Question_Id" value="@ViewBag.Questions[i - 1].Answers[j - 1]" ng-model="test[@ViewBag.Questions[i - 1].Question_Id]">@ViewBag.Questions[i - 1].Answers[j - 1]<br>
+                        }
+                        <br />
+                        break;
+                    case 2: //Multiple answer type
+                    <p>Question @i: @ViewBag.Questions[i - 1].Question_Title</p>
+                        for (int j = 1; j < ViewBag.Questions[i - 1].Answers.Count + 1; j++)
+                        {
+                            <input type="checkbox" name="@ViewBag.Questions[i - 1].Question_Id" value="@ViewBag.Questions[i - 1].Answers[j - 1]" ng-change="objToArr(multis[@ViewBag.Questions[i - 1].Question_Id], @ViewBag.Questions[i - 1].Question_Id)" ng-model="multis[@ViewBag.Questions[i - 1].Question_Id][@j]" ng-true-value="'@ViewBag.Questions[i - 1].Answers[j - 1]'" ng-false-value="">@ViewBag.Questions[i - 1].Answers[j - 1]<br>
+                        }
+                        <br />
+                        break;
+                    case 3: //Measurement type
+                    <p>Question @i: @ViewBag.Questions[i - 1].Question_Title</p><input id="@ViewBag.Questions[i - 1].Question_Id" type="text" ng-model="test[@ViewBag.Questions[i - 1].Question_Id]" required /><br />
+                    <br />
+                        break;
+
+                    case 4: //Text type
+                    <p>Question @i: @ViewBag.Questions[i - 1].Question_Title</p><input id="@ViewBag.Questions[i - 1].Question_Id" type="text" ng-model="test[@ViewBag.Questions[i - 1].Question_Id]" required /><br />
+                    <br />
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        <button id="submitBtn" onclick="location.href = '/Participant/InterventionResults';" class="btn-sm btn-success">Submit</button>
+        <button id="backBtn" onclick="location.href = '/Participant/InterventionResults';" class="btn-sm">Back</button>
+
+        {{test}} <br />
+        {{answers}} <br />
+        Multis: {{multis}}
+    </form>
+</div>
+
+
+
+

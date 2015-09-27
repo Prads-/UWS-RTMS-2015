@@ -176,6 +176,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdministratorViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InterventionModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -187,6 +188,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Javascript\CompleteTestApp.js" />
+    <Content Include="Javascript\InterventionResultsApp.js" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -1032,6 +1035,8 @@
     <Content Include="Views\Administrator\Reporting.cshtml" />
     <Content Include="Views\Administrator\InterventionSetup.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\Participant\InterventionResults.cshtml" />
+    <Content Include="Views\Participant\CompleteTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
