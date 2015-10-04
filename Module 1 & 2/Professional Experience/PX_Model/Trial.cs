@@ -17,6 +17,7 @@ namespace PX_Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Trial()
         {
+            this.Assessment_Type = new HashSet<Assessment_Type>();
             this.Trial_Investigator = new HashSet<Trial_Investigator>();
             this.Trial_Participant = new HashSet<Trial_Participant>();
             this.Trial_Screening_Criteria = new HashSet<Trial_Screening_Criteria>();
@@ -30,7 +31,11 @@ namespace PX_Model
         public string Objectives { get; set; }
         public string Hypothesis { get; set; }
         public string Outcome { get; set; }
+        public Nullable<bool> HasBeenRandomised { get; set; }
+        public string TermsAndConditions { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Assessment_Type> Assessment_Type { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Trial_Investigator> Trial_Investigator { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

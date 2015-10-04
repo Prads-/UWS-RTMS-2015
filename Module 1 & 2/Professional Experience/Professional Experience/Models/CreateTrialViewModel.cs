@@ -37,5 +37,9 @@ namespace Professional_Experience.Models
         [Required]
         [Display(Name = "Outcome")]
         public string Outcome { get; set; }
+
+        [Required]
+        [Display(Name = "Terms and Conditions")]
+        public string TermsAndConditions { get; set; }
     }
 }

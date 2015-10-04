@@ -67,7 +67,9 @@
     <EntitySetMapping Name="Assessment_Type">
       <EntityTypeMapping TypeName="PX_Model.Assessment_Type">
         <MappingFragment StoreEntitySet="Assessment_Type">
+          <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Trial_Id" ColumnName="Trial_Id" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -260,6 +262,8 @@
     <EntitySetMapping Name="Trials">
       <EntityTypeMapping TypeName="PX_Model.Trial">
         <MappingFragment StoreEntitySet="Trial">
+          <ScalarProperty Name="TermsAndConditions" ColumnName="TermsAndConditions" />
+          <ScalarProperty Name="HasBeenRandomised" ColumnName="HasBeenRandomised" />
           <ScalarProperty Name="Outcome" ColumnName="Outcome" />
           <ScalarProperty Name="Hypothesis" ColumnName="Hypothesis" />
           <ScalarProperty Name="Objectives" ColumnName="Objectives" />

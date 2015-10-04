@@ -31,7 +31,7 @@ namespace Professional_Experience.Controllers
             var trials = _db.Trials.ToArray();
             var trialList = new List<Professional_Experience.Models.ParticipateTrialListViewModel>();
             var trialParticipants = _db.Trial_Participant.Where(tp => tp.Participant_Id == participant.Id);
-
+            
             foreach (var trial in trials)
             {
                 var trialParticipant = trialParticipants.FirstOrDefault(tp => tp.Trial_Id == trial.Id);
@@ -162,6 +162,117 @@ namespace Professional_Experience.Controllers
         public ActionResult ScreeningCriteriaSuccess()
         {
             return View();
+        }
+
+        public ActionResult MyTrials()
+        {
+            var m = new List<Professional_Experience.Models.MyTrialViewModel>();
+            var trialParticipants = _db.Trial_Participant.Where(tp => tp.Participant_Id == GetCurrentParticipant.Id);
+
+            foreach (var tp in trialParticipants)
+            {
+                var model = new Professional_Experience.Models.MyTrialViewModel();
+                model.TrialId = (int)tp.Trial_Id;
+                model.TrialName = tp.Trial.Name;
+                model.TrialDescription = tp.Trial.Description;
+                m.Add(model);
+            }
+
+            return View(m.AsEnumerable());
+        }
+
+        public ActionResult ViewTrial(int id)
+        {
+            var baselineAssessments = _db.Assessment_Type.Where(at => at.Trial_Id == id);
+            int partcipantId = GetCurrentParticipant.Id;
+            var m = new List<Professional_Experience.Models.ViewTrialViewModel>();
+
+            foreach (var ba in baselineAssessments)
+            {
+                var tpba = _db.Trial_Participant_Assessment_Type.FirstOrDefault(t => t.Trial_Participant_Id == partcipantId && t.Assessment_Type_Id == ba.Id);
+                if (tpba == null)
+                {
+                    var model = new Professional_Experience.Models.ViewTrialViewModel();
+                    model.BaselineAssessmentId = ba.Id;
+                    model.BaselineAssessmentDescription = ba.Description;
+                    model.BaselineAssessmentName = ba.Name;
+                    m.Add(model);
+                }
+            }
+
+            return View(m.AsEnumerable());
+        }
+
+        public ActionResult TakeBaselineAssessment(int id)
+        {
+            var baselineAssessment = _db.Assessment_Type.FirstOrDefault(ba => ba.Id == id);
+            if (baselineAssessment == null)
+            {
+                ModelState.AddModelError("", "Baseline assessment not found in the database!");
+                return View("Index");
+            }
+            var questions = baselineAssessment.Assessment_Type_Question;
+            var m = new Professional_Experience.Models.TakeBaselineAssessmentViewModel();
+            m.AssessmentTypeId = baselineAssessment.Id;
+            m.Answers = new List<Models.AnswerBaselineAssessmentQuestionViewModel>();
+
+            foreach (var question in questions)
+            {
+                var q = new Professional_Experience.Models.AnswerBaselineAssessmentQuestionViewModel();
+                q.Question = question.Question;
+                q.QuestionId = question.Id;
+                q.QuestionType = (int)question.Question_Type;
+
+                if (question.Assessment_Type_Option != null)
+                {
+                    q.Options = new List<string>();
+                    foreach (var option in question.Assessment_Type_Option)
+                    {
+                        q.Options.Add(option.Opt);
+                    }
+                }
+                m.Answers.Add(q);
+            }
+
+            return View(m);
+        }
+
+        [HttpPost]
+        public ActionResult TakeBaselineAssessment(Professional_Experience.Models.TakeBaselineAssessmentViewModel m)
+        {
+            var trialParticipantAssessmentType = new PX_Model.Trial_Participant_Assessment_Type();
+            trialParticipantAssessmentType.Assessment_Type_Id = m.AssessmentTypeId;
+            trialParticipantAssessmentType.Trial_Participant_Id = GetCurrentParticipant.Id;
+            _db.Trial_Participant_Assessment_Type.Add(trialParticipantAssessmentType);
+            _db.SaveChanges();
+
+            foreach (var answer in m.Answers)
+            {
+                if (answer.QuestionType == PX_Model.Assessment_Type_Question.TYPE_MULTU_CHOICE_MULTI_SELECT)
+                {
+                    foreach (var a in answer.Options)
+                    {
+                        var ans = new PX_Model.Assessment_Type_Question_Answer();
+                        ans.Answer = a;
+                        ans.Answer_Type = answer.QuestionType;
+                        ans.Assessment_Type_Question_Id = answer.QuestionId;
+                        ans.Trial_Participant_Assessment_Type_Id = trialParticipantAssessmentType.Id;
+                        _db.Assessment_Type_Question_Answer.Add(ans);
+                    }
+                }
+                else
+                {
+                    var ans = new PX_Model.Assessment_Type_Question_Answer();
+                    ans.Answer = answer.Answer;
+                    ans.Answer_Type = answer.QuestionType;
+                    ans.Assessment_Type_Question_Id = answer.QuestionId;
+                    ans.Trial_Participant_Assessment_Type_Id = trialParticipantAssessmentType.Id;
+                    _db.Assessment_Type_Question_Answer.Add(ans);
+                }
+                _db.SaveChanges();
+            }
+
+            return View("Index");
         }
     }
 }

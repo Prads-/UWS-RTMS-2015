@@ -42,6 +42,8 @@ namespace Professional_Experience.Controllers
                 trial.Hypothesis = m.Hypothesis;
                 trial.Outcome = m.Outcome;
                 trial.Objectives = m.Objective;
+                trial.TermsAndConditions = m.TermsAndConditions;
+                trial.HasBeenRandomised = false;
 
                 _db.Trials.Add(trial);
                 _db.SaveChanges();
@@ -74,6 +76,7 @@ namespace Professional_Experience.Controllers
                 trialModel.Objective = trial.Objectives;
                 trialModel.Hypothesis = trial.Hypothesis;
                 trialModel.Outcome = trial.Outcome;
+                trialModel.TermsAndConditions = trial.TermsAndConditions;
 
                 return View(trialModel);
             }
@@ -95,6 +98,7 @@ namespace Professional_Experience.Controllers
                 trial.Objectives = m.Objective;
                 trial.Hypothesis = m.Hypothesis;
                 trial.Outcome = m.Outcome;
+                trial.TermsAndConditions = m.TermsAndConditions;
 
                 _db.SaveChanges();
             }
@@ -387,6 +391,55 @@ namespace Professional_Experience.Controllers
             _db.SaveChanges();
 
             return View("Index");
+        }
+
+        public ActionResult CreateBaselineAssessment()
+        {
+            var m = new CreateBaselineAssessmentViewModel();
+            m.Trials = _db.Trials.OrderBy(t => t.Name).ToArray();
+            return View(m);
+        }
+
+        [HttpPost]
+        public ActionResult CreateBaselineAssessment(CreateBaselineAssessmentViewModel m)
+        {
+            if (ModelState.IsValid)
+            {
+                var assessmentType = new PX_Model.Assessment_Type();
+                assessmentType.Name = m.Name;
+                assessmentType.Trial_Id = m.TrialId;
+                assessmentType.Description = m.Description;
+                _db.Assessment_Type.Add(assessmentType);
+                _db.SaveChanges();
+
+                foreach (var question in m.Questions)
+                {
+                    if (question.AddToQuestion)
+                    {
+                        var assessmentTypeQuestion = new PX_Model.Assessment_Type_Question();
+                        assessmentTypeQuestion.Question = question.Question;
+                        assessmentTypeQuestion.Question_Type = question.Type;
+                        assessmentTypeQuestion.Assessment_Type_Id = assessmentType.Id;
+                        _db.Assessment_Type_Question.Add(assessmentTypeQuestion);
+                        _db.SaveChanges();
+
+                        if (question.Type != PX_Model.Assessment_Type_Question.TYPE_TEXT)
+                        {
+                            foreach (var option in question.Options)
+                            {
+                                var opt = new PX_Model.Assessment_Type_Option();
+                                opt.Opt = option;
+                                opt.Assessment_Type_Question_Id = assessmentTypeQuestion.Id;
+                                _db.Assessment_Type_Option.Add(opt);
+                            }
+                            _db.SaveChanges();
+                        }
+                    }
+                }
+                return View("Index");
+            }
+            m.Trials = _db.Trials.OrderBy(t => t.Name).ToArray();
+            return View(m);
         }
     }
 }

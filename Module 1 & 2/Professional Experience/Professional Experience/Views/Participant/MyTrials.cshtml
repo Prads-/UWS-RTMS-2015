@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Professional_Experience.Models.MyTrialViewModel>
+
+@{
+    ViewBag.Title = "My Trials";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>My Trials</h2>
+
+@foreach (var trial in Model)
+{
+    <h3>@Html.ActionLink(trial.TrialName, "ViewTrial", new { id = trial.TrialId })</h3>
+    <p>@trial.TrialDescription</p>
+    <hr />
+}

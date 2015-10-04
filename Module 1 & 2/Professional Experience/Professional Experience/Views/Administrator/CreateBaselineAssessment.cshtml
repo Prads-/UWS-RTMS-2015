@@ -1,0 +1,113 @@
+﻿@model Professional_Experience.Models.CreateBaselineAssessmentViewModel
+
+@{
+    ViewBag.Title = "Create Baseline Assessment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Baseline Assessment</h2>
+
+@using (Html.BeginForm("CreateBaselineAssessment", "Administrator", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create Baseline Assessment.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.TrialId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <select class='form-control' name="TrialId">
+                @foreach (var trial in Model.Trials)
+                {
+                    <option value="@trial.Id">@trial.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div id="question0"></div>
+
+    <hr />
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" class="btn btn-default" value="Add Question" onclick="addQuestion()" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Submit" />
+        </div>
+    </div>
+}
+
+@section scripts {
+    <script type="text/javascript">
+        var qCounter = 0;
+        function addQuestion() {
+            var questionHTML = "<hr /><div class='form-group'>";
+            questionHTML += "<label class='col-md-2 control-label'>Question</label>"
+            questionHTML += "<div class='col-md-10'>";
+            questionHTML += "<input type='text' class='form-control' name='Questions[" + qCounter + "].Question' />";
+            questionHTML += "</div></div>";
+            questionHTML += "<div class='form-group'>";
+            questionHTML += "<label class='col-md-2 control-label'>Type</label>";
+            questionHTML += "<div class='col-md-10'>";
+            questionHTML += "<select class='form-control' name='Questions[" + qCounter + "].Type'>";
+            questionHTML += "<option value=" + @PX_Model.Assessment_Type_Question.TYPE_MULTI_CHOICE_SINGLE_SELECT + ">Multiple Choice (Single Select)</option>";
+            questionHTML += "<option value=" + @PX_Model.Assessment_Type_Question.TYPE_MULTU_CHOICE_MULTI_SELECT + ">Multiple Choice (Multi Select)</option>";
+            questionHTML += "<option value=" + @PX_Model.Assessment_Type_Question.TYPE_TEXT + ">Text</option>";
+            questionHTML += "</select></div></div>";
+            questionHTML += "<div class='form-group'>";
+            questionHTML += "<label class='col-md-2 control-label'>Option</label>";
+            questionHTML += "<div class='col-md-10' id='options" + qCounter + "'><input type='text' class='form-control' id='txtOpt" + qCounter + "' /></div></div>";
+            questionHTML += "<div class='form-group'>";
+            questionHTML += "<label class='col-md-2 control-label'></label>"
+            questionHTML += "<div class='col-md-10'>";
+            questionHTML += "<input style='margin-top:5px' type='button' class='btn btn-default' value='Add Option' onclick='addOption(" + qCounter + ")' />";
+            questionHTML += "</div></div>";
+            questionHTML += "<div class='form-group'>";
+            questionHTML += "<label class='col-md-2 control-label'></label>"
+            questionHTML += "<div class='col-md-10'>";
+            questionHTML += "<input type='checkbox' name='Questions[" + qCounter + "].AddToQuestion' value='true' />Add this question to baseline assessment</div></div>"
+            questionHTML += "<div id='question" + (qCounter + 1) + "'></div>";
+
+            var questions = document.getElementById("question" + qCounter);
+            questions.innerHTML = questionHTML;
+            document.getElementsByName("Questions[" + qCounter + "].AddToQuestion")[0].checked = true;
+            ++qCounter;
+        }
+
+        function addOption(counter) {
+            var txtOpt = document.getElementById("txtOpt" + counter).value;
+            var option = "<input type='checkbox' name='Questions[" + counter + "].Options' value='" + txtOpt + "' />" + txtOpt + "<br />";
+
+            var checkBoxesState = [];
+            var optCheckBoxes = document.getElementsByName("Questions[" + counter + "].Options");
+            var checkBoxesLength = optCheckBoxes.length;
+            for (var i = 0; i < checkBoxesLength; ++i) {
+                checkBoxesState[i] = optCheckBoxes[i].checked;
+            }
+
+            var options = document.getElementById("options" + counter);
+            options.innerHTML = options.innerHTML + option;
+
+            optCheckBoxes = document.getElementsByName("Questions[" + counter + "].Options");
+            for (var i = 0; i < checkBoxesLength; ++i) {
+                optCheckBoxes[i].checked = checkBoxesState[i];
+            }
+            optCheckBoxes[optCheckBoxes.length - 1].checked = true;
+        }
+    </script>
+}

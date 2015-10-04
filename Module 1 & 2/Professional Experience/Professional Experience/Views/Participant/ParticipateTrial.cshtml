@@ -10,7 +10,7 @@
 @using (Html.BeginForm("ParticipateTrial", "Participant", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new Trial.</h4>
+    <h4>Screening Criteria.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <input type="hidden" name="tid" value="@ViewBag.tid" />

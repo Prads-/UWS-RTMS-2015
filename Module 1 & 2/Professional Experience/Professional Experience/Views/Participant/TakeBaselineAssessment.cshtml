@@ -1,0 +1,52 @@
+﻿@model Professional_Experience.Models.TakeBaselineAssessmentViewModel
+
+@{
+    ViewBag.Title = "Take Baseline Assessment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Baseline Assessment</h2>
+
+@using (Html.BeginForm("TakeBaselineAssessment", "Participant", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Take Baseline Assessment.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.HiddenFor(m => m.AssessmentTypeId)
+    for (int i = 0; i < Model.Answers.Count; ++i)
+    {
+        <div class="form-group">
+            <input type="hidden" name="Answers[@i].QuestionId" value="@Model.Answers.ElementAt(i).QuestionId" />
+            <input type="hidden" name="Answers[@i].QuestionType" value="@Model.Answers.ElementAt(i).QuestionType" />
+            <label class="col-md-2 control-label">@Model.Answers.ElementAt(i).Question</label>
+            <div class="col-md-10">
+                @if (Model.Answers.ElementAt(i).QuestionType == PX_Model.Assessment_Type_Question.TYPE_TEXT)
+                {
+                    <input class="form-control" type="text" name="Answers[@i].Answer" />
+                }
+                else if (Model.Answers.ElementAt(i).QuestionType == PX_Model.Assessment_Type_Question.TYPE_MULTI_CHOICE_SINGLE_SELECT)
+                {
+                    <select name="Answers[@i].Answer" class="form-control">
+                        @foreach (var option in Model.Answers.ElementAt(i).Options)
+                        {
+                            <option value="@option">@option</option>
+                        }
+                    </select>
+                }
+                else
+                {
+                    foreach (var option in Model.Answers.ElementAt(i).Options)
+                    {
+                        <input name="Answers[@i].Options" type="checkbox" value="@option" />@option<br />
+                    }
+                }
+            </div>
+        </div>
+    }
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Submit" />
+        </div>
+    </div>
+}

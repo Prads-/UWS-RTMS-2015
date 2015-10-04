@@ -39,9 +39,21 @@
         function addOption() {
             var optionStr = document.getElementById("txtOption").value;
             var optDivHTML = document.getElementById("optDiv").innerHTML;
-            var newOptDivHTML = "<input type='checkbox' name='Options' value='" + optionStr + "' checked>" + optionStr + "<br />";
+            var newOptDivHTML = "<input type='checkbox' name='Options' value='" + optionStr + "' />" + optionStr + "<br />";
+
+            var optCheckBoxes = document.getElementsByName("Options");
+            var checkBoxesState = [];
+            for (var i = 0; i < optCheckBoxes.length; ++i) {
+                checkBoxesState[i] = optCheckBoxes[i].checked;
+            }
 
             document.getElementById("optDiv").innerHTML = optDivHTML + newOptDivHTML;
+
+            var optCheckBoxes = document.getElementsByName("Options");
+            for (var i = 0; i < optCheckBoxes.length - 1; ++i) {
+                optCheckBoxes[i].checked = checkBoxesState[i];
+            }
+            optCheckBoxes[optCheckBoxes.length - 1].checked = true;
         }
     </script>
 }

@@ -73,7 +73,9 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="varchar" MaxLength="255" />
+    <Property Name="Trial_Id" Type="int" />
+    <Property Name="Name" Type="varchar" MaxLength="1000" />
+    <Property Name="Description" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="Assessment_Type_Option">
     <Key>
@@ -81,7 +83,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Assessment_Type_Question_Id" Type="int" />
-    <Property Name="Opt" Type="varchar" MaxLength="500" />
+    <Property Name="Opt" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="Assessment_Type_Question">
     <Key>
@@ -99,7 +101,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Assessment_Type_Question_Id" Type="int" />
     <Property Name="Trial_Participant_Assessment_Type_Id" Type="int" />
-    <Property Name="Answer" Type="varchar" MaxLength="5000" />
+    <Property Name="Answer" Type="varchar(max)" />
     <Property Name="Answer_Type" Type="int" />
   </EntityType>
   <EntityType Name="Clinician">
@@ -114,7 +116,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="varchar" MaxLength="255" />
+    <Property Name="Name" Type="varchar" MaxLength="1000" />
     <Property Name="Description" Type="varchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="Intervention_Area_Test">
@@ -123,7 +125,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Intervention_Area_Id" Type="int" />
-    <Property Name="Name" Type="varchar" MaxLength="255" />
+    <Property Name="Name" Type="varchar" MaxLength="1000" />
     <Property Name="Description" Type="varchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="Intervention_Area_Test_Question">
@@ -132,7 +134,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Intervention_Area_Test_Id" Type="int" />
-    <Property Name="Question" Type="varchar" MaxLength="1000" />
+    <Property Name="Question" Type="varchar(max)" />
     <Property Name="Question_Type" Type="int" />
     <Property Name="Sequence" Type="int" />
   </EntityType>
@@ -143,7 +145,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Intervention_Area_Test_Question_Id" Type="int" />
     <Property Name="Trial_Participant_Intervention_Area_Test_Id" Type="int" />
-    <Property Name="Answer" Type="varchar" MaxLength="5000" />
+    <Property Name="Answer" Type="varchar(max)" />
     <Property Name="Answer_Type" Type="int" />
   </EntityType>
   <EntityType Name="Intervention_Area_Test_Question_Option">
@@ -152,7 +154,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Intervention_Area_Test_Question_Id" Type="int" />
-    <Property Name="Opt" Type="varchar" MaxLength="500" />
+    <Property Name="Opt" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="Investigator">
     <Key>
@@ -209,7 +211,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Participant_Id" Type="int" />
     <Property Name="Screening_Criteria_Id" Type="int" />
-    <Property Name="Value" Type="varchar" MaxLength="255" />
+    <Property Name="Value" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="Person">
     <Key>
@@ -231,7 +233,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Description" Type="varchar" MaxLength="255" />
+    <Property Name="Description" Type="varchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="Screening_Criteria_Option">
     <Key>
@@ -239,7 +241,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Screening_Criteria_Id" Type="int" />
-    <Property Name="Description" Type="varchar" MaxLength="255" />
+    <Property Name="Description" Type="varchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="Trial">
     <Key>
@@ -247,12 +249,14 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="255" />
-    <Property Name="Description" Type="varchar" MaxLength="1000" />
+    <Property Name="Description" Type="varchar(max)" />
     <Property Name="Start_Date" Type="date" />
     <Property Name="End_Date" Type="date" />
-    <Property Name="Objectives" Type="varchar" MaxLength="1000" />
-    <Property Name="Hypothesis" Type="varchar" MaxLength="1000" />
-    <Property Name="Outcome" Type="varchar" MaxLength="1000" />
+    <Property Name="Objectives" Type="varchar(max)" />
+    <Property Name="Hypothesis" Type="varchar(max)" />
+    <Property Name="Outcome" Type="varchar(max)" />
+    <Property Name="HasBeenRandomised" Type="bit" />
+    <Property Name="TermsAndConditions" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="Trial_Investigator">
     <Key>
@@ -305,7 +309,7 @@
     <Property Name="Trial_Id" Type="int" />
     <Property Name="Screening_Criteria_Id" Type="int" />
     <Property Name="OperatorType" Type="int" />
-    <Property Name="OperatorValue" Type="varchar" MaxLength="255" />
+    <Property Name="OperatorValue" Type="varchar(max)" />
   </EntityType>
   <Association Name="FK__Administr__Perso__1273C1CD">
     <End Role="Person" Type="Self.Person" Multiplicity="0..1" />
@@ -319,7 +323,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Assessmen__Asses__02084FDA">
+  <Association Name="FK__Assessmen__Asses__02FC7413">
     <End Role="Assessment_Type_Question" Type="Self.Assessment_Type_Question" Multiplicity="0..1" />
     <End Role="Assessment_Type_Option" Type="Self.Assessment_Type_Option" Multiplicity="*" />
     <ReferentialConstraint>
@@ -331,7 +335,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Assessmen__Asses__06CD04F7">
+  <Association Name="FK__Assessmen__Asses__07C12930">
     <End Role="Assessment_Type_Question" Type="Self.Assessment_Type_Question" Multiplicity="0..1" />
     <End Role="Assessment_Type_Question_Answer" Type="Self.Assessment_Type_Question_Answer" Multiplicity="*" />
     <ReferentialConstraint>
@@ -343,7 +347,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Assessmen__Asses__7D439ABD">
+  <Association Name="FK__Assessmen__Asses__7E37BEF6">
     <End Role="Assessment_Type" Type="Self.Assessment_Type" Multiplicity="0..1" />
     <End Role="Assessment_Type_Question" Type="Self.Assessment_Type_Question" Multiplicity="*" />
     <ReferentialConstraint>
@@ -355,7 +359,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Assessmen__Trial__07C12930">
+  <Association Name="FK__Assessmen__Trial__08B54D69">
     <End Role="Trial_Participant_Assessment_Type" Type="Self.Trial_Participant_Assessment_Type" Multiplicity="0..1" />
     <End Role="Assessment_Type_Question_Answer" Type="Self.Assessment_Type_Question_Answer" Multiplicity="*" />
     <ReferentialConstraint>
@@ -364,6 +368,18 @@
       </Principal>
       <Dependent Role="Assessment_Type_Question_Answer">
         <PropertyRef Name="Trial_Participant_Assessment_Type_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Assessmen__Trial__73BA3083">
+    <End Role="Trial" Type="Self.Trial" Multiplicity="0..1" />
+    <End Role="Assessment_Type" Type="Self.Assessment_Type" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trial">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assessment_Type">
+        <PropertyRef Name="Trial_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -595,7 +611,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Trial_Par__Asses__787EE5A0">
+  <Association Name="FK__Trial_Par__Asses__797309D9">
     <End Role="Assessment_Type" Type="Self.Assessment_Type" Multiplicity="0..1" />
     <End Role="Trial_Participant_Assessment_Type" Type="Self.Trial_Participant_Assessment_Type" Multiplicity="*" />
     <ReferentialConstraint>
@@ -679,7 +695,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Trial_Par__Trial__778AC167">
+  <Association Name="FK__Trial_Par__Trial__787EE5A0">
     <End Role="Trial_Participant" Type="Self.Trial_Participant" Multiplicity="0..1" />
     <End Role="Trial_Participant_Assessment_Type" Type="Self.Trial_Participant_Assessment_Type" Multiplicity="*" />
     <ReferentialConstraint>
@@ -810,21 +826,25 @@
       <End Role="Person" EntitySet="Person" />
       <End Role="Administrator" EntitySet="Administrator" />
     </AssociationSet>
-    <AssociationSet Name="FK__Assessmen__Asses__02084FDA" Association="Self.FK__Assessmen__Asses__02084FDA">
+    <AssociationSet Name="FK__Assessmen__Asses__02FC7413" Association="Self.FK__Assessmen__Asses__02FC7413">
       <End Role="Assessment_Type_Question" EntitySet="Assessment_Type_Question" />
       <End Role="Assessment_Type_Option" EntitySet="Assessment_Type_Option" />
     </AssociationSet>
-    <AssociationSet Name="FK__Assessmen__Asses__06CD04F7" Association="Self.FK__Assessmen__Asses__06CD04F7">
+    <AssociationSet Name="FK__Assessmen__Asses__07C12930" Association="Self.FK__Assessmen__Asses__07C12930">
       <End Role="Assessment_Type_Question" EntitySet="Assessment_Type_Question" />
       <End Role="Assessment_Type_Question_Answer" EntitySet="Assessment_Type_Question_Answer" />
     </AssociationSet>
-    <AssociationSet Name="FK__Assessmen__Asses__7D439ABD" Association="Self.FK__Assessmen__Asses__7D439ABD">
+    <AssociationSet Name="FK__Assessmen__Asses__7E37BEF6" Association="Self.FK__Assessmen__Asses__7E37BEF6">
       <End Role="Assessment_Type" EntitySet="Assessment_Type" />
       <End Role="Assessment_Type_Question" EntitySet="Assessment_Type_Question" />
     </AssociationSet>
-    <AssociationSet Name="FK__Assessmen__Trial__07C12930" Association="Self.FK__Assessmen__Trial__07C12930">
+    <AssociationSet Name="FK__Assessmen__Trial__08B54D69" Association="Self.FK__Assessmen__Trial__08B54D69">
       <End Role="Trial_Participant_Assessment_Type" EntitySet="Trial_Participant_Assessment_Type" />
       <End Role="Assessment_Type_Question_Answer" EntitySet="Assessment_Type_Question_Answer" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Assessmen__Trial__73BA3083" Association="Self.FK__Assessmen__Trial__73BA3083">
+      <End Role="Trial" EntitySet="Trial" />
+      <End Role="Assessment_Type" EntitySet="Assessment_Type" />
     </AssociationSet>
     <AssociationSet Name="FK__Clinician__Perso__08EA5793" Association="Self.FK__Clinician__Perso__08EA5793">
       <End Role="Person" EntitySet="Person" />
@@ -902,7 +922,7 @@
       <End Role="Trial" EntitySet="Trial" />
       <End Role="Trial_Investigator" EntitySet="Trial_Investigator" />
     </AssociationSet>
-    <AssociationSet Name="FK__Trial_Par__Asses__787EE5A0" Association="Self.FK__Trial_Par__Asses__787EE5A0">
+    <AssociationSet Name="FK__Trial_Par__Asses__797309D9" Association="Self.FK__Trial_Par__Asses__797309D9">
       <End Role="Assessment_Type" EntitySet="Assessment_Type" />
       <End Role="Trial_Participant_Assessment_Type" EntitySet="Trial_Participant_Assessment_Type" />
     </AssociationSet>
@@ -930,7 +950,7 @@
       <End Role="Trial_Participant" EntitySet="Trial_Participant" />
       <End Role="Trial_Participant_Intervention_Area_Test" EntitySet="Trial_Participant_Intervention_Area_Test" />
     </AssociationSet>
-    <AssociationSet Name="FK__Trial_Par__Trial__778AC167" Association="Self.FK__Trial_Par__Trial__778AC167">
+    <AssociationSet Name="FK__Trial_Par__Trial__787EE5A0" Association="Self.FK__Trial_Par__Trial__787EE5A0">
       <End Role="Trial_Participant" EntitySet="Trial_Participant" />
       <End Role="Trial_Participant_Assessment_Type" EntitySet="Trial_Participant_Assessment_Type" />
     </AssociationSet>

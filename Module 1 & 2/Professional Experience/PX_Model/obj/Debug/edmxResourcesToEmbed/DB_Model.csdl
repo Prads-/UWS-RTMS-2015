@@ -46,23 +46,27 @@
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
       <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
     </AssociationSet>
-    <AssociationSet Name="FK__Assessmen__Asses__7D439ABD" Association="PX_Model.FK__Assessmen__Asses__7D439ABD">
+    <AssociationSet Name="FK__Assessmen__Asses__7E37BEF6" Association="PX_Model.FK__Assessmen__Asses__7E37BEF6">
       <End Role="Assessment_Type" EntitySet="Assessment_Type" />
       <End Role="Assessment_Type_Question" EntitySet="Assessment_Type_Question" />
     </AssociationSet>
-    <AssociationSet Name="FK__Trial_Par__Asses__787EE5A0" Association="PX_Model.FK__Trial_Par__Asses__787EE5A0">
+    <AssociationSet Name="FK__Assessmen__Trial__73BA3083" Association="PX_Model.FK__Assessmen__Trial__73BA3083">
+      <End Role="Trial" EntitySet="Trials" />
+      <End Role="Assessment_Type" EntitySet="Assessment_Type" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trial_Par__Asses__797309D9" Association="PX_Model.FK__Trial_Par__Asses__797309D9">
       <End Role="Assessment_Type" EntitySet="Assessment_Type" />
       <End Role="Trial_Participant_Assessment_Type" EntitySet="Trial_Participant_Assessment_Type" />
     </AssociationSet>
-    <AssociationSet Name="FK__Assessmen__Asses__02084FDA" Association="PX_Model.FK__Assessmen__Asses__02084FDA">
+    <AssociationSet Name="FK__Assessmen__Asses__02FC7413" Association="PX_Model.FK__Assessmen__Asses__02FC7413">
       <End Role="Assessment_Type_Question" EntitySet="Assessment_Type_Question" />
       <End Role="Assessment_Type_Option" EntitySet="Assessment_Type_Option" />
     </AssociationSet>
-    <AssociationSet Name="FK__Assessmen__Asses__06CD04F7" Association="PX_Model.FK__Assessmen__Asses__06CD04F7">
+    <AssociationSet Name="FK__Assessmen__Asses__07C12930" Association="PX_Model.FK__Assessmen__Asses__07C12930">
       <End Role="Assessment_Type_Question" EntitySet="Assessment_Type_Question" />
       <End Role="Assessment_Type_Question_Answer" EntitySet="Assessment_Type_Question_Answer" />
     </AssociationSet>
-    <AssociationSet Name="FK__Assessmen__Trial__07C12930" Association="PX_Model.FK__Assessmen__Trial__07C12930">
+    <AssociationSet Name="FK__Assessmen__Trial__08B54D69" Association="PX_Model.FK__Assessmen__Trial__08B54D69">
       <End Role="Trial_Participant_Assessment_Type" EntitySet="Trial_Participant_Assessment_Type" />
       <End Role="Assessment_Type_Question_Answer" EntitySet="Assessment_Type_Question_Answer" />
     </AssociationSet>
@@ -174,7 +178,7 @@
       <End Role="Trial_Participant" EntitySet="Trial_Participant" />
       <End Role="Trial_Participant_Intervention_Area_Test" EntitySet="Trial_Participant_Intervention_Area_Test" />
     </AssociationSet>
-    <AssociationSet Name="FK__Trial_Par__Trial__778AC167" Association="PX_Model.FK__Trial_Par__Trial__778AC167">
+    <AssociationSet Name="FK__Trial_Par__Trial__787EE5A0" Association="PX_Model.FK__Trial_Par__Trial__787EE5A0">
       <End Role="Trial_Participant" EntitySet="Trial_Participant" />
       <End Role="Trial_Participant_Assessment_Type" EntitySet="Trial_Participant_Assessment_Type" />
     </AssociationSet>
@@ -255,9 +259,12 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Assessment_Type_Question" Relationship="PX_Model.FK__Assessmen__Asses__7D439ABD" FromRole="Assessment_Type" ToRole="Assessment_Type_Question" />
-    <NavigationProperty Name="Trial_Participant_Assessment_Type" Relationship="PX_Model.FK__Trial_Par__Asses__787EE5A0" FromRole="Assessment_Type" ToRole="Trial_Participant_Assessment_Type" />
+    <Property Name="Trial_Id" Type="Int32" />
+    <Property Name="Name" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Assessment_Type_Question" Relationship="PX_Model.FK__Assessmen__Asses__7E37BEF6" FromRole="Assessment_Type" ToRole="Assessment_Type_Question" />
+    <NavigationProperty Name="Trial" Relationship="PX_Model.FK__Assessmen__Trial__73BA3083" FromRole="Assessment_Type" ToRole="Trial" />
+    <NavigationProperty Name="Trial_Participant_Assessment_Type" Relationship="PX_Model.FK__Trial_Par__Asses__797309D9" FromRole="Assessment_Type" ToRole="Trial_Participant_Assessment_Type" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Assessment_Type_Option">
     <Key>
@@ -265,8 +272,8 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Assessment_Type_Question_Id" Type="Int32" />
-    <Property Name="Opt" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Assessment_Type_Question" Relationship="PX_Model.FK__Assessmen__Asses__02084FDA" FromRole="Assessment_Type_Option" ToRole="Assessment_Type_Question" />
+    <Property Name="Opt" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Assessment_Type_Question" Relationship="PX_Model.FK__Assessmen__Asses__02FC7413" FromRole="Assessment_Type_Option" ToRole="Assessment_Type_Question" />
   </EntityType>
   <EntityType Name="Assessment_Type_Question">
     <Key>
@@ -276,9 +283,9 @@
     <Property Name="Assessment_Type_Id" Type="Int32" />
     <Property Name="Question" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="Question_Type" Type="Int32" />
-    <NavigationProperty Name="Assessment_Type" Relationship="PX_Model.FK__Assessmen__Asses__7D439ABD" FromRole="Assessment_Type_Question" ToRole="Assessment_Type" />
-    <NavigationProperty Name="Assessment_Type_Option" Relationship="PX_Model.FK__Assessmen__Asses__02084FDA" FromRole="Assessment_Type_Question" ToRole="Assessment_Type_Option" />
-    <NavigationProperty Name="Assessment_Type_Question_Answer" Relationship="PX_Model.FK__Assessmen__Asses__06CD04F7" FromRole="Assessment_Type_Question" ToRole="Assessment_Type_Question_Answer" />
+    <NavigationProperty Name="Assessment_Type" Relationship="PX_Model.FK__Assessmen__Asses__7E37BEF6" FromRole="Assessment_Type_Question" ToRole="Assessment_Type" />
+    <NavigationProperty Name="Assessment_Type_Option" Relationship="PX_Model.FK__Assessmen__Asses__02FC7413" FromRole="Assessment_Type_Question" ToRole="Assessment_Type_Option" />
+    <NavigationProperty Name="Assessment_Type_Question_Answer" Relationship="PX_Model.FK__Assessmen__Asses__07C12930" FromRole="Assessment_Type_Question" ToRole="Assessment_Type_Question_Answer" />
   </EntityType>
   <EntityType Name="Assessment_Type_Question_Answer">
     <Key>
@@ -287,10 +294,10 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Assessment_Type_Question_Id" Type="Int32" />
     <Property Name="Trial_Participant_Assessment_Type_Id" Type="Int32" />
-    <Property Name="Answer" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+    <Property Name="Answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Answer_Type" Type="Int32" />
-    <NavigationProperty Name="Assessment_Type_Question" Relationship="PX_Model.FK__Assessmen__Asses__06CD04F7" FromRole="Assessment_Type_Question_Answer" ToRole="Assessment_Type_Question" />
-    <NavigationProperty Name="Trial_Participant_Assessment_Type" Relationship="PX_Model.FK__Assessmen__Trial__07C12930" FromRole="Assessment_Type_Question_Answer" ToRole="Trial_Participant_Assessment_Type" />
+    <NavigationProperty Name="Assessment_Type_Question" Relationship="PX_Model.FK__Assessmen__Asses__07C12930" FromRole="Assessment_Type_Question_Answer" ToRole="Assessment_Type_Question" />
+    <NavigationProperty Name="Trial_Participant_Assessment_Type" Relationship="PX_Model.FK__Assessmen__Trial__08B54D69" FromRole="Assessment_Type_Question_Answer" ToRole="Trial_Participant_Assessment_Type" />
   </EntityType>
   <EntityType Name="Clinician">
     <Key>
@@ -306,7 +313,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Intervention_Area_Test" Relationship="PX_Model.FK__Intervent__Inter__4E88ABD4" FromRole="Intervention_Area" ToRole="Intervention_Area_Test" />
     <NavigationProperty Name="Investigator_Intervention_Area" Relationship="PX_Model.FK__Investiga__Inter__6EF57B66" FromRole="Intervention_Area" ToRole="Investigator_Intervention_Area" />
@@ -318,7 +325,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Intervention_Area_Id" Type="Int32" />
-    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Intervention_Area" Relationship="PX_Model.FK__Intervent__Inter__4E88ABD4" FromRole="Intervention_Area_Test" ToRole="Intervention_Area" />
     <NavigationProperty Name="Intervention_Area_Test_Question" Relationship="PX_Model.FK__Intervent__Inter__534D60F1" FromRole="Intervention_Area_Test" ToRole="Intervention_Area_Test_Question" />
@@ -330,7 +337,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Intervention_Area_Test_Id" Type="Int32" />
-    <Property Name="Question" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Question_Type" Type="Int32" />
     <Property Name="Sequence" Type="Int32" />
     <NavigationProperty Name="Intervention_Area_Test" Relationship="PX_Model.FK__Intervent__Inter__534D60F1" FromRole="Intervention_Area_Test_Question" ToRole="Intervention_Area_Test" />
@@ -344,7 +351,7 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Intervention_Area_Test_Question_Id" Type="Int32" />
     <Property Name="Trial_Participant_Intervention_Area_Test_Id" Type="Int32" />
-    <Property Name="Answer" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+    <Property Name="Answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Answer_Type" Type="Int32" />
     <NavigationProperty Name="Intervention_Area_Test_Question" Relationship="PX_Model.FK__Intervent__Inter__628FA481" FromRole="Intervention_Area_Test_Question_Answer" ToRole="Intervention_Area_Test_Question" />
     <NavigationProperty Name="Trial_Participant_Intervention_Area_Test" Relationship="PX_Model.FK__Intervent__Trial__6383C8BA" FromRole="Intervention_Area_Test_Question_Answer" ToRole="Trial_Participant_Intervention_Area_Test" />
@@ -355,7 +362,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Intervention_Area_Test_Question_Id" Type="Int32" />
-    <Property Name="Opt" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Opt" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Intervention_Area_Test_Question" Relationship="PX_Model.FK__Intervent__Inter__5812160E" FromRole="Intervention_Area_Test_Question_Option" ToRole="Intervention_Area_Test_Question" />
   </EntityType>
   <EntityType Name="Investigator">
@@ -428,7 +435,7 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Participant_Id" Type="Int32" />
     <Property Name="Screening_Criteria_Id" Type="Int32" />
-    <Property Name="Value" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Participant" Relationship="PX_Model.FK__Participa__Parti__45F365D3" FromRole="Participant_Screening_Criteria" ToRole="Participant" />
     <NavigationProperty Name="Screening_Criteria" Relationship="PX_Model.FK__Participa__Scree__44FF419A" FromRole="Participant_Screening_Criteria" ToRole="Screening_Criteria" />
   </EntityType>
@@ -456,7 +463,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Participant_Screening_Criteria" Relationship="PX_Model.FK__Participa__Scree__44FF419A" FromRole="Screening_Criteria" ToRole="Participant_Screening_Criteria" />
     <NavigationProperty Name="Screening_Criteria_Option" Relationship="PX_Model.FK__Screening__Scree__3A81B327" FromRole="Screening_Criteria" ToRole="Screening_Criteria_Option" />
     <NavigationProperty Name="Trial_Screening_Criteria" Relationship="PX_Model.FK__Trial_Scr__Scree__403A8C7D" FromRole="Screening_Criteria" ToRole="Trial_Screening_Criteria" />
@@ -467,7 +474,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Screening_Criteria_Id" Type="Int32" />
-    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Screening_Criteria" Relationship="PX_Model.FK__Screening__Scree__3A81B327" FromRole="Screening_Criteria_Option" ToRole="Screening_Criteria" />
   </EntityType>
   <EntityType Name="Trial">
@@ -476,12 +483,15 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Start_Date" Type="DateTime" Precision="0" />
     <Property Name="End_Date" Type="DateTime" Precision="0" />
-    <Property Name="Objectives" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="Hypothesis" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="Outcome" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="Objectives" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Hypothesis" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Outcome" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="HasBeenRandomised" Type="Boolean" />
+    <Property Name="TermsAndConditions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Assessment_Type" Relationship="PX_Model.FK__Assessmen__Trial__73BA3083" FromRole="Trial" ToRole="Assessment_Type" />
     <NavigationProperty Name="Trial_Investigator" Relationship="PX_Model.FK__Trial_Inv__Trial__31EC6D26" FromRole="Trial" ToRole="Trial_Investigator" />
     <NavigationProperty Name="Trial_Participant" Relationship="PX_Model.FK__Trial_Par__Trial__1CF15040" FromRole="Trial" ToRole="Trial_Participant" />
     <NavigationProperty Name="Trial_Screening_Criteria" Relationship="PX_Model.FK__Trial_Scr__Trial__3F466844" FromRole="Trial" ToRole="Trial_Screening_Criteria" />
@@ -509,7 +519,7 @@
     <NavigationProperty Name="Trial" Relationship="PX_Model.FK__Trial_Par__Trial__1CF15040" FromRole="Trial_Participant" ToRole="Trial" />
     <NavigationProperty Name="Trial_Participant_Participant_Group" Relationship="PX_Model.FK__Trial_Par__Trial__267ABA7A" FromRole="Trial_Participant" ToRole="Trial_Participant_Participant_Group" />
     <NavigationProperty Name="Trial_Participant_Intervention_Area_Test" Relationship="PX_Model.FK__Trial_Par__Trial__5CD6CB2B" FromRole="Trial_Participant" ToRole="Trial_Participant_Intervention_Area_Test" />
-    <NavigationProperty Name="Trial_Participant_Assessment_Type" Relationship="PX_Model.FK__Trial_Par__Trial__778AC167" FromRole="Trial_Participant" ToRole="Trial_Participant_Assessment_Type" />
+    <NavigationProperty Name="Trial_Participant_Assessment_Type" Relationship="PX_Model.FK__Trial_Par__Trial__787EE5A0" FromRole="Trial_Participant" ToRole="Trial_Participant_Assessment_Type" />
   </EntityType>
   <EntityType Name="Trial_Participant_Assessment_Type">
     <Key>
@@ -518,9 +528,9 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Trial_Participant_Id" Type="Int32" />
     <Property Name="Assessment_Type_Id" Type="Int32" />
-    <NavigationProperty Name="Assessment_Type" Relationship="PX_Model.FK__Trial_Par__Asses__787EE5A0" FromRole="Trial_Participant_Assessment_Type" ToRole="Assessment_Type" />
-    <NavigationProperty Name="Assessment_Type_Question_Answer" Relationship="PX_Model.FK__Assessmen__Trial__07C12930" FromRole="Trial_Participant_Assessment_Type" ToRole="Assessment_Type_Question_Answer" />
-    <NavigationProperty Name="Trial_Participant" Relationship="PX_Model.FK__Trial_Par__Trial__778AC167" FromRole="Trial_Participant_Assessment_Type" ToRole="Trial_Participant" />
+    <NavigationProperty Name="Assessment_Type" Relationship="PX_Model.FK__Trial_Par__Asses__797309D9" FromRole="Trial_Participant_Assessment_Type" ToRole="Assessment_Type" />
+    <NavigationProperty Name="Assessment_Type_Question_Answer" Relationship="PX_Model.FK__Assessmen__Trial__08B54D69" FromRole="Trial_Participant_Assessment_Type" ToRole="Assessment_Type_Question_Answer" />
+    <NavigationProperty Name="Trial_Participant" Relationship="PX_Model.FK__Trial_Par__Trial__787EE5A0" FromRole="Trial_Participant_Assessment_Type" ToRole="Trial_Participant" />
   </EntityType>
   <EntityType Name="Trial_Participant_Intervention_Area_Test">
     <Key>
@@ -552,7 +562,7 @@
     <Property Name="Trial_Id" Type="Int32" />
     <Property Name="Screening_Criteria_Id" Type="Int32" />
     <Property Name="OperatorType" Type="Int32" />
-    <Property Name="OperatorValue" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="OperatorValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Screening_Criteria" Relationship="PX_Model.FK__Trial_Scr__Scree__403A8C7D" FromRole="Trial_Screening_Criteria" ToRole="Screening_Criteria" />
     <NavigationProperty Name="Trial" Relationship="PX_Model.FK__Trial_Scr__Trial__3F466844" FromRole="Trial_Screening_Criteria" ToRole="Trial" />
   </EntityType>
@@ -596,7 +606,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Assessmen__Asses__7D439ABD">
+  <Association Name="FK__Assessmen__Asses__7E37BEF6">
     <End Type="PX_Model.Assessment_Type" Role="Assessment_Type" Multiplicity="0..1" />
     <End Type="PX_Model.Assessment_Type_Question" Role="Assessment_Type_Question" Multiplicity="*" />
     <ReferentialConstraint>
@@ -608,7 +618,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Trial_Par__Asses__787EE5A0">
+  <Association Name="FK__Assessmen__Trial__73BA3083">
+    <End Type="PX_Model.Trial" Role="Trial" Multiplicity="0..1" />
+    <End Type="PX_Model.Assessment_Type" Role="Assessment_Type" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trial">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assessment_Type">
+        <PropertyRef Name="Trial_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trial_Par__Asses__797309D9">
     <End Type="PX_Model.Assessment_Type" Role="Assessment_Type" Multiplicity="0..1" />
     <End Type="PX_Model.Trial_Participant_Assessment_Type" Role="Trial_Participant_Assessment_Type" Multiplicity="*" />
     <ReferentialConstraint>
@@ -620,7 +642,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Assessmen__Asses__02084FDA">
+  <Association Name="FK__Assessmen__Asses__02FC7413">
     <End Type="PX_Model.Assessment_Type_Question" Role="Assessment_Type_Question" Multiplicity="0..1" />
     <End Type="PX_Model.Assessment_Type_Option" Role="Assessment_Type_Option" Multiplicity="*" />
     <ReferentialConstraint>
@@ -632,7 +654,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Assessmen__Asses__06CD04F7">
+  <Association Name="FK__Assessmen__Asses__07C12930">
     <End Type="PX_Model.Assessment_Type_Question" Role="Assessment_Type_Question" Multiplicity="0..1" />
     <End Type="PX_Model.Assessment_Type_Question_Answer" Role="Assessment_Type_Question_Answer" Multiplicity="*" />
     <ReferentialConstraint>
@@ -644,7 +666,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Assessmen__Trial__07C12930">
+  <Association Name="FK__Assessmen__Trial__08B54D69">
     <End Type="PX_Model.Trial_Participant_Assessment_Type" Role="Trial_Participant_Assessment_Type" Multiplicity="0..1" />
     <End Type="PX_Model.Assessment_Type_Question_Answer" Role="Assessment_Type_Question_Answer" Multiplicity="*" />
     <ReferentialConstraint>
@@ -980,7 +1002,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Trial_Par__Trial__778AC167">
+  <Association Name="FK__Trial_Par__Trial__787EE5A0">
     <End Type="PX_Model.Trial_Participant" Role="Trial_Participant" Multiplicity="0..1" />
     <End Type="PX_Model.Trial_Participant_Assessment_Type" Role="Trial_Participant_Assessment_Type" Multiplicity="*" />
     <ReferentialConstraint>
