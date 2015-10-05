@@ -1,6 +1,6 @@
-ALTER TABLE Intervention_Area ADD Description VARCHAR(1000);
+ALTER TABLE Intervention_Area ADD Description VARCHAR(MAX);
 
-ALTER TABLE Intervention_Area_Test ADD Description VARCHAR(1000);
+ALTER TABLE Intervention_Area_Test ADD Description VARCHAR(MAX);
 
 ALTER TABLE Intervention_Area_Test_Question ADD Sequence INT;
 
@@ -121,7 +121,6 @@ INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (N'46a2ad37-e006-4246-bcf4-45b4
 INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (N'0001e959-ea5c-4a81-b3d6-2fbccbe43851', N'Clinician')
 INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (N'b6434539-7c26-4c8f-8d3c-025967089bf5', N'Investigator')
 INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (N'61c693d9-7da7-4959-a188-595266dae200', N'Participant')
-INSERT [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName]) VALUES (N'ab56d9b2-f893-4d0b-b330-58b19efbdd69', N'admin@admin.com', 0, N'AFDmz4YvTvZ6Jb2hwX83DJNdTX1icXFBF7k7h4n8qV6I3ID6fWhjI5sAguI8dcNuqA==', N'7d7b9ff6-20b4-4aac-accf-f6d32b6a6a02', NULL, 0, 0, NULL, 1, 0, N'admin')
 ALTER TABLE [dbo].[AspNetUserClaims]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
 REFERENCES [dbo].[AspNetUsers] ([Id])
 ON DELETE CASCADE

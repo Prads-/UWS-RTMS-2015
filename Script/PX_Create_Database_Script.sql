@@ -13,12 +13,14 @@ CREATE TABLE Person (
 CREATE TABLE Trial (
 	Id INT IDENTITY(1,1) NOT NULL, 
 	Name VARCHAR(255), 
-	Description VARCHAR(1000), 
+	Description VARCHAR(MAX), 
 	Start_Date DATE, 
 	End_Date DATE,
-	Objectives VARCHAR(1000), 
-	Hypothesis VARCHAR(1000), 
-	Outcome VARCHAR(1000), 
+	Objectives VARCHAR(MAX), 
+	Hypothesis VARCHAR(MAX), 
+	Outcome VARCHAR(MAX),
+	HasBeenRandomised BIT, 
+	TermsAndConditions VARCHAR(MAX),
 	PRIMARY KEY (Id));
 
 CREATE TABLE Clinician (
@@ -89,13 +91,13 @@ CREATE TABLE Trial_Investigator (
 
 CREATE TABLE Screening_Criteria (
 	Id INT IDENTITY(1,1) NOT NULL,
-	Description VARCHAR(255),
+	Description VARCHAR(1000),
 	PRIMARY KEY (Id));
 
 CREATE TABLE Screening_Criteria_Option (
 	Id INT IDENTITY(1,1) NOT NULL,
 	Screening_Criteria_Id INT,
-	Description VARCHAR(255),
+	Description VARCHAR(1000),
 	PRIMARY KEY (Id),
 	FOREIGN KEY (Screening_Criteria_Id) REFERENCES Screening_Criteria(Id));
 
@@ -104,7 +106,7 @@ CREATE TABLE Trial_Screening_Criteria (
 	Trial_Id INT,
 	Screening_Criteria_Id INT,
 	OperatorType INT,
-	OperatorValue VARCHAR(255),
+	OperatorValue VARCHAR(MAX),
 	PRIMARY KEY (Id),
 	FOREIGN KEY (Trial_Id) REFERENCES Trial(Id),
 	FOREIGN KEY (Screening_Criteria_Id) REFERENCES Screening_Criteria(Id));
@@ -113,27 +115,27 @@ CREATE TABLE Participant_Screening_Criteria (
 	Id INT IDENTITY(1,1) NOT NULL,
 	Participant_Id INT,
 	Screening_Criteria_Id INT,
-	Value VARCHAR(255),
+	Value VARCHAR(MAX),
 	PRIMARY KEY (Id),
 	FOREIGN KEY (Screening_Criteria_Id) REFERENCES Screening_Criteria(Id),
 	FOREIGN KEY (Participant_Id) REFERENCES Participant(Id));
 
 CREATE TABLE Intervention_Area (
 	Id INT IDENTITY(1,1) NOT NULL,
-	Name VARCHAR(255),
+	Name VARCHAR(1000),
 	PRIMARY KEY (Id));
 
 CREATE TABLE Intervention_Area_Test (
 	Id INT IDENTITY(1,1) NOT NULL,
 	Intervention_Area_Id INT,
-	Name VARCHAR(255),
+	Name VARCHAR(1000),
 	PRIMARY KEY (Id),
 	FOREIGN KEY (Intervention_Area_Id) REFERENCES Intervention_Area(Id));
 
 CREATE TABLE Intervention_Area_Test_Question (
 	Id INT IDENTITY(1,1) NOT NULL,
 	Intervention_Area_Test_Id INT,
-	Question VARCHAR(1000),
+	Question VARCHAR(MAX),
 	Question_Type INT,
 	PRIMARY KEY (Id),
 	FOREIGN KEY (Intervention_Area_Test_Id) REFERENCES Intervention_Area_Test(Id));
@@ -141,7 +143,7 @@ CREATE TABLE Intervention_Area_Test_Question (
 CREATE TABLE Intervention_Area_Test_Question_Option (
 	Id INT IDENTITY(1,1) NOT NULL,
 	Intervention_Area_Test_Question_Id INT,
-	Opt VARCHAR(500),
+	Opt VARCHAR(MAX),
 	PRIMARY KEY (Id),
 	FOREIGN KEY (Intervention_Area_Test_Question_Id) REFERENCES Intervention_Area_Test_Question(Id));
 
@@ -158,7 +160,7 @@ CREATE TABLE Intervention_Area_Test_Question_Answer (
 	Id INT IDENTITY(1,1) NOT NULL,
 	Intervention_Area_Test_Question_Id INT,
 	Trial_Participant_Intervention_Area_Test_Id INT,
-	Answer VARCHAR(5000),
+	Answer VARCHAR(MAX),
 	Answer_Type INT,
 	PRIMARY KEY (Id),
 	FOREIGN KEY (Intervention_Area_Test_Question_Id) REFERENCES Intervention_Area_Test_Question(Id),
@@ -182,8 +184,10 @@ CREATE TABLE Investigator_Intervention_Area (
 
 CREATE TABLE Assessment_Type (
 	Id  INT IDENTITY(1,1) NOT NULL,
-	Name VARCHAR(255),
-	PRIMARY KEY (Id));
+	Trial_Id INT,
+	Name VARCHAR(1000),
+	PRIMARY KEY (Id),
+	FOREIGN KEY (Trial_Id) REFERENCES Trial(Id));
 
 CREATE TABLE Trial_Participant_Assessment_Type (
 	Id INT IDENTITY(1,1) NOT NULL,
@@ -204,7 +208,7 @@ CREATE TABLE Assessment_Type_Question (
 CREATE TABLE Assessment_Type_Option (
 	Id INT IDENTITY(1,1) NOT NULL,
 	Assessment_Type_Question_Id INT,
-	Opt VARCHAR(500),
+	Opt VARCHAR(MAX),
 	PRIMARY KEY (Id),
 	FOREIGN KEY (Assessment_Type_Question_Id) REFERENCES Assessment_Type_Question(Id));
 
@@ -212,7 +216,7 @@ CREATE TABLE Assessment_Type_Question_Answer (
 	Id INT IDENTITY(1,1) NOT NULL,
 	Assessment_Type_Question_Id INT,
 	Trial_Participant_Assessment_Type_Id INT,
-	Answer VARCHAR(5000),
+	Answer VARCHAR(MAX),
 	Answer_Type INT,
 	PRIMARY KEY (Id),
 	FOREIGN KEY (Assessment_Type_Question_Id) REFERENCES Assessment_Type_Question(Id),
