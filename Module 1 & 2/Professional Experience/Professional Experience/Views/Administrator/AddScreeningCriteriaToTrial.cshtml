@@ -16,7 +16,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.TrialId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            <select name="TrialId">
+            <select class="form-control" name="TrialId">
                 @foreach (var trial in Model.Trials)
                 {
                     <option value="@trial.Id">@trial.Name</option>
@@ -27,7 +27,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.ScreeningCriteriaId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            <select name="ScreeningCriteriaId">
+            <select class="form-control" name="ScreeningCriteriaId">
                 @foreach (var selectionCriteria in Model.ScreeningCriteria)
                 {
                     <option value="@selectionCriteria.Id">@selectionCriteria.Description</option>
@@ -38,7 +38,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.OperatorType, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            <select name="OperatorType">
+            <select class="form-control" name="OperatorType">
                 <option value="@PX_Model.Screening_Criteria.OPERATOR_RANGE">Range</option>
                 <option value="@PX_Model.Screening_Criteria.OPERATOR_EQUALS">Equals</option>
                 <option value="@PX_Model.Screening_Criteria.OPERATOR_GREATER_THAN">Greater Than</option>

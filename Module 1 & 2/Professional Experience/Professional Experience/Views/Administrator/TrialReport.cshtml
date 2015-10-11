@@ -1,0 +1,41 @@
+﻿@model Professional_Experience.Models.TrialReportViewModel
+
+@{
+    ViewBag.Title = "Trial Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Trial Report</h2>
+
+<img src="~/Charts/gender.jpg" />
+
+<table>
+    <tr>
+        <th>Participants according to gender</th>
+    </tr>
+    <tr>
+        <td>Male</td>
+        <td>@Model.NumberOfMales</td>
+    </tr>
+    <tr>
+        <td>Female</td>
+        <td>@Model.NumberOfFemales</td>
+    </tr>
+</table>
+<hr />
+
+<img src="~/Charts/classification.jpg" />
+
+<table>
+    <tr>
+        <th>Participants according to Classification</th>
+    </tr>
+    <tr>
+        <td>Intervention</td>
+        <td>@Model.NumberOfInterventionParticipant</td>
+    </tr>
+    <tr>
+        <td>Experimental</td>
+        <td>@Model.NumberOfExperimentalParticipant</td>
+    </tr>
+</table>

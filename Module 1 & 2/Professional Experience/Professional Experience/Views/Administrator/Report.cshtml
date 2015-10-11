@@ -1,0 +1,38 @@
+﻿@model IEnumerable<PX_Model.Trial>
+
+@{
+    ViewBag.Title = "Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Report</h2>
+
+@if (Model.Count() > 0)
+{
+    using (Html.BeginForm("TrialReport", "Administrator", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="col-md-2 control-label">Trial</label>
+            <div class="col-md-10">
+                <select class="form-control" name="id">
+                    @foreach (var t in Model)
+                    {
+                        <option value="@t.Id">@t.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Trial Report" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("General Report", "GeneralReport", new { }, new { @class = "btn btn-default" })
+            </div>
+        </div>     
+    }
+}

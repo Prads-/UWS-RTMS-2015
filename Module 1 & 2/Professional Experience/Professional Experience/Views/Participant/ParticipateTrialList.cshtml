@@ -10,7 +10,7 @@
 
 @foreach (var trial in Model)
 {
-    <h3>@Html.ActionLink(trial.TrialName, "ParticipateTrial", new { id = trial.TrialId })</h3>
+    <h3>@Html.ActionLink(trial.TrialName, "AcceptTermsAndConditions", new { id = trial.TrialId })</h3>
     <p>@trial.TrialDescription</p>
     <hr />
 }

@@ -1,0 +1,39 @@
+﻿@model PX_Model.Trial
+
+@{
+    ViewBag.Title = "View Non Randomised Trial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View Non Randomised Trial</h2>
+
+<table style="width:800px;">
+    <tr>
+        <td><strong>Name</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Name</td>
+    </tr>
+    <tr>
+        <td><strong>Start Date</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@String.Format("{0:dd/MM/yyyy", Model.Start_Date)</td>
+    </tr>
+    <tr>
+        <td><strong>End Date</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@String.Format("{0:dd/MM/yyyy", Model.End_Date)</td>
+    </tr>
+    <tr>
+        <td><strong>Description</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Description</td>
+    </tr>
+    <tr>
+        <td><strong>Objectives</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Objectives</td>
+    </tr>
+    <tr>
+        <td><strong>Hypothesis</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Hypothesis</td>
+    </tr>
+    <tr>
+        <td><strong>Outcome</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Outcome</td>
+    </tr>
+</table>

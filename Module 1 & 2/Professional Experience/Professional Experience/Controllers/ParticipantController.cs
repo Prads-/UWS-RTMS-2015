@@ -48,6 +48,24 @@ namespace Professional_Experience.Controllers
             return View(trialList.AsEnumerable());
         }
 
+        public ActionResult AcceptTermsAndConditions(int id)
+        {
+            var trial = _db.Trials.FirstOrDefault(t => t.Id == id);
+
+            if (trial == null)
+            {
+                ModelState.AddModelError("", "Trial was not found!");
+                return View("Index");
+            }
+
+            var m = new Professional_Experience.Models.TermsAndConditionViewModel();
+
+            m.Id = id;
+            m.TermsAndCondition = trial.TermsAndConditions;
+
+            return View(m);
+        }
+
         public ActionResult ParticipateTrial(int id)
         {
             var trial = _db.Trials.FirstOrDefault(t => t.Id == id);

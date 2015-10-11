@@ -5,11 +5,18 @@
 
 <h2>Administrator Dashboard</h2>
 
-@Html.ActionLink("Create Trial", "CreateTrial")<br />
-@Html.ActionLink("Edit Trial", "EditTrials")<br />
-@Html.ActionLink("Add Participant to Trial", "AddParticipantToTrial")<br />
-@Html.ActionLink("Screening Criteria", "ScreeningCriteria")<br />
-@Html.ActionLink("Create Investigator", "CreateInvestigator")<br />
-@Html.ActionLink("Edit Investigator", "EditInvestigators")<br />
-@Html.ActionLink("Assign Investigator to Trial", "AssignInvestigatorToTrial")<br />
-@Html.ActionLink("Create Baseline Assessment", "CreateBaselineAssessment")
+@Html.ValidationSummary("", new { @class = "text-danger" })
+
+<div>
+    @Html.ActionLink("Create Trial", "CreateTrial", new { }, new { @class = "btn" })<br />
+    @Html.ActionLink("Edit Trial", "EditTrials", new { }, new { @class = "btn" })<br />
+    @Html.ActionLink("Add Participant to Trial", "AddParticipantToTrial", new { }, new { @class = "btn" })<br />
+    @Html.ActionLink("Screening Criteria", "ScreeningCriteria", new { }, new { @class = "btn" })<br />
+    @Html.ActionLink("Create Investigator", "CreateInvestigator", new { }, new { @class = "btn" })<br />
+    @Html.ActionLink("Edit Investigator", "EditInvestigators", new { }, new { @class = "btn" })<br />
+    @Html.ActionLink("Assign Investigator to Trial", "AssignInvestigatorToTrial", new { }, new { @class = "btn" })<br />
+    @Html.ActionLink("Create Baseline Assessment", "CreateBaselineAssessment", new { }, new { @class = "btn" })<br />
+    @Html.ActionLink("Randomise Trial", "RandomiseTrialParticipants", new { }, new { @class = "btn" })<br />
+    @Html.ActionLink("View all Trials", "ViewTrials", new { }, new { @class = "btn" })<br />
+    @Html.ActionLink("Reports", "Report", new { }, new { @class = "btn" })
+</div>

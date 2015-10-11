@@ -1,0 +1,26 @@
+﻿@model IEnumerable<PX_Model.Trial_Participant>
+
+@{
+    ViewBag.Title = "View All Participants";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View All Participants</h2>
+
+<table style="width:100%;">
+    <tr>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Gender</th>
+        <th>Email</th>
+    </tr>
+    <tr>
+        @foreach (var tp in Model)
+        {
+            <td>@Html.ActionLink(String.Format("{0} {1}", tp.Participant.Person.First_Name, tp.Participant.Person.Last_Name), "ViewParticipant", new { id = tp.Participant.Id })</td>
+            <td>@String.Format("{0:dd/MM/yyyy}", tp.Participant.Date_Of_Birth)</td>
+            <td>@tp.Participant.Gender</td>
+            <td>@tp.Participant.Person.Email</td>
+        }
+    </tr>
+</table>

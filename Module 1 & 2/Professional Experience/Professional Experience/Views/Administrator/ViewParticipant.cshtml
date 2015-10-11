@@ -1,0 +1,60 @@
+﻿@model PX_Model.Participant
+
+@{
+    ViewBag.Title = "View Participant";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View Participant</h2>
+
+<table style="width:100%;">
+    <tr>
+        <td><strong>Name</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@String.Format("{0} {1}", Model.Person.First_Name, Model.Person.Last_Name)</td>
+    </tr>
+    <tr>
+        <td><strong>Date Of Birth</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Date_Of_Birth</td>
+    </tr>
+    <tr>
+        <td><strong>Gender</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Gender</td>
+    </tr>
+    <tr>
+        <td><strong>Email</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Person.Email</td>
+    </tr>
+    <tr>
+        <td><strong>Objectives</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Person.Phone_Number</td>
+    </tr>
+    <tr>
+        <td><strong>Street</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Person.Street</td>
+    </tr>
+    <tr>
+        <td><strong>Suburb</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Person.Suburb</td>
+    </tr>
+    <tr>
+        <td><strong>State</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Person.State</td>
+    </tr>
+    <tr>
+        <td><strong>Postcode</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Person.Postcode</td>
+    </tr>
+</table>
+
+<h3>Participating in following trials:</h3>
+@foreach (var tp in Model.Trial_Participant)
+{
+    if (tp.Trial.HasBeenRandomised == true)
+    {
+        @Html.ActionLink(tp.Trial.Name, "ViewRandomisedTrial", new { id = tp.Trial_Id })<br />
+    }
+    else
+    {
+        @Html.ActionLink(tp.Trial.Name, "ViewNonRandomisedTrial", new { id = tp.Trial_Id })<br />
+    }
+}

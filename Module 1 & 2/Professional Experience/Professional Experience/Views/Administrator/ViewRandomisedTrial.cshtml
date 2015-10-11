@@ -1,0 +1,54 @@
+﻿@model Professional_Experience.Models.ViewRandomisedViewModel
+
+@{
+    ViewBag.Title = "View Randomised Trial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View Randomised Trial</h2>
+
+<table style="width:800px;">
+    <tr>
+        <td><strong>Name</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Trial.Name</td>
+    </tr>
+    <tr>
+        <td><strong>Start Date</strong></td>
+        <td style ="word-break:break-all; padding-left:20px;">@String.Format("{0:dd/MM/yyyy}", Model.Trial.Start_Date)</td>
+    </tr>
+    <tr>
+        <td><strong>End Date</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@String.Format("{0:dd/MM/yyyy}", Model.Trial.End_Date)</td>
+    </tr>
+    <tr>
+        <td><strong>Description</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Trial.Description</td>
+    </tr>
+    <tr>
+        <td><strong>Objectives</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Trial.Objectives</td>
+    </tr>
+    <tr>
+        <td><strong>Hypothesis</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Trial.Hypothesis</td>
+    </tr>
+    <tr>
+        <td><strong>Outcome</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Trial.Outcome</td>
+    </tr>
+</table>
+
+<div style="margin-top:15px;">
+    @Html.ActionLink("View all participants", "ViewAllParticipants", new { id = Model.Trial.Id }, new { @class = "btn" })<br />
+    @Html.ActionLink("View all intervention participants", "ViewAllInterventionParticipant", new { id = Model.Trial.Id }, new { @class = "btn" })<br />
+    @Html.ActionLink("View all experimental participants", "ViewAllExperimentalParticipant", new { id = Model.Trial.Id }, new { @class = "btn" })<br />
+
+    @if (Model.ParticipantGroups.Count() > 0)
+    {
+        <strong>View Participants in Group:</strong><br />
+        foreach (var pg in Model.ParticipantGroups)
+        {
+            @Html.ActionLink(pg.Name, "ViewParticipantsInGroup", new { tid = Model.Trial.Id, pgid = pg.Id }, new { @class = "btn" })<br />
+        }
+    }
+</div>

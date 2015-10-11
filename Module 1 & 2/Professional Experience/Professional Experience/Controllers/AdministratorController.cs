@@ -8,6 +8,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Threading.Tasks;
+using System.Collections;
+using System.Web.Helpers;
 
 namespace Professional_Experience.Controllers
 {
@@ -439,6 +441,211 @@ namespace Professional_Experience.Controllers
                 return View("Index");
             }
             m.Trials = _db.Trials.OrderBy(t => t.Name).ToArray();
+            return View(m);
+        }
+
+        private List<PX_Model.Trial> getNonRandomisedTrials()
+        {
+            var trials = _db.Trials;
+            var trialList = new List<PX_Model.Trial>();
+
+            foreach (var t in trials)
+            {
+                if (t.HasBeenRandomised == false)
+                {
+                    trialList.Add(t);
+                }
+            }
+            return trialList;
+        }
+
+        public ActionResult RandomiseTrialParticipants()
+        {
+            var trialList = getNonRandomisedTrials();
+
+            if (trialList.Count == 0)
+            {
+                ModelState.AddModelError("", "There are no trials that needs to be randomised");
+                return View("Index");
+            }
+
+            var m = new RandomiseViewModel();
+            m.Trials = trialList.AsEnumerable();
+
+            return View(m);
+        }
+
+        [HttpPost]
+        public ActionResult RandomiseTrialParticipants(Professional_Experience.Models.RandomiseViewModel m)
+        {
+            var trial = _db.Trials.FirstOrDefault(t => t.Id == m.TrialId);
+
+            if (trial == null)
+            {
+                ModelState.AddModelError("", "Trial does not exist");
+            }
+
+            if (m.NumberOfParticipantInIntervention < 0 || trial.Trial_Participant.Count < m.NumberOfParticipantInIntervention)
+            {
+                ModelState.AddModelError("", "Invalid number of participants to be added in intervention group");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var trialParticipants = trial.Trial_Participant;
+
+                for (int i = 0; i < m.NumberOfParticipantInIntervention; ++i)
+                {
+                    trialParticipants.ElementAt(i).Classification = PX_Model.Trial_Participant.CLASSIFICATION_INTERVENTION;
+                }
+                for (int i = m.NumberOfParticipantInIntervention; i < trialParticipants.Count; ++i)
+                {
+                    trialParticipants.ElementAt(i).Classification = PX_Model.Trial_Participant.CLASSIFICATION_CONTROL;
+                }
+                trial.HasBeenRandomised = true;
+                _db.SaveChanges();
+
+                return View("Index");
+            }
+
+            m.Trials = getNonRandomisedTrials().AsEnumerable();
+            return View(m);
+        }
+
+        public ActionResult ViewTrials()
+        {
+            var m = new Professional_Experience.Models.AdminViewTrialsViewModel();
+            m.Randomised = _db.Trials.Where(t => t.HasBeenRandomised == true);
+            m.NonRandomised = _db.Trials.Where(t => t.HasBeenRandomised == false);
+            return View(m);
+        }
+
+        public ActionResult ViewRandomisedTrial(int id)
+        {
+            var m = new ViewRandomisedViewModel();
+            m.Trial = _db.Trials.FirstOrDefault(t => t.Id == id);
+            if (m.Trial == null)
+            {
+                ModelState.AddModelError("", "Trial not found!");
+                return View("Index");
+            }
+            m.ParticipantGroups = _db.Participant_Group.Where(pg => pg.Trial_Participant_Participant_Group.FirstOrDefault(tppg => tppg.Trial_Participant.Trial_Id == id) != null);
+            
+            return View(m);
+        }
+
+        public ActionResult ViewNonRandomisedTrial(int id)
+        {
+            var m = _db.Trials.FirstOrDefault(t => t.Id == id);
+            if (m == null)
+            {
+                ModelState.AddModelError("", "Trial not found!");
+                return View("Index");
+            }
+            return View(m);
+        }
+
+        public ActionResult ViewAllParticipants(int id)
+        {
+            var m = _db.Trial_Participant.
+                Where(tp => tp.Trial_Id == id).OrderBy(tp => tp.Participant.Person.First_Name).AsEnumerable();
+            return View(m);
+        }
+
+        public ActionResult ViewAllInterventionParticipant(int id)
+        {
+            var m = _db.Trial_Participant.
+                Where(tp => tp.Trial_Id == id && tp.Classification == PX_Model.Trial_Participant.CLASSIFICATION_INTERVENTION).
+                OrderBy(tp => tp.Participant.Person.First_Name).AsEnumerable();
+            return View("ViewAllParticipants", m);
+        }
+
+        public ActionResult ViewAllExperimentalParticipant(int id)
+        {
+            var m = _db.Trial_Participant.
+                Where(tp => tp.Trial_Id == id && tp.Classification == PX_Model.Trial_Participant.CLASSIFICATION_CONTROL).
+                OrderBy(tp => tp.Participant.Person.First_Name).AsEnumerable();
+            return View("ViewAllParticipants", m);
+        }
+
+        public ActionResult ViewParticipantsInGroup(int id, int pgid)
+        {
+            var m = _db.Trial_Participant.Where(tp => tp.Id == id && tp.Trial_Participant_Participant_Group.Where(tppg => tppg.Participant_Group.Id == pgid).Count() > 0);
+            return View("ViewAllParticipants", m);
+        }
+
+        public ActionResult ViewParticipant(int id)
+        {
+            var m = _db.Participants.FirstOrDefault(p => p.Id == id);
+            if (m == null)
+            {
+                ModelState.AddModelError("", "Participant not found");
+                return View("Index");
+            }
+            return View(m);
+        }
+
+        public ActionResult Report()
+        {
+            return View(_db.Trials.OrderBy(t => t.Name).AsEnumerable());
+        }
+
+        public ActionResult GeneralReport()
+        {
+            var trials = _db.Trials;
+            var trialNames = new List<string>();
+            var numberOfParticipants = new List<int>();
+
+            foreach (var t in trials)
+            {
+                trialNames.Add(t.Name);
+                numberOfParticipants.Add(t.Trial_Participant.Count);
+            }
+
+            var barChart = new Chart(width: 600, height: 400)
+                .AddTitle("Number of participant on trials")
+                .AddSeries(
+                    name: "Trials",
+                    xValue: trialNames.ToArray(),
+                    yValues: numberOfParticipants.ToArray());
+            barChart.Save("~/Charts/bar.jpg");
+
+            return View(trials);
+        }
+
+        public ActionResult TrialReport(int id)
+        {
+            var trial = _db.Trials.FirstOrDefault(t => t.Id == id);
+            if (trial == null)
+            {
+                ModelState.AddModelError("", "Trial not found");
+                return View("Index");
+            }
+            var m = new Professional_Experience.Models.TrialReportViewModel();
+            m.TrialName = trial.Name;
+            m.NumberOfMales = trial.Trial_Participant.Where(tp => tp.Participant.Gender == "Male").Count();
+            m.NumberOfFemales = trial.Trial_Participant.Count - m.NumberOfMales;
+            m.NumberOfInterventionParticipant = trial.Trial_Participant.Where(tp => tp.Classification == PX_Model.Trial_Participant.CLASSIFICATION_INTERVENTION).Count();
+            m.NumberOfExperimentalParticipant = trial.Trial_Participant.Count - m.NumberOfInterventionParticipant;
+
+            var genderChart = new Chart(width: 600, height: 400)
+                .AddTitle("Number of participants according to gender")
+                .AddSeries(
+                    chartType: "Pie",
+                    name: "Trials",
+                    xValue: new[] { "Male", "Female" },
+                    yValues: new[] { m.NumberOfMales, m.NumberOfFemales });
+            genderChart.Save("~/Charts/gender.jpg");
+
+            var classificationChart = new Chart(width: 600, height: 400)
+                .AddTitle("Number of participants according to classification")
+                .AddSeries(
+                    chartType: "Pie",
+                    name: "Trials",
+                    xValue: new[] { "Intervention", "Experimental" },
+                    yValues: new[] { m.NumberOfInterventionParticipant, m.NumberOfExperimentalParticipant });
+            classificationChart.Save("~/Charts/classification.jpg");
+
             return View(m);
         }
     }

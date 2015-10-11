@@ -1,0 +1,22 @@
+﻿@model Professional_Experience.Models.AdminViewTrialsViewModel
+
+@{
+    ViewBag.Title = "View Trials";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View Trials</h2>
+
+<h3>Randomised Trials</h3>
+
+@foreach (var t in Model.Randomised)
+{
+    @Html.ActionLink(t.Name, "ViewRandomisedTrial", new { id = t.Id })<br />
+}
+
+<h3>Non-Randomised Trials</h3>
+
+@foreach (var t in Model.NonRandomised)
+{
+    @Html.ActionLink(t.Name, "ViewNonRandomisedTrial", new { id = t.Id })<br />
+}
