@@ -3,8 +3,12 @@ C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\PX_Model\bin\
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\PX_Model\bin\Debug\PX_Model.pdb
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\PX_Model\bin\Debug\EntityFramework.dll
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\PX_Model\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\PX_Model\bin\Debug\PagedList.dll
+C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\PX_Model\bin\Debug\PagedList.Mvc.dll
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\PX_Model\bin\Debug\EntityFramework.xml
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\PX_Model\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\PX_Model\bin\Debug\PagedList.xml
+C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\PX_Model\bin\Debug\PagedList.Mvc.xml
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\PX_Model\obj\Debug\PX_Model.csprojResolveAssemblyReference.cache
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\PX_Model\obj\Debug\PX_Model.dll
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\PX_Model\obj\Debug\PX_Model.pdb

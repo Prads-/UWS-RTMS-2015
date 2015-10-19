@@ -19,6 +19,9 @@ C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional 
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\Newtonsoft.Json.dll
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\Owin.dll
+C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\PagedList.dll
+C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\PagedList.Mvc.dll
+C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\PX_Model.dll
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\System.Web.Helpers.dll
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\System.Web.Mvc.dll
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\System.Web.Optimization.dll
@@ -27,6 +30,9 @@ C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional 
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\System.Web.WebPages.dll
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\System.Web.WebPages.Razor.dll
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\WebGrease.dll
+C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\PX_Model.pdb
+C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\PagedList.xml
+C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\PagedList.Mvc.xml
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\System.Web.Helpers.xml
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\System.Web.Mvc.xml
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\System.Web.Optimization.xml
@@ -53,5 +59,3 @@ C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional 
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\obj\Debug\Professional Experience.csprojResolveAssemblyReference.cache
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\obj\Debug\Professional Experience.dll
 C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\obj\Debug\Professional Experience.pdb
-C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\PX_Model.dll
-C:\Users\Prad\Documents\Uni\Sem 4\PX\Proto\Professional Experience\Professional Experience\bin\PX_Model.pdb

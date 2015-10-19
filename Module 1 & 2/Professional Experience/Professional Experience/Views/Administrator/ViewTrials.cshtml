@@ -9,14 +9,50 @@
 
 <h3>Randomised Trials</h3>
 
-@foreach (var t in Model.Randomised)
-{
-    @Html.ActionLink(t.Name, "ViewRandomisedTrial", new { id = t.Id })<br />
-}
+<table class="table table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+    </tr>
+    
+    @foreach (var t in Model.Randomised)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(t.Name, "ViewRandomisedTrial", new { id = t.Id }, new { @style = "display: block;" })
+            </td>
+            <td>
+                @Html.ActionLink(string.Format("{0:dd/MM/yyyy}", t.Start_Date), "ViewRandomisedTrial", new { id = t.Id }, new { @style = "display: block;" })
+            </td>
+            <td>
+                @Html.ActionLink(string.Format("{0:dd/MM/yyyy}", t.End_Date), "ViewRandomisedTrial", new { id = t.Id }, new { @style = "display: block;" })
+            </td>
+        </tr>
+    }
+</table>
 
 <h3>Non-Randomised Trials</h3>
 
-@foreach (var t in Model.NonRandomised)
-{
-    @Html.ActionLink(t.Name, "ViewNonRandomisedTrial", new { id = t.Id })<br />
-}
+<table class="table table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+    </tr>
+
+    @foreach (var t in Model.NonRandomised)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(t.Name, "ViewNonRandomisedTrial", new { id = t.Id }, new { @style = "display: block;" })
+            </td>
+            <td>
+                @Html.ActionLink(string.Format("{0:dd/MM/yyyy}", t.Start_Date), "ViewNonRandomisedTrial", new { id = t.Id }, new { @style = "display: block;" })
+            </td>
+            <td>
+                @Html.ActionLink(string.Format("{0:dd/MM/yyyy}", t.End_Date), "ViewNonRandomisedTrial", new { id = t.Id }, new { @style = "display: block;" })
+            </td>
+        </tr>
+    }
+</table>

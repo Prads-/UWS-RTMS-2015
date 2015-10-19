@@ -1,13 +1,13 @@
-﻿@model IEnumerable<PX_Model.Trial_Participant>
+﻿@model PagedList.PagedList<PX_Model.Trial_Participant>
 
 @{
     ViewBag.Title = "View All Participants";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>View All Participants</h2>
+<h2>Participants</h2>
 
-<table style="width:100%;">
+<table class="table table-hover" style="width:100%;">
     <tr>
         <th>Name</th>
         <th>Date of Birth</th>
@@ -17,10 +17,11 @@
     <tr>
         @foreach (var tp in Model)
         {
-            <td>@Html.ActionLink(String.Format("{0} {1}", tp.Participant.Person.First_Name, tp.Participant.Person.Last_Name), "ViewParticipant", new { id = tp.Participant.Id })</td>
-            <td>@String.Format("{0:dd/MM/yyyy}", tp.Participant.Date_Of_Birth)</td>
-            <td>@tp.Participant.Gender</td>
-            <td>@tp.Participant.Person.Email</td>
+            <td>@Html.ActionLink(String.Format("{0} {1}", tp.Participant.Person.First_Name, tp.Participant.Person.Last_Name), "ViewParticipant", new { id = tp.Participant.Id }, new { @style = "display: block;" })</td>
+            <td>@Html.ActionLink(String.Format("{0:dd/MM/yyyy}", tp.Participant.Date_Of_Birth), "ViewParticipant", new { id = tp.Participant.Id }, new { @style = "display: block;" })</td>
+            <td>@Html.ActionLink(tp.Participant.Gender, "ViewParticipant", new { id = tp.Participant.Id }, new { @style = "display: block;" })</td>
+            <td>@Html.ActionLink(tp.Participant.Person.Email, "ViewParticipant", new { id = tp.Participant.Id }, new { @style = "display: block;" })</td>
         }
     </tr>
 </table>
+@Html.PagedListPager()

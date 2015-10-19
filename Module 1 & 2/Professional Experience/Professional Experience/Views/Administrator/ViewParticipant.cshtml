@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>View Participant</h2>
+<h2>Participant</h2>
 
 <table style="width:100%;">
     <tr>
@@ -47,14 +47,33 @@
 </table>
 
 <h3>Participating in following trials:</h3>
-@foreach (var tp in Model.Trial_Participant)
-{
-    if (tp.Trial.HasBeenRandomised == true)
+<table class="table table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+    </tr>
+    @foreach (var tp in Model.Trial_Participant)
     {
-        @Html.ActionLink(tp.Trial.Name, "ViewRandomisedTrial", new { id = tp.Trial_Id })<br />
+        string action = "";
+        if (tp.Trial.HasBeenRandomised == true)
+        {
+            action = "ViewRandomisedTrial";
+        }
+        else
+        {
+            action = "ViewNonRandomisedTrial";
+        }
+        <tr>
+            <td>
+                @Html.ActionLink(tp.Trial.Name, action, new { id = tp.Trial_Id }, new { @style="display: block;" })
+            </td>
+            <td>
+                @Html.ActionLink(string.Format("{0:dd/MM/yyyy}", tp.Trial.Start_Date), action, new { id = tp.Trial_Id }, new { @style = "display: block;" })
+            </td>
+            <td>
+                @Html.ActionLink(string.Format("{0:dd/MM/yyyy}", tp.Trial.End_Date), action, new { id = tp.Trial_Id }, new { @style = "display: block;" })
+            </td>
+        </tr>
     }
-    else
-    {
-        @Html.ActionLink(tp.Trial.Name, "ViewNonRandomisedTrial", new { id = tp.Trial_Id })<br />
-    }
-}
+</table>

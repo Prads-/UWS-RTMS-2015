@@ -10,6 +10,7 @@ using Microsoft.Owin.Security;
 using System.Threading.Tasks;
 using System.Collections;
 using System.Web.Helpers;
+using PagedList;
 
 namespace Professional_Experience.Controllers
 {
@@ -18,6 +19,16 @@ namespace Professional_Experience.Controllers
     {
         // GET: Administrator
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Trial()
+        {
+            return View();
+        }
+
+        public ActionResult Investigator()
         {
             return View();
         }
@@ -122,7 +133,7 @@ namespace Professional_Experience.Controllers
         public ActionResult AddParticipantToTrial(AddParticipantToTrialViewModel m)
         {
             var trialParticipants = _db.Trial_Participant.Where(tp => tp.Trial_Id == m.TrialId && tp.Participant_Id == m.ParticipantId);
-
+            
             if (trialParticipants.Count() == 0)
             {
                 PX_Model.Trial_Participant trialParticipant = new PX_Model.Trial_Participant();
@@ -494,13 +505,17 @@ namespace Professional_Experience.Controllers
             {
                 var trialParticipants = trial.Trial_Participant;
 
+                Random rnd = new Random();
+                int count = trialParticipants.Count;
+                int random = rnd.Next(0, count);
+                
                 for (int i = 0; i < m.NumberOfParticipantInIntervention; ++i)
                 {
-                    trialParticipants.ElementAt(i).Classification = PX_Model.Trial_Participant.CLASSIFICATION_INTERVENTION;
+                    trialParticipants.ElementAt((i + random)  % count).Classification = PX_Model.Trial_Participant.CLASSIFICATION_INTERVENTION;
                 }
-                for (int i = m.NumberOfParticipantInIntervention; i < trialParticipants.Count; ++i)
+                for (int i = m.NumberOfParticipantInIntervention; i < count; ++i)
                 {
-                    trialParticipants.ElementAt(i).Classification = PX_Model.Trial_Participant.CLASSIFICATION_CONTROL;
+                    trialParticipants.ElementAt((i + random) % count).Classification = PX_Model.Trial_Participant.CLASSIFICATION_CONTROL;
                 }
                 trial.HasBeenRandomised = true;
                 _db.SaveChanges();
@@ -545,10 +560,11 @@ namespace Professional_Experience.Controllers
             return View(m);
         }
 
-        public ActionResult ViewAllParticipants(int id)
+        public ActionResult ViewAllParticipants(int id, int page = 0)
         {
-            var m = _db.Trial_Participant.
+            var trialParticipants = _db.Trial_Participant.
                 Where(tp => tp.Trial_Id == id).OrderBy(tp => tp.Participant.Person.First_Name).AsEnumerable();
+            var m = new PagedList<PX_Model.Trial_Participant>(trialParticipants, page, 15);
             return View(m);
         }
 

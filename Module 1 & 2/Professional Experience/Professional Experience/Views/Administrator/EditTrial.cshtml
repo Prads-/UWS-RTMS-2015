@@ -10,7 +10,6 @@
 @using (Html.BeginForm("EditTrial", "Administrator", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Edit the Trial.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">

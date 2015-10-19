@@ -10,29 +10,30 @@
 @using (Html.BeginForm("AddParticipantToTrial", "Administrator", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Add Participant to Trial.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(m => m.TrialId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            <select name="TrialId">
+            <select class="form-control" name="TrialId" id="trial">
                 @foreach (var trial in Model.Trials)
                 {
                     <option value="@trial.Id">@trial.Name</option>
                 }
             </select>
+            <input id="SearchTrial" style="margin-top:5px" type="text" class="form-control" placeholder="Search Trial" onkeyup="searchSel('SearchTrial', 'trial')" />
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ParticipantId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            <select name="ParticipantId">
+            <select class="form-control" name="ParticipantId" id="participant">
                 @foreach (var participant in Model.Participants)
                 {
                     <option value="@participant.Id">@participant.Person.First_Name @participant.Person.Last_Name (@participant.Person.Username)</option>
                 }
             </select>
+            <input id="SearchParticipant" style="margin-top:5px" type="text" class="form-control" placeholder="Search Participant" />
         </div>
     </div>
     <div class="form-group">
@@ -40,4 +41,24 @@
             <input type="submit" class="btn btn-default" value="Add Participant" />
         </div>
     </div>
+}
+
+@section scripts {
+    <script type="text/javascript">
+        //document.getElementById('SearchTrial').onkeyup = searchSel("SearchTrial", "trial");
+        //document.getElementById('SearchParticipant').onkeyup = searchSel("SearchParticipant", "participant");
+        function searchSel(textBox, dropDown) {
+            var input = document.getElementById(textBox).value.toLowerCase();
+
+            len = input.length;
+            output = document.getElementById(dropDown).options;
+            for (var i = 0; i < output.length; i++)
+                if (output[i].text.toLowerCase().indexOf(input) != -1) {
+                    output[i].selected = true;
+                    break;
+                }
+            if (input == '')
+                output[0].selected = true;
+        }
+    </script>
 }
