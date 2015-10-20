@@ -4,7 +4,10 @@
 
 <div class="jumbotron">
     <h1 style="font-size:40px;">Research Trial Management System</h1>
-    <p><a href="@Url.Action("Login", "Account")" class="btn btn-primary btn-lg">Login &raquo;</a></p>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <p><a href="@Url.Action("Login", "Account")" class="btn btn-primary btn-lg">Login &raquo;</a></p>
+    }
 </div>
 
 <h1>Welcome to the RTMS</h1>

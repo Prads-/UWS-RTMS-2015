@@ -560,7 +560,7 @@ namespace Professional_Experience.Controllers
             return View(m);
         }
 
-        public ActionResult ViewAllParticipants(int id, int page = 0)
+        public ActionResult ViewAllParticipants(int id, int page = 1)
         {
             var trialParticipants = _db.Trial_Participant.
                 Where(tp => tp.Trial_Id == id).OrderBy(tp => tp.Participant.Person.First_Name).AsEnumerable();
@@ -568,19 +568,21 @@ namespace Professional_Experience.Controllers
             return View(m);
         }
 
-        public ActionResult ViewAllInterventionParticipant(int id)
+        public ActionResult ViewAllInterventionParticipant(int id, int page = 1)
         {
-            var m = _db.Trial_Participant.
+            var trialParticipants = _db.Trial_Participant.
                 Where(tp => tp.Trial_Id == id && tp.Classification == PX_Model.Trial_Participant.CLASSIFICATION_INTERVENTION).
                 OrderBy(tp => tp.Participant.Person.First_Name).AsEnumerable();
+            var m = new PagedList<PX_Model.Trial_Participant>(trialParticipants, page, 15);
             return View("ViewAllParticipants", m);
         }
 
-        public ActionResult ViewAllExperimentalParticipant(int id)
+        public ActionResult ViewAllExperimentalParticipant(int id, int page = 1)
         {
-            var m = _db.Trial_Participant.
+            var trialParticipants = _db.Trial_Participant.
                 Where(tp => tp.Trial_Id == id && tp.Classification == PX_Model.Trial_Participant.CLASSIFICATION_CONTROL).
                 OrderBy(tp => tp.Participant.Person.First_Name).AsEnumerable();
+            var m = new PagedList<PX_Model.Trial_Participant>(trialParticipants, page, 15);
             return View("ViewAllParticipants", m);
         }
 
