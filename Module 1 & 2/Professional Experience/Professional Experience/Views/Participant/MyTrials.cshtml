@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Professional_Experience.Models.MyTrialViewModel>
+﻿@using PagedList.Mvc;
+@model PagedList.PagedList<PX_Model.Trial>
 
 @{
     ViewBag.Title = "My Trials";
@@ -7,9 +8,29 @@
 
 <h2>My Trials</h2>
 
-@foreach (var trial in Model)
+@using (Html.BeginForm("SearchTrials", "Participant", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    <h3>@Html.ActionLink(trial.TrialName, "ViewTrial", new { id = trial.TrialId })</h3>
-    <p>@trial.TrialDescription</p>
+    @Html.AntiForgeryToken()
     <hr />
+    <div class="form-group">
+        <input type="text" style="display:inline; margin-left:15px;" placeholder="Search Trial" name="searchWord" class="form-control" />
+        <input type="submit" style="padding:6px; width: 100px;" class="btn btn-default" value="Search" />
+    </div>
+    <input type="hidden" value="true" name="myTrials" />
 }
+
+<table class="table table-striped" style="border:1px solid #dddddd;">
+    @foreach (var trial in Model)
+    {
+        <tr>
+            <td>
+                <h3>@Html.ActionLink(trial.Name, "ViewTrial", new { id = trial.Id })</h3>
+                <p>@Html.Raw(trial.Description)</p>
+            </td>
+        </tr>
+    }
+</table>
+
+<div style="text-align:center;">
+    @Html.PagedListPager(Model, page => Url.Action("MyTrials", new { page = page }))
+</div>

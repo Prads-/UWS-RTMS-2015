@@ -1,4 +1,5 @@
-﻿@model PagedList.PagedList<PX_Model.Trial_Participant>
+﻿@using PagedList.Mvc
+@model PagedList.PagedList<PX_Model.Trial_Participant>
 
 @{
     ViewBag.Title = "View All Participants";
@@ -7,6 +8,18 @@
 
 <h2>Participants</h2>
 
+@using (Html.BeginForm("SearchAllParticipants", "Administrator", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    <div class="form-group">
+        <input type="text" style="display:inline;" placeholder="Search Participant" name="searchWord" class="form-control" />
+        <input type="submit" style="padding:6px; width: 100px;" class="btn btn-default" value="Search" />
+    </div>
+    <input type="hidden" name="id" value="@ViewBag.Id" />
+    <input type="hidden" name="type" value="@ViewBag.contentType" />
+}
+
 <table class="table table-hover" style="width:100%;">
     <tr>
         <th>Name</th>
@@ -14,13 +27,28 @@
         <th>Gender</th>
         <th>Email</th>
     </tr>
-    <tr>
-        @foreach (var tp in Model)
-        {
+    @foreach (var tp in Model)
+    {
+        <tr>
             <td>@Html.ActionLink(String.Format("{0} {1}", tp.Participant.Person.First_Name, tp.Participant.Person.Last_Name), "ViewParticipant", new { id = tp.Participant.Id }, new { @style = "display: block;" })</td>
             <td>@Html.ActionLink(String.Format("{0:dd/MM/yyyy}", tp.Participant.Date_Of_Birth), "ViewParticipant", new { id = tp.Participant.Id }, new { @style = "display: block;" })</td>
             <td>@Html.ActionLink(tp.Participant.Gender, "ViewParticipant", new { id = tp.Participant.Id }, new { @style = "display: block;" })</td>
             <td>@Html.ActionLink(tp.Participant.Person.Email, "ViewParticipant", new { id = tp.Participant.Id }, new { @style = "display: block;" })</td>
-        }
-    </tr>
+        </tr>
+    }
 </table>
+
+<div style="text-align:center;">
+    @switch ((int)ViewBag.contentType)
+    {
+        case 0:
+            @Html.PagedListPager(Model, page => Url.Action("ViewAllParticipants", new { id = ViewBag.Id, page = page }))
+            break;
+        case 1:
+        @Html.PagedListPager(Model, page => Url.Action("ViewAllInterventionParticipant", new { id = ViewBag.Id, page = page }))
+            break;
+        case 2:
+        @Html.PagedListPager(Model, page => Url.Action("ViewAllExperimentalParticipant", new { id = ViewBag.Id, page = page }))
+            break;
+    }
+</div>

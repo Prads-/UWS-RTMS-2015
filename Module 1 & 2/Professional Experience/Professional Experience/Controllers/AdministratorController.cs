@@ -66,10 +66,9 @@ namespace Professional_Experience.Controllers
             return View(m);
         }
 
-        public ActionResult EditTrials()
+        public ActionResult EditTrials(int page = 1)
         {
-            var trials = _db.Trials.ToArray();
-
+            var trials = new PagedList<PX_Model.Trial>(_db.Trials.AsEnumerable().OrderBy(t => t.Name), page, 7);
             return View(trials);
         }
 
@@ -527,12 +526,22 @@ namespace Professional_Experience.Controllers
             return View(m);
         }
 
-        public ActionResult ViewTrials()
+        public ActionResult ViewTrials(int pageRandomised = 1, int pageNonRandomised = 1)
         {
             var m = new Professional_Experience.Models.AdminViewTrialsViewModel();
-            m.Randomised = _db.Trials.Where(t => t.HasBeenRandomised == true);
-            m.NonRandomised = _db.Trials.Where(t => t.HasBeenRandomised == false);
+            m.Randomised = new PagedList<PX_Model.Trial>(_db.Trials.Where(t => t.HasBeenRandomised == true).OrderBy(t => t.Name), pageRandomised, 7);
+            m.NonRandomised = new PagedList<PX_Model.Trial>(_db.Trials.Where(t => t.HasBeenRandomised == false).OrderBy(t => t.Name), pageNonRandomised, 7);
             return View(m);
+        }
+
+        public ActionResult SearchTrialsAccordingToClassification(string searchWord)
+        {
+            searchWord = searchWord.ToLower();
+            var trials = _db.Trials.Where(t => t.Name.ToLower().Contains(searchWord) || t.Description.ToLower().Contains(searchWord)).OrderBy(t => t.Name);
+            var m = new Professional_Experience.Models.AdminViewTrialsViewModel();
+            m.Randomised = new PagedList<PX_Model.Trial>(trials.Where(t => t.HasBeenRandomised == true), 1, trials.Count());
+            m.NonRandomised = new PagedList<PX_Model.Trial>(trials.Where(t => t.HasBeenRandomised == false), 1, trials.Count());
+            return View("ViewTrials", m);
         }
 
         public ActionResult ViewRandomisedTrial(int id)
@@ -565,6 +574,8 @@ namespace Professional_Experience.Controllers
             var trialParticipants = _db.Trial_Participant.
                 Where(tp => tp.Trial_Id == id).OrderBy(tp => tp.Participant.Person.First_Name).AsEnumerable();
             var m = new PagedList<PX_Model.Trial_Participant>(trialParticipants, page, 15);
+            ViewBag.contentType = 0;
+            ViewBag.Id = id;
             return View(m);
         }
 
@@ -574,6 +585,8 @@ namespace Professional_Experience.Controllers
                 Where(tp => tp.Trial_Id == id && tp.Classification == PX_Model.Trial_Participant.CLASSIFICATION_INTERVENTION).
                 OrderBy(tp => tp.Participant.Person.First_Name).AsEnumerable();
             var m = new PagedList<PX_Model.Trial_Participant>(trialParticipants, page, 15);
+            ViewBag.contentType = 1;
+            ViewBag.Id = id;
             return View("ViewAllParticipants", m);
         }
 
@@ -583,6 +596,37 @@ namespace Professional_Experience.Controllers
                 Where(tp => tp.Trial_Id == id && tp.Classification == PX_Model.Trial_Participant.CLASSIFICATION_CONTROL).
                 OrderBy(tp => tp.Participant.Person.First_Name).AsEnumerable();
             var m = new PagedList<PX_Model.Trial_Participant>(trialParticipants, page, 15);
+            ViewBag.contentType = 2;
+            ViewBag.Id = id;
+            return View("ViewAllParticipants", m);
+        }
+
+        [HttpPost]
+        public ActionResult SearchAllParticipants(int id, int type, string searchWord)
+        {
+            IEnumerable<PX_Model.Trial_Participant> trialParticipants;
+            searchWord = searchWord.ToLower();
+
+            if (type == 0)
+            {
+                trialParticipants = _db.Trial_Participant.
+                    Where(tp => tp.Trial_Id == id).
+                    OrderBy(tp => tp.Participant.Person.First_Name).AsEnumerable();
+            }
+            else
+            {
+                trialParticipants = _db.Trial_Participant.
+                    Where(tp => tp.Trial_Id == id && tp.Classification == type - 1).
+                    OrderBy(tp => tp.Participant.Person.First_Name).AsEnumerable();
+            }
+
+            var searchParticipants = trialParticipants.Where(tp => tp.Participant.Person.First_Name.ToLower().Contains(searchWord)
+                || tp.Participant.Person.Last_Name.ToLower().Contains(searchWord) 
+                || tp.Participant.Person.Username.ToLower().Contains(searchWord));
+
+            var m = new PagedList<PX_Model.Trial_Participant>(searchParticipants, 1, searchParticipants.Count() + 1);
+            ViewBag.contentType = type;
+            ViewBag.Id = id;
             return View("ViewAllParticipants", m);
         }
 
@@ -663,6 +707,36 @@ namespace Professional_Experience.Controllers
                     xValue: new[] { "Intervention", "Experimental" },
                     yValues: new[] { m.NumberOfInterventionParticipant, m.NumberOfExperimentalParticipant });
             classificationChart.Save("~/Charts/classification.jpg");
+
+            m.BaselineAssessments = new List<TrialReportViewModel.BaselineAssessment>();
+            var baselineAssessments = _db.Assessment_Type.Where(ba => ba.Trial_Id == id);
+
+            foreach (var baselineAssessment in baselineAssessments)
+            {
+                var baseline = new TrialReportViewModel.BaselineAssessment();
+                baseline.Name = baselineAssessment.Name;
+                baseline.Questions = new List<TrialReportViewModel.Question>();
+                var questions = baselineAssessment.Assessment_Type_Question.Where(q => q.Question_Type != 0);
+                foreach (var question in questions) {
+                    var options = new List<TrialReportViewModel.Option>();
+                    double count = question.Assessment_Type_Question_Answer.Count;
+                    foreach (var option in question.Assessment_Type_Option)
+                    {
+                        var opt = new TrialReportViewModel.Option();
+                        opt.Opt = option.Opt;
+                        opt.Percentage = ((double)question.Assessment_Type_Question_Answer.Where(qa => qa.Answer == option.Opt).Count() / count) * 100.0;
+                        options.Add(opt);
+                    }
+                    var q = new TrialReportViewModel.Question();
+                    q.Q = question.Question;
+                    q.Options = options;
+                    baseline.Questions.Add(q);
+                }
+                if (questions.Count() != 0)
+                {
+                    m.BaselineAssessments.Add(baseline);
+                }
+            }
 
             return View(m);
         }

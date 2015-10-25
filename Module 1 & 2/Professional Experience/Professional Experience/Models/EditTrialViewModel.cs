@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Professional_Experience.Models
 {
@@ -15,6 +16,7 @@ namespace Professional_Experience.Models
         public string Name { get; set; }
 
         [Required]
+        [AllowHtml]
         [Display(Name = "Description")]
         public string Description { get; set; }
 
@@ -29,18 +31,22 @@ namespace Professional_Experience.Models
         public DateTime? EndDate { get; set; }
 
         [Required]
+        [AllowHtml]
         [Display(Name = "Objective")]
         public string Objective { get; set; }
 
         [Required]
+        [AllowHtml]
         [Display(Name = "Hypothesis")]
         public string Hypothesis { get; set; }
 
         [Required]
+        [AllowHtml]
         [Display(Name = "Outcome")]
         public string Outcome { get; set; }
 
         [Required]
+        [AllowHtml]
         [Display(Name = "Terms and Conditions")]
         public string TermsAndConditions { get; set; }
     }

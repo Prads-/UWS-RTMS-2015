@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace Professional_Experience.Controllers
 {
@@ -25,27 +26,12 @@ namespace Professional_Experience.Controllers
             return View();
         }
 
-        public ActionResult ParticipateTrialList()
+        public ActionResult ParticipateTrialList(int page = 1)
         {
             var participant = GetCurrentParticipant;
-            var trials = _db.Trials.ToArray();
-            var trialList = new List<Professional_Experience.Models.ParticipateTrialListViewModel>();
-            var trialParticipants = _db.Trial_Participant.Where(tp => tp.Participant_Id == participant.Id);
+            var trials = _db.Trials.Where(t => t.Trial_Participant.Where(tp => tp.Participant_Id == participant.Id).Count() == 0);
             
-            foreach (var trial in trials)
-            {
-                var trialParticipant = trialParticipants.FirstOrDefault(tp => tp.Trial_Id == trial.Id);
-                if (trialParticipant == null)
-                {
-                    var m = new Professional_Experience.Models.ParticipateTrialListViewModel();
-                    m.TrialId = trial.Id;
-                    m.TrialName = trial.Name;
-                    m.TrialDescription = trial.Description;
-                    trialList.Add(m);
-                }
-            }
-
-            return View(trialList.AsEnumerable());
+            return View(new PagedList<PX_Model.Trial>(trials.OrderBy(t => t.Name), page, 5));
         }
 
         public ActionResult AcceptTermsAndConditions(int id)
@@ -182,39 +168,40 @@ namespace Professional_Experience.Controllers
             return View();
         }
 
-        public ActionResult MyTrials()
+        public ActionResult MyTrials(int page = 1)
         {
-            var m = new List<Professional_Experience.Models.MyTrialViewModel>();
-            var trialParticipants = _db.Trial_Participant.Where(tp => tp.Participant_Id == GetCurrentParticipant.Id);
+            var participant = GetCurrentParticipant;
+            var trials = _db.Trials.Where(t => t.Trial_Participant.Where(tp => tp.Participant_Id == participant.Id).Count() != 0);
 
-            foreach (var tp in trialParticipants)
-            {
-                var model = new Professional_Experience.Models.MyTrialViewModel();
-                model.TrialId = (int)tp.Trial_Id;
-                model.TrialName = tp.Trial.Name;
-                model.TrialDescription = tp.Trial.Description;
-                m.Add(model);
-            }
-
-            return View(m.AsEnumerable());
+            return View(new PagedList<PX_Model.Trial>(trials.OrderBy(t => t.Name), page, 5));
         }
 
         public ActionResult ViewTrial(int id)
         {
-            var baselineAssessments = _db.Assessment_Type.Where(at => at.Trial_Id == id);
-            int partcipantId = GetCurrentParticipant.Id;
+            var trial = _db.Trials.FirstOrDefault(t => t.Id == id);
+            if (trial == null)
+            {
+                ModelState.AddModelError("", "Trail not found");
+                return View("Index");
+            }
             var m = new List<Professional_Experience.Models.ViewTrialViewModel>();
 
-            foreach (var ba in baselineAssessments)
+            if (trial.HasBeenRandomised == true)
             {
-                var tpba = _db.Trial_Participant_Assessment_Type.FirstOrDefault(t => t.Trial_Participant_Id == partcipantId && t.Assessment_Type_Id == ba.Id);
-                if (tpba == null)
+                var baselineAssessments = _db.Assessment_Type.Where(at => at.Trial_Id == id);
+                int partcipantId = GetCurrentParticipant.Id;
+
+                foreach (var ba in baselineAssessments)
                 {
-                    var model = new Professional_Experience.Models.ViewTrialViewModel();
-                    model.BaselineAssessmentId = ba.Id;
-                    model.BaselineAssessmentDescription = ba.Description;
-                    model.BaselineAssessmentName = ba.Name;
-                    m.Add(model);
+                    var tpba = _db.Trial_Participant_Assessment_Type.FirstOrDefault(t => t.Trial_Participant_Id == partcipantId && t.Assessment_Type_Id == ba.Id);
+                    if (tpba == null)
+                    {
+                        var model = new Professional_Experience.Models.ViewTrialViewModel();
+                        model.BaselineAssessmentId = ba.Id;
+                        model.BaselineAssessmentDescription = ba.Description;
+                        model.BaselineAssessmentName = ba.Name;
+                        m.Add(model);
+                    }
                 }
             }
 
@@ -291,6 +278,28 @@ namespace Professional_Experience.Controllers
             }
 
             return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult SearchTrials(string searchWord, bool myTrials) 
+        {
+            var participant = GetCurrentParticipant;
+            IEnumerable<PX_Model.Trial> trials;
+            searchWord = searchWord.ToLower();
+
+            if (myTrials)
+            {
+                trials = _db.Trials.Where(t => t.Trial_Participant.Where(tp => tp.Participant_Id == participant.Id).Count() != 0);
+            }
+            else
+            {
+                trials = _db.Trials.Where(t => t.Trial_Participant.Where(tp => tp.Participant_Id == participant.Id).Count() == 0);
+            }
+
+            trials = trials.Where(t => t.Name.ToLower().Contains(searchWord) || t.Description.ToLower().Contains(searchWord));
+            var m = new PagedList<PX_Model.Trial>(trials.OrderBy(t => t.Name), 1, trials.Count() + 1);
+            
+            return ((myTrials) ? View("MyTrials", m) : View("ParticipateTrialList", m));
         }
     }
 }

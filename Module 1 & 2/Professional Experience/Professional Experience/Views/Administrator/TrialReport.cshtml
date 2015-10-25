@@ -9,9 +9,10 @@
 
 <img src="~/Charts/gender.jpg" />
 
-<table>
+<table class="table table-striped" style="width:30%; border:1px solid #dddddd;">
     <tr>
         <th>Participants according to gender</th>
+        <th></th>
     </tr>
     <tr>
         <td>Male</td>
@@ -26,9 +27,10 @@
 
 <img src="~/Charts/classification.jpg" />
 
-<table>
+<table class="table table-striped" style="width:30%; border:1px solid #dddddd;">
     <tr>
         <th>Participants according to Classification</th>
+        <th></th>
     </tr>
     <tr>
         <td>Intervention</td>
@@ -39,3 +41,24 @@
         <td>@Model.NumberOfExperimentalParticipant</td>
     </tr>
 </table>
+
+@foreach (var baselineAssessment in Model.BaselineAssessments)
+{
+    <table class="table table-striped" style="width:50%; border:1px solid #dddddd;">
+        <tr>
+            <th>@baselineAssessment.Name</th>
+            <th></th>
+        </tr>
+        @foreach (var question in baselineAssessment.Questions)
+        {
+            <tr><td><strong>@question.Q</strong></td><td></td></tr>
+            foreach (var option in question.Options)
+            {
+                <tr>
+                    <td>@option.Opt</td>
+                    <td>@option.Percentage%</td>
+                </tr>
+            }
+        }
+    </table>
+}

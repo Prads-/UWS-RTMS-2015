@@ -1,12 +1,12 @@
 ﻿@model Professional_Experience.Models.TermsAndConditionViewModel
 
 @{
-    ViewBag.Title = "Accept Terms And Conditions";
+    ViewBag.Title = "Terms And Conditions";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Accept Terms And Conditions</h2>
+<h2>Terms And Conditions</h2>
 
-<p>@Model.TermsAndCondition</p>
+<p>@Html.Raw(Model.TermsAndCondition)</p>
 
-@Html.ActionLink("I Accept", "ParticipateTrial", new { id = Model.Id })
+@Html.ActionLink("I Accept", "ParticipateTrial", new { id = Model.Id }, new { @class="btn" })

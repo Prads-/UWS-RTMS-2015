@@ -1,4 +1,5 @@
-﻿@model IEnumerable<PX_Model.Trial>
+﻿@using PagedList.Mvc
+@model PagedList.PagedList<PX_Model.Trial>
 
 @{
     ViewBag.Title = "Edit Trials";
@@ -7,8 +8,27 @@
 
 <h2>Edit Trials</h2>
 
-@foreach (var trial in Model)
-{
-    @Html.ActionLink(trial.Name, "EditTrial", "Administrator", new { id = trial.Id }, new { });
-    <br />
-}
+<table class="table table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+    </tr>
+    @foreach (var trial in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(trial.Name, "EditTrial", "Administrator", new { id = trial.Id }, new { @style = "display: block;" })
+            </td>
+            <td>
+                @Html.ActionLink(String.Format("{0: dd/MM/yyyy}", trial.Start_Date), "EditTrial", "Administrator", new { id = trial.Id }, new { @style = "display: block;" })
+            </td>
+            <td>
+                @Html.ActionLink(String.Format("{0: dd/MM/yyyy}", trial.End_Date), "EditTrial", "Administrator", new { id = trial.Id }, new { @style = "display: block;" })
+            </td>
+        </tr>
+    }
+</table>
+<div style="text-align:center;">
+    @Html.PagedListPager(Model, page => Url.Action("EditTrials", new { page = page }))
+</div>

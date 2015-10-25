@@ -1,4 +1,5 @@
-﻿@model Professional_Experience.Models.AdminViewTrialsViewModel
+﻿@using PagedList.Mvc
+@model Professional_Experience.Models.AdminViewTrialsViewModel
 
 @{
     ViewBag.Title = "View Trials";
@@ -6,6 +7,16 @@
 }
 
 <h2>View Trials</h2>
+
+@using (Html.BeginForm("SearchTrialsAccordingToClassification", "Administrator", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    <div class="form-group">
+        <input type="text" style="display:inline;" placeholder="Search Trial" name="searchWord" class="form-control" />
+        <input type="submit" style="padding:6px; width: 100px;" class="btn btn-default" value="Search" />
+    </div>
+}
 
 <h3>Randomised Trials</h3>
 
@@ -31,6 +42,9 @@
         </tr>
     }
 </table>
+<div style="text-align:center;">
+    @Html.PagedListPager(Model.Randomised, page => Url.Action("ViewTrials", new { pageRandomised = page }))
+</div>
 
 <h3>Non-Randomised Trials</h3>
 
@@ -56,3 +70,6 @@
         </tr>
     }
 </table>
+<div style="text-align:center;">
+    @Html.PagedListPager(Model.NonRandomised, page => Url.Action("ViewTrials", new { pageNonRandomised = page }))
+</div>

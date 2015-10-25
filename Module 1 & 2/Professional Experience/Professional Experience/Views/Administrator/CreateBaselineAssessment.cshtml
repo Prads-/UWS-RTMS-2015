@@ -10,7 +10,6 @@
 @using (Html.BeginForm("CreateBaselineAssessment", "Administrator", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create Baseline Assessment.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
 
@@ -56,7 +55,8 @@
     <script type="text/javascript">
         var qCounter = 0;
         function addQuestion() {
-            var questionHTML = "<hr /><div class='form-group'>";
+            var questionHTML = "<fieldset><legend>Question " + (qCounter + 1) + "</legend>";
+            questionHTML += "<div class='form-group'>";
             questionHTML += "<label class='col-md-2 control-label'>Question</label>"
             questionHTML += "<div class='col-md-10'>";
             questionHTML += "<input type='text' class='form-control' name='Questions[" + qCounter + "].Question' />";
@@ -81,7 +81,7 @@
             questionHTML += "<label class='col-md-2 control-label'></label>"
             questionHTML += "<div class='col-md-10'>";
             questionHTML += "<input type='checkbox' name='Questions[" + qCounter + "].AddToQuestion' value='true' />Add this question to baseline assessment</div></div>"
-            questionHTML += "<div id='question" + (qCounter + 1) + "'></div>";
+            questionHTML += "<div id='question" + (qCounter + 1) + "'></div></fieldset>";
 
             var questions = document.getElementById("question" + qCounter);
             questions.innerHTML = questionHTML;
