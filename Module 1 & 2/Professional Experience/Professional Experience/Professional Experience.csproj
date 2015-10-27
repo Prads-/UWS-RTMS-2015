@@ -166,6 +166,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdministratorController.cs" />
+    <Compile Include="Controllers\ClinicianController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ParticipantController.cs" />
@@ -182,11 +183,14 @@
     <Compile Include="Models\AssignInvestigatorToTrialViewModel.cs" />
     <Compile Include="Models\CreateAssessmentTypeQuestionViewModel.cs" />
     <Compile Include="Models\CreateBaselineAssessmentViewModel.cs" />
+    <Compile Include="Models\CreateClinicianViewModel.cs" />
     <Compile Include="Models\CreateTrialViewModel.cs" />
+    <Compile Include="Models\EditClinicianViewModel.cs" />
     <Compile Include="Models\EditInvestigatorViewModel.cs" />
     <Compile Include="Models\EditTrialViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MonitorTrialParticipantViewModel.cs" />
     <Compile Include="Models\RandomiseViewModel.cs" />
     <Compile Include="Models\RegisterInvestigatorViewModel.cs" />
     <Compile Include="Models\ScreeningCriteriaViewModel.cs" />
@@ -458,6 +462,16 @@
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.eot" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\readme.md" />
     <Content Include="Scripts\tinymce\langs\readme.md" />
+    <Content Include="Views\Administrator\CreateClinician.cshtml" />
+    <Content Include="Views\Administrator\EditClinician.cshtml" />
+    <Content Include="Views\Administrator\Clinician.cshtml" />
+    <Content Include="Views\Administrator\EditClinicians.cshtml" />
+    <Content Include="Views\Clinician\Index.cshtml" />
+    <Content Include="Views\Clinician\ParticipantList.cshtml" />
+    <Content Include="Views\Clinician\AssignParticipant.cshtml" />
+    <Content Include="Views\Clinician\MyParticipantList.cshtml" />
+    <Content Include="Views\Clinician\MonitorParticipantTrial.cshtml" />
+    <Content Include="Views\Clinician\MonitorParticipant.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -178,22 +178,21 @@ namespace Professional_Experience.Controllers
 
         public ActionResult ViewTrial(int id)
         {
-            var trial = _db.Trials.FirstOrDefault(t => t.Id == id);
-            if (trial == null)
+            var trialParticipant = _db.Trial_Participant.FirstOrDefault(t => t.Trial_Id == id && t.Participant_Id == GetCurrentParticipant.Id);
+            if (trialParticipant == null)
             {
-                ModelState.AddModelError("", "Trail not found");
+                ModelState.AddModelError("", "Trail Participant not found");
                 return View("Index");
             }
             var m = new List<Professional_Experience.Models.ViewTrialViewModel>();
 
-            if (trial.HasBeenRandomised == true)
+            if (trialParticipant.Trial.HasBeenRandomised == true)
             {
                 var baselineAssessments = _db.Assessment_Type.Where(at => at.Trial_Id == id);
-                int partcipantId = GetCurrentParticipant.Id;
-
+                
                 foreach (var ba in baselineAssessments)
                 {
-                    var tpba = _db.Trial_Participant_Assessment_Type.FirstOrDefault(t => t.Trial_Participant_Id == partcipantId && t.Assessment_Type_Id == ba.Id);
+                    var tpba = _db.Trial_Participant_Assessment_Type.FirstOrDefault(t => t.Trial_Participant_Id == trialParticipant.Id && t.Assessment_Type_Id == ba.Id);
                     if (tpba == null)
                     {
                         var model = new Professional_Experience.Models.ViewTrialViewModel();
@@ -204,11 +203,12 @@ namespace Professional_Experience.Controllers
                     }
                 }
             }
+            ViewBag.tid = id;
 
             return View(m.AsEnumerable());
         }
 
-        public ActionResult TakeBaselineAssessment(int id)
+        public ActionResult TakeBaselineAssessment(int id, int tid)
         {
             var baselineAssessment = _db.Assessment_Type.FirstOrDefault(ba => ba.Id == id);
             if (baselineAssessment == null)
@@ -218,6 +218,7 @@ namespace Professional_Experience.Controllers
             }
             var questions = baselineAssessment.Assessment_Type_Question;
             var m = new Professional_Experience.Models.TakeBaselineAssessmentViewModel();
+            m.TrialId = tid;
             m.AssessmentTypeId = baselineAssessment.Id;
             m.Answers = new List<Models.AnswerBaselineAssessmentQuestionViewModel>();
 
@@ -245,12 +246,19 @@ namespace Professional_Experience.Controllers
         [HttpPost]
         public ActionResult TakeBaselineAssessment(Professional_Experience.Models.TakeBaselineAssessmentViewModel m)
         {
+            var trialParticipant = _db.Trial_Participant.FirstOrDefault(tp => tp.Trial_Id == m.TrialId && tp.Participant_Id == GetCurrentParticipant.Id);
+            if (trialParticipant == null)
+            {
+                ModelState.AddModelError("", "Trial Participant not found!");
+                return View("Index");
+            }
+            
             var trialParticipantAssessmentType = new PX_Model.Trial_Participant_Assessment_Type();
             trialParticipantAssessmentType.Assessment_Type_Id = m.AssessmentTypeId;
-            trialParticipantAssessmentType.Trial_Participant_Id = GetCurrentParticipant.Id;
+            trialParticipantAssessmentType.Trial_Participant_Id = trialParticipant.Id;
             _db.Trial_Participant_Assessment_Type.Add(trialParticipantAssessmentType);
             _db.SaveChanges();
-
+            
             foreach (var answer in m.Answers)
             {
                 if (answer.QuestionType == PX_Model.Assessment_Type_Question.TYPE_MULTU_CHOICE_MULTI_SELECT)

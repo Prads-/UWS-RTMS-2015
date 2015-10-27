@@ -569,6 +569,10 @@ namespace Professional_Experience.Controllers
             {
                 return RedirectToAction("Index", "Administrator");
             }
+            else if (User.IsInRole("Clinician"))
+            {
+                return RedirectToAction("Index", "Clinician");
+            }
             return RedirectToAction("Index", "Home");
         }
 

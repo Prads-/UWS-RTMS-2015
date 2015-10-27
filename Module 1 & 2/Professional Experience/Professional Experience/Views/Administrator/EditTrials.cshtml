@@ -8,6 +8,16 @@
 
 <h2>Edit Trials</h2>
 
+@using (Html.BeginForm("SearchTrials", "Administrator", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    <div class="form-group">
+        <input type="text" style="display:inline; margin-left:15px;" placeholder="Search Trial" name="searchWord" class="form-control" />
+        <input type="submit" style="padding:6px; width: 100px;" class="btn btn-default" value="Search" />
+    </div>
+}
+
 <table class="table table-hover">
     <tr>
         <th>Name</th>

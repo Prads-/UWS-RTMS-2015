@@ -17,7 +17,6 @@ namespace Professional_Experience.Controllers
     [Authorize(Roles="Admin")]
     public class AdministratorController : UIController
     {
-        // GET: Administrator
         public ActionResult Index()
         {
             return View();
@@ -64,6 +63,13 @@ namespace Professional_Experience.Controllers
                 return View("Index");
             }
             return View(m);
+        }
+
+        public ActionResult SearchTrials(string searchWord)
+        {
+            searchWord = searchWord.ToLower();
+            var trials = _db.Trials.Where(t => t.Name.ToLower().Contains(searchWord) || t.Description.ToLower().Contains(searchWord));
+            return View("EditTrials", new PagedList<PX_Model.Trial>(trials.OrderBy(t => t.Name), 1, trials.Count() + 1));
         }
 
         public ActionResult EditTrials(int page = 1)
@@ -539,8 +545,8 @@ namespace Professional_Experience.Controllers
             searchWord = searchWord.ToLower();
             var trials = _db.Trials.Where(t => t.Name.ToLower().Contains(searchWord) || t.Description.ToLower().Contains(searchWord)).OrderBy(t => t.Name);
             var m = new Professional_Experience.Models.AdminViewTrialsViewModel();
-            m.Randomised = new PagedList<PX_Model.Trial>(trials.Where(t => t.HasBeenRandomised == true), 1, trials.Count());
-            m.NonRandomised = new PagedList<PX_Model.Trial>(trials.Where(t => t.HasBeenRandomised == false), 1, trials.Count());
+            m.Randomised = new PagedList<PX_Model.Trial>(trials.Where(t => t.HasBeenRandomised == true), 1, trials.Count() + 1);
+            m.NonRandomised = new PagedList<PX_Model.Trial>(trials.Where(t => t.HasBeenRandomised == false), 1, trials.Count() + 1);
             return View("ViewTrials", m);
         }
 
@@ -633,7 +639,7 @@ namespace Professional_Experience.Controllers
         public ActionResult ViewParticipantsInGroup(int id, int pgid)
         {
             var m = _db.Trial_Participant.Where(tp => tp.Id == id && tp.Trial_Participant_Participant_Group.Where(tppg => tppg.Participant_Group.Id == pgid).Count() > 0);
-            return View("ViewAllParticipants", m);
+            return View("ViewAllParticipants", new PagedList<PX_Model.Trial_Participant>(m, 1, m.Count() + 1));
         }
 
         public ActionResult ViewParticipant(int id)
@@ -690,22 +696,49 @@ namespace Professional_Experience.Controllers
             m.NumberOfInterventionParticipant = trial.Trial_Participant.Where(tp => tp.Classification == PX_Model.Trial_Participant.CLASSIFICATION_INTERVENTION).Count();
             m.NumberOfExperimentalParticipant = trial.Trial_Participant.Count - m.NumberOfInterventionParticipant;
 
+            var xAxisValues = new List<string>();
+            var yAxisValues = new List<int>();
+
+            if (m.NumberOfMales != 0)
+            {
+                xAxisValues.Add("Male");
+                yAxisValues.Add(m.NumberOfMales);
+            }
+            if (m.NumberOfFemales != 0)
+            {
+                xAxisValues.Add("Female");
+                yAxisValues.Add(m.NumberOfFemales);
+            }
+
             var genderChart = new Chart(width: 600, height: 400)
                 .AddTitle("Number of participants according to gender")
                 .AddSeries(
                     chartType: "Pie",
                     name: "Trials",
-                    xValue: new[] { "Male", "Female" },
-                    yValues: new[] { m.NumberOfMales, m.NumberOfFemales });
+                    xValue: xAxisValues.ToArray(),
+                    yValues: yAxisValues.ToArray());
             genderChart.Save("~/Charts/gender.jpg");
+
+            xAxisValues.Clear();
+            yAxisValues.Clear();
+            if (m.NumberOfInterventionParticipant != 0)
+            {
+                xAxisValues.Add("Intervention");
+                yAxisValues.Add(m.NumberOfInterventionParticipant);
+            }
+            if (m.NumberOfExperimentalParticipant != 0)
+            {
+                xAxisValues.Add("Experimental");
+                yAxisValues.Add(m.NumberOfExperimentalParticipant);
+            }
 
             var classificationChart = new Chart(width: 600, height: 400)
                 .AddTitle("Number of participants according to classification")
                 .AddSeries(
                     chartType: "Pie",
                     name: "Trials",
-                    xValue: new[] { "Intervention", "Experimental" },
-                    yValues: new[] { m.NumberOfInterventionParticipant, m.NumberOfExperimentalParticipant });
+                    xValue: xAxisValues.ToArray(),
+                    yValues: yAxisValues.ToArray());
             classificationChart.Save("~/Charts/classification.jpg");
 
             m.BaselineAssessments = new List<TrialReportViewModel.BaselineAssessment>();
@@ -739,6 +772,129 @@ namespace Professional_Experience.Controllers
             }
 
             return View(m);
+        }
+
+        public ActionResult Clinician()
+        {
+            return View();
+        }
+
+        public ActionResult CreateClinician()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateClinician(CreateClinicianViewModel m)
+        {
+            if (ModelState.IsValid)
+            {
+                var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var user = new ApplicationUser { UserName = m.Username, Email = m.Email };
+                var result = await UserManager.CreateAsync(user, m.Password);
+                if (result.Succeeded)
+                {
+                    var person = new PX_Model.Person();
+
+                    person.First_Name = m.FirstName;
+                    person.Last_Name = m.LastName;
+                    person.Email = m.Email;
+                    person.Phone_Number = m.PhoneNumber;
+                    person.Postcode = m.Postcode;
+                    person.State = m.State;
+                    person.Street = m.Street;
+                    person.Suburb = m.Suburb;
+                    person.Username = m.Username;
+
+                    _db.People.Add(person);
+                    _db.SaveChanges();
+
+                    var clinician = new PX_Model.Clinician();
+
+                    clinician.Person_Id = person.Id;
+
+                    _db.Clinicians.Add(clinician);
+                    _db.SaveChanges();
+
+                    var u = UserManager.FindByName(m.Username);
+                    UserManager.AddToRole(u.Id, "Clinician");
+
+                    return View("Index");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+            }
+
+            return View(m);
+        }
+
+        public ActionResult EditClinicians(int page = 1)
+        {
+            var m = _db.Clinicians.OrderBy(c => c.Person.First_Name).AsEnumerable();
+            return View(new PagedList<PX_Model.Clinician>(m, page, 10));
+        }
+
+        public ActionResult EditClinician(int id)
+        {
+            var clinician = _db.Clinicians.FirstOrDefault(c => c.Id == id);
+            if (clinician == null)
+            {
+                ModelState.AddModelError("", "Clinician not found");
+                return View("Index");
+            }
+
+            var m = new EditClinicianViewModel();
+
+            m.Id = clinician.Id;
+            m.FirstName = clinician.Person.First_Name;
+            m.Email = clinician.Person.Email;
+            m.LastName = clinician.Person.Last_Name;
+            m.PhoneNumber = clinician.Person.Phone_Number;
+            m.Postcode = clinician.Person.Postcode;
+            m.State = clinician.Person.State;
+            m.Street = clinician.Person.Street;
+            m.Suburb = clinician.Person.Suburb;
+
+            return View(m);
+        }
+
+        [HttpPost]
+        public ActionResult EditClinician(EditClinicianViewModel m)
+        {
+            var clinician = _db.Clinicians.FirstOrDefault(c => c.Id == m.Id);
+            if (clinician == null)
+            {
+                ModelState.AddModelError("", "Clinician not found");
+                return View("Index");
+            }
+
+            if (ModelState.IsValid)
+            {
+                clinician.Person.Email = m.Email;
+                clinician.Person.First_Name = m.FirstName;
+                clinician.Person.Last_Name = m.LastName;
+                clinician.Person.Phone_Number = m.PhoneNumber;
+                clinician.Person.Postcode = m.Postcode;
+                clinician.Person.State = m.State;
+                clinician.Person.Street = m.Street;
+                clinician.Person.Suburb = m.Suburb;
+
+                _db.SaveChanges();
+                return View("Index");
+            }
+
+            return View(m);
+        }
+
+        public ActionResult SearchClinicians(string searchWord)
+        {
+            searchWord = searchWord.ToLower();
+            var clinicians = _db.Clinicians.Where(c => c.Person.First_Name.ToLower().Contains(searchWord)
+                || c.Person.Last_Name.ToLower().Contains(searchWord)
+                || c.Person.Username.ToLower().Contains(searchWord));
+            return View("EditClinicians", new PagedList<PX_Model.Clinician>(clinicians.OrderBy(c => c.Person.First_Name), 1, clinicians.Count() + 1));
         }
     }
 }

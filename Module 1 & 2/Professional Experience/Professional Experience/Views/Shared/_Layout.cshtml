@@ -32,7 +32,14 @@
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Dashboard", "Index", "Administrator")</li>
                     </ul>
-    
+
+                }
+                else if (User.IsInRole("Clinician"))
+                {
+                    //Add menu item for Clinician here
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Dashboard", "Index", "Clinician")</li>
+                    </ul>
                 }
                 @Html.Partial("_LoginPartial")
             </div>
@@ -43,7 +50,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Western Sydney University</p>
         </footer>
     </div>
 

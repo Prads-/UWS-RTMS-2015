@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Clinician Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Clinician Dashboard</h2>
+
+@Html.ValidationSummary("", new { @class = "text-danger" })
+
+@Html.ActionLink("Participant List", "ParticipantList", new { }, new { @class = "btn"})<br />
+@Html.ActionLink("My Participant List", "MyParticipantList", new { }, new { @class = "btn" })

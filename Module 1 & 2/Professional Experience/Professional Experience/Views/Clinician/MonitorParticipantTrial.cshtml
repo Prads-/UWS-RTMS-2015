@@ -1,0 +1,47 @@
+﻿@model Professional_Experience.Models.MonitorTrialParticipantViewModel
+
+@{
+    ViewBag.Title = "Monitor Participant Trial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Monitor Participant Trial</h2>
+
+<table class="table table-striped" style="width:800px; border:1px solid #dddddd;">
+    <tr>
+        <td><strong>Name</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Model.Trial.Name</td>
+    </tr>
+    <tr>
+        <td><strong>Start Date</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@String.Format("{0:dd/MM/yyyy}", Model.Trial.Start_Date)</td>
+    </tr>
+    <tr>
+        <td><strong>End Date</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@String.Format("{0:dd/MM/yyyy}", Model.Trial.End_Date)</td>
+    </tr>
+    <tr>
+        <td><strong>Description</strong></td>
+        <td style="word-break:break-all; padding-left:20px;">@Html.Raw(Model.Trial.Description)</td>
+    </tr>
+</table>
+
+<h3>Baseline Assessment Answers</h3>
+@foreach (var ba in Model.BaselineAssessments)
+{
+    <table class="table table-striped" style="width:800px; border:1px solid #dddddd;">
+        <tr><td><strong>@ba.Name</strong></td><td></td></tr>
+        @foreach (var question in ba.Questions)
+        {
+            <tr>
+                <td>@question.Ques</td>
+                <td>
+                    @foreach (var answer in question.Answers)
+                    {
+                        @answer<br />
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}

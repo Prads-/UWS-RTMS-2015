@@ -10,10 +10,15 @@
 @if (Model.Count() > 0)
 {
     <h3>Here are the list of baseline assessments you need to perform for this trial</h3>
-    foreach (var ba in Model)
-    {
-        <h3>@Html.ActionLink(ba.BaselineAssessmentName, "TakeBaselineAssessment", new { id = ba.BaselineAssessmentId })</h3>
-        <p>@ba.BaselineAssessmentDescription</p>
-        <hr />
-    }
+    <table class="table table-striped" style="border:1px solid #dddddd;">
+        @foreach (var ba in Model)
+        {
+            <tr>
+                <td>
+                    <h3>@Html.ActionLink(ba.BaselineAssessmentName, "TakeBaselineAssessment", new { id = ba.BaselineAssessmentId, tid = ViewBag.tid })</h3>
+                    <p>@ba.BaselineAssessmentDescription</p>
+                </td>
+            </tr>
+        }
+    </table>
 }

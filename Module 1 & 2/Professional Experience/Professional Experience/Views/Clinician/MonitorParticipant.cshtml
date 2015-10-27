@@ -1,11 +1,11 @@
 ﻿@model PX_Model.Participant
 
 @{
-    ViewBag.Title = "View Participant";
+    ViewBag.Title = "Monitor Participant";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Participant</h2>
+<h2>Monitor Participant</h2>
 
 <table class="table table-striped" style="width:100%;">
     <tr>
@@ -55,24 +55,15 @@
     </tr>
     @foreach (var tp in Model.Trial_Participant)
     {
-        string action = "";
-        if (tp.Trial.HasBeenRandomised == true)
-        {
-            action = "ViewRandomisedTrial";
-        }
-        else
-        {
-            action = "ViewNonRandomisedTrial";
-        }
         <tr>
             <td>
-                @Html.ActionLink(tp.Trial.Name, action, new { id = tp.Trial_Id }, new { @style="display: block;" })
+                @Html.ActionLink(tp.Trial.Name, "MonitorParticipantTrial", new { pid = Model.Id, tid = tp.Trial_Id }, new { @style = "display: block;" })
             </td>
             <td>
-                @Html.ActionLink(string.Format("{0:dd/MM/yyyy}", tp.Trial.Start_Date), action, new { id = tp.Trial_Id }, new { @style = "display: block;" })
+                @Html.ActionLink(string.Format("{0:dd/MM/yyyy}", tp.Trial.Start_Date), "MonitorParticipantTrial", new { pid = Model.Id, tid = tp.Trial_Id }, new { @style = "display: block;" })
             </td>
             <td>
-                @Html.ActionLink(string.Format("{0:dd/MM/yyyy}", tp.Trial.End_Date), action, new { id = tp.Trial_Id }, new { @style = "display: block;" })
+                @Html.ActionLink(string.Format("{0:dd/MM/yyyy}", tp.Trial.End_Date), "MonitorParticipantTrial", new { pid = Model.Id, tid = tp.Trial_Id }, new { @style = "display: block;" })
             </td>
         </tr>
     }

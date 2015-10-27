@@ -33,7 +33,7 @@
                     <option value="@participant.Id">@participant.Person.First_Name @participant.Person.Last_Name (@participant.Person.Username)</option>
                 }
             </select>
-            <input id="SearchParticipant" style="margin-top:5px" type="text" class="form-control" placeholder="Search Participant" />
+            <input id="SearchParticipant" style="margin-top:5px" type="text" class="form-control" placeholder="Search Participant" onkeyup="searchSel('SearchParticipant', 'participant')"  />
         </div>
     </div>
     <div class="form-group">

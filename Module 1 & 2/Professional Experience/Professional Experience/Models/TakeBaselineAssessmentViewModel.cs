@@ -8,6 +8,7 @@ namespace Professional_Experience.Models
     public class TakeBaselineAssessmentViewModel
     {
         public int AssessmentTypeId { get; set; }
+        public int TrialId { get; set; }
 
         public List<AnswerBaselineAssessmentQuestionViewModel> Answers { get; set; }
     }

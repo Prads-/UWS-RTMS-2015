@@ -1,0 +1,38 @@
+﻿@using PagedList.Mvc
+@model PagedList.PagedList<PX_Model.Clinician>
+
+@{
+    ViewBag.Title = "Edit Clinicians";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Clinicians</h2>
+
+@using (Html.BeginForm("SearchClinicians", "Administrator", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    <div class="form-group">
+        <input type="text" style="display:inline; margin-left:15px;" placeholder="Search Trial" name="searchWord" class="form-control" />
+        <input type="submit" style="padding:6px; width: 100px;" class="btn btn-default" value="Search" />
+    </div>
+}
+
+<table class="table table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+    </tr>
+    @foreach (var clinician in Model)
+    {
+        <tr>
+            <td>@Html.ActionLink(String.Format("{0} {1}", clinician.Person.First_Name, clinician.Person.Last_Name), "EditClinician", new { id = clinician.Id }, new { @style = "display: block;" })</td>
+            <td>@Html.ActionLink(clinician.Person.Email, "EditClinician", new { id = clinician.Id }, new { @style = "display: block;" })</td>
+            <td>@Html.ActionLink(clinician.Person.Phone_Number, "EditClinician", new { id = clinician.Id }, new { @style = "display: block;" })</td>
+        </tr>
+    }
+</table>
+<div style="text-align:center;">
+    @Html.PagedListPager(Model, page => Url.Action("EditClinicians", new { page = page }))
+</div>

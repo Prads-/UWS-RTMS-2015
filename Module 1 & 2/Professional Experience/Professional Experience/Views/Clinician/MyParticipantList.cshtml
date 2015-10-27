@@ -1,0 +1,41 @@
+﻿@using PagedList.Mvc;
+@model PagedList.PagedList<PX_Model.Participant>
+
+@{
+    ViewBag.Title = "My Participants List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>My Participants List</h2>
+
+@using (Html.BeginForm("SearchParticipant", "Clinician", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    <div class="form-group">
+        <input type="text" style="display:inline; margin-left:15px;" placeholder="Search Trial" name="searchWord" class="form-control" />
+        <input type="submit" style="padding:6px; width: 100px;" class="btn btn-default" value="Search" />
+    </div>
+    <input type="hidden" name="myParticipants" value="true" />
+}
+
+<table class="table table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Gender</th>
+        <th>Email</th>
+    </tr>
+    @foreach (var participant in Model)
+    {
+        <tr>
+            <td>@Html.ActionLink(String.Format("{0} {1}", participant.Person.First_Name, participant.Person.Last_Name), "MonitorParticipant", new { id = participant.Id }, new { @style = "display: block;" })</td>
+            <td>@Html.ActionLink(String.Format("{0:dd/MM/yyyy}", participant.Date_Of_Birth), "MonitorParticipant", new { id = participant.Id }, new { @style = "display: block;" })</td>
+            <td>@Html.ActionLink(participant.Gender, "MonitorParticipant", new { id = participant.Id }, new { @style = "display: block;" })</td>
+            <td>@Html.ActionLink(participant.Person.Email, "MonitorParticipant", new { id = participant.Id }, new { @style = "display: block;" })</td>
+        </tr>
+    }
+</table>
+<div style="text-align:center;">
+    @Html.PagedListPager(Model, page => Url.Action("MyParticipantList", new { page = page }))
+</div>

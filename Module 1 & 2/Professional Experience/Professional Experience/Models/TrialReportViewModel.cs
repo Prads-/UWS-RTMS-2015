@@ -17,6 +17,11 @@ namespace Professional_Experience.Models
         {
             public string Opt;
             public double Percentage;
+
+            public Option()
+            {
+                Percentage = 0.0;
+            }
         }
 
         public class Question
