@@ -44,21 +44,5 @@
 }
 
 @section scripts {
-    <script type="text/javascript">
-        //document.getElementById('SearchTrial').onkeyup = searchSel("SearchTrial", "trial");
-        //document.getElementById('SearchParticipant').onkeyup = searchSel("SearchParticipant", "participant");
-        function searchSel(textBox, dropDown) {
-            var input = document.getElementById(textBox).value.toLowerCase();
-
-            len = input.length;
-            output = document.getElementById(dropDown).options;
-            for (var i = 0; i < output.length; i++)
-                if (output[i].text.toLowerCase().indexOf(input) != -1) {
-                    output[i].selected = true;
-                    break;
-                }
-            if (input == '')
-                output[0].selected = true;
-        }
-    </script>
+    <script type="text/javascript" src="~/Scripts/Custom/Search.js"></script>
 }

@@ -670,7 +670,7 @@ namespace Professional_Experience.Controllers
                 numberOfParticipants.Add(t.Trial_Participant.Count);
             }
 
-            var barChart = new Chart(width: 600, height: 400)
+            var barChart = new Chart(width: 750, height: 500)
                 .AddTitle("Number of participant on trials")
                 .AddSeries(
                     name: "Trials",

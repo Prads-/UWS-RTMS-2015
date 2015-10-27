@@ -7,18 +7,22 @@
 
 <h2>General Report</h2>
 
-<img src="~/Charts/bar.jpg" />
+@{
+    Random random = new Random();
+}
 
-<table style="border: 1px solid; width: 70%;">
-    <tr style="border: 1px solid;">
-        <th style="border: 1px solid;">Trial Name</th>
-        <th style="border: 1px solid;">Number of Participants</th>
+<img src="~/Charts/bar.jpg?r=@random.Next(0, 10000)" />
+
+<table class="table table-striped" style="border:1px solid #dddddd;">
+    <tr>
+        <th>Trial Name</th>
+        <th>Number of Participants</th>
     </tr>
     @foreach (var t in Model)
     {
-        <tr style="border: 1px solid;">
-            <td style="border: 1px solid;">@t.Name</td>
-            <td style="border: 1px solid;">@t.Trial_Participant.Count</td>
+        <tr>
+            <td>@t.Name</td>
+            <td>@t.Trial_Participant.Count</td>
         </tr>
     }
 </table>

@@ -7,7 +7,20 @@
 
 <h2>Edit Investigator</h2>
 
-@foreach (var i in Model)
-{
-    @Html.ActionLink(i.Person.First_Name + " " + i.Person.Last_Name + "(" + i.Person.Username + ")", "EditInvestigator", new { id = i.Id })<br />
-}
+<table class="table table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Institution</th>
+        <th>Phone</th>
+        <th>Email</th>
+    </tr>
+    @foreach (var i in Model)
+    {
+        <tr>
+            <td>@Html.ActionLink(string.Format("{0} {1}", i.Person.First_Name, i.Person.Last_Name), "EditInvestigator", new { id = i.Id }, new { @style = "display: block;" })</td>
+            <td>@Html.ActionLink(i.Institution, "EditInvestigator", new { id = i.Id }, new { @style = "display: block;" })</td>
+            <td>@Html.ActionLink(i.Person.Phone_Number, "EditInvestigator", new { id = i.Id }, new { @style = "display: block;" })</td>
+            <td>@Html.ActionLink(i.Person.Email, "EditInvestigator", new { id = i.Id }, new { @style = "display: block;" })</td>
+        </tr>
+    }
+</table>

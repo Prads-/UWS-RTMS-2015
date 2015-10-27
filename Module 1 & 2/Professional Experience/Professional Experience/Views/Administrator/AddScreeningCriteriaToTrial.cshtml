@@ -15,23 +15,25 @@
     <div class="form-group">
         @Html.LabelFor(m => m.TrialId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            <select class="form-control" name="TrialId">
+            <select class="form-control" name="TrialId" id="trial">
                 @foreach (var trial in Model.Trials)
                 {
                     <option value="@trial.Id">@trial.Name</option>
                 }
             </select>
+            <input id="SearchTrial" style="margin-top:5px" type="text" class="form-control" placeholder="Search Trial" onkeyup="searchSel('SearchTrial', 'trial')" />
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ScreeningCriteriaId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            <select class="form-control" name="ScreeningCriteriaId">
+            <select class="form-control" name="ScreeningCriteriaId" id="criteria">
                 @foreach (var selectionCriteria in Model.ScreeningCriteria)
                 {
                     <option value="@selectionCriteria.Id">@selectionCriteria.Description</option>
                 }
             </select>
+            <input id="SearchCriteria" style="margin-top:5px" type="text" class="form-control" placeholder="Search Screening Criteria" onkeyup="searchSel('SearchCriteria', 'criteria')" />
         </div>
     </div>
     <div class="form-group">
@@ -58,4 +60,8 @@
             <input type="submit" class="btn btn-default" value="Submit" />
         </div>
     </div>
+}
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/Custom/Search.js"></script>
 }
