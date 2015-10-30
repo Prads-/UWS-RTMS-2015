@@ -7,9 +7,11 @@ using PagedList;
 
 namespace Professional_Experience.Controllers
 {
+    //Controller for managing participant account
     [Authorize(Roles="Participant")]
     public class ParticipantController : UIController
     {
+        //Get the currently logged in participant
         public PX_Model.Participant GetCurrentParticipant
         {
             get
@@ -20,12 +22,13 @@ namespace Professional_Experience.Controllers
             }
         }
 
-        // GET: Participant
+        //Participant dashboard
         public ActionResult Index()
         {
             return View();
         }
 
+        //Shows list of trials that hasn't been participated by currently logged in participant
         public ActionResult ParticipateTrialList(int page = 1)
         {
             var participant = GetCurrentParticipant;
@@ -34,6 +37,7 @@ namespace Professional_Experience.Controllers
             return View(new PagedList<PX_Model.Trial>(trials.OrderBy(t => t.Name), page, 5));
         }
 
+        //Show terms and condition for participant to accept
         public ActionResult AcceptTermsAndConditions(int id)
         {
             var trial = _db.Trials.FirstOrDefault(t => t.Id == id);
@@ -52,6 +56,7 @@ namespace Professional_Experience.Controllers
             return View(m);
         }
 
+        //Show screening criteria for participant to answer
         public ActionResult ParticipateTrial(int id)
         {
             var trial = _db.Trials.FirstOrDefault(t => t.Id == id);
@@ -65,11 +70,13 @@ namespace Professional_Experience.Controllers
 
             var m = new List<Professional_Experience.Models.ScreeningCriteriaViewModel>();
 
+            //Make a list of all the screening criteria for this trial
             foreach (var tsc in trialScreeningCriteria)
             {
                 var model = new Professional_Experience.Models.ScreeningCriteriaViewModel();
                 model.TrialScreeningCriteriaId = tsc.Id;
                 model.Description = tsc.Screening_Criteria.Description;
+                //Get screening criteria options
                 if (tsc.Screening_Criteria.Screening_Criteria_Option.Count > 0)
                 {
                     model.Options = new List<string>();
@@ -85,13 +92,16 @@ namespace Professional_Experience.Controllers
             return View(m.AsEnumerable());
         }
 
+        //Check the screening criteria answers and according to that accept or unaccept the participant
         [HttpPost]
         public ActionResult ParticipateTrial(int tid, IEnumerable<Professional_Experience.Models.ScreeningCriteriaViewModel> m)
         {
+            //Go through all the screening criteria answers
             foreach (var model in m) {
                 var tsc = _db.Trial_Screening_Criteria.FirstOrDefault(t => t.Id == model.TrialScreeningCriteriaId);
                 if (tsc.OperatorType == PX_Model.Screening_Criteria.OPERATOR_EQUALS)
                 {
+                    //If operator is equals
                     if (model.Answer != tsc.OperatorValue)
                     {
                         return View("ScreeningCriteriaFailed");
@@ -99,6 +109,7 @@ namespace Professional_Experience.Controllers
                 }
                 else
                 {
+                    //Get the numeric value of the answer
                     decimal answer, operatorValue = 0;
                     bool r = decimal.TryParse(model.Answer, out answer);
                     if (!r)
@@ -110,6 +121,7 @@ namespace Professional_Experience.Controllers
                     {
                         operatorValue = decimal.Parse(tsc.OperatorValue);
                     }
+                    //Compare the answer according to the operator
                     bool pass = false;
                     switch (tsc.OperatorType)
                     {
@@ -148,6 +160,7 @@ namespace Professional_Experience.Controllers
             return View("ScreeningCriteriaSuccess");
         }
 
+        //Associate participant with a trial
         private void createTrialParticipant(int tid)
         {
             int pid = GetCurrentParticipant.Id;
@@ -158,16 +171,19 @@ namespace Professional_Experience.Controllers
             _db.SaveChanges();
         }
 
+        //Show the screening criteria failed view
         public ActionResult ScreeningCriteriaFailed()
         {
             return View();
         }
 
+        //Show that the participant successfully passed throught the screening criteria
         public ActionResult ScreeningCriteriaSuccess()
         {
             return View();
         }
 
+        //Show all the trials that the participant is part of
         public ActionResult MyTrials(int page = 1)
         {
             var participant = GetCurrentParticipant;
@@ -176,6 +192,7 @@ namespace Professional_Experience.Controllers
             return View(new PagedList<PX_Model.Trial>(trials.OrderBy(t => t.Name), page, 5));
         }
 
+        //Show trial information
         public ActionResult ViewTrial(int id)
         {
             var trialParticipant = _db.Trial_Participant.FirstOrDefault(t => t.Trial_Id == id && t.Participant_Id == GetCurrentParticipant.Id);
@@ -186,6 +203,8 @@ namespace Professional_Experience.Controllers
             }
             var m = new List<Professional_Experience.Models.ViewTrialViewModel>();
 
+            //If the trial has already been randomised, let the participant access
+            //the baseline assessments for this trial
             if (trialParticipant.Trial.HasBeenRandomised == true)
             {
                 var baselineAssessments = _db.Assessment_Type.Where(at => at.Trial_Id == id);
@@ -193,6 +212,7 @@ namespace Professional_Experience.Controllers
                 foreach (var ba in baselineAssessments)
                 {
                     var tpba = _db.Trial_Participant_Assessment_Type.FirstOrDefault(t => t.Trial_Participant_Id == trialParticipant.Id && t.Assessment_Type_Id == ba.Id);
+                    //If the baseline assessment has not been completed before, add it to the list
                     if (tpba == null)
                     {
                         var model = new Professional_Experience.Models.ViewTrialViewModel();
@@ -208,8 +228,10 @@ namespace Professional_Experience.Controllers
             return View(m.AsEnumerable());
         }
 
+        //Show the form where participant can answer baseline assessment
         public ActionResult TakeBaselineAssessment(int id, int tid)
         {
+            //Get the baseline assessment
             var baselineAssessment = _db.Assessment_Type.FirstOrDefault(ba => ba.Id == id);
             if (baselineAssessment == null)
             {
@@ -222,6 +244,7 @@ namespace Professional_Experience.Controllers
             m.AssessmentTypeId = baselineAssessment.Id;
             m.Answers = new List<Models.AnswerBaselineAssessmentQuestionViewModel>();
 
+            //Get all the questions
             foreach (var question in questions)
             {
                 var q = new Professional_Experience.Models.AnswerBaselineAssessmentQuestionViewModel();
@@ -229,6 +252,7 @@ namespace Professional_Experience.Controllers
                 q.QuestionId = question.Id;
                 q.QuestionType = (int)question.Question_Type;
 
+                //Get all the options
                 if (question.Assessment_Type_Option != null)
                 {
                     q.Options = new List<string>();
@@ -243,9 +267,11 @@ namespace Professional_Experience.Controllers
             return View(m);
         }
 
+        //Get the answers for basline assessment
         [HttpPost]
         public ActionResult TakeBaselineAssessment(Professional_Experience.Models.TakeBaselineAssessmentViewModel m)
         {
+            //Get trial participant
             var trialParticipant = _db.Trial_Participant.FirstOrDefault(tp => tp.Trial_Id == m.TrialId && tp.Participant_Id == GetCurrentParticipant.Id);
             if (trialParticipant == null)
             {
@@ -253,16 +279,19 @@ namespace Professional_Experience.Controllers
                 return View("Index");
             }
             
+            //Create baseline assessment record in the database
             var trialParticipantAssessmentType = new PX_Model.Trial_Participant_Assessment_Type();
             trialParticipantAssessmentType.Assessment_Type_Id = m.AssessmentTypeId;
             trialParticipantAssessmentType.Trial_Participant_Id = trialParticipant.Id;
             _db.Trial_Participant_Assessment_Type.Add(trialParticipantAssessmentType);
             _db.SaveChanges();
             
+            //Save all the answers in the database
             foreach (var answer in m.Answers)
             {
                 if (answer.QuestionType == PX_Model.Assessment_Type_Question.TYPE_MULTU_CHOICE_MULTI_SELECT)
                 {
+                    //If participant can give multiple answers
                     foreach (var a in answer.Options)
                     {
                         var ans = new PX_Model.Assessment_Type_Question_Answer();
@@ -288,6 +317,7 @@ namespace Professional_Experience.Controllers
             return View("Index");
         }
 
+        //Search through trials list
         [HttpPost]
         public ActionResult SearchTrials(string searchWord, bool myTrials) 
         {
@@ -297,13 +327,16 @@ namespace Professional_Experience.Controllers
 
             if (myTrials)
             {
+                //Search in my trial list
                 trials = _db.Trials.Where(t => t.Trial_Participant.Where(tp => tp.Participant_Id == participant.Id).Count() != 0);
             }
             else
             {
+                //Search in systems trial list
                 trials = _db.Trials.Where(t => t.Trial_Participant.Where(tp => tp.Participant_Id == participant.Id).Count() == 0);
             }
 
+            //Search for search word in name and description
             trials = trials.Where(t => t.Name.ToLower().Contains(searchWord) || t.Description.ToLower().Contains(searchWord));
             var m = new PagedList<PX_Model.Trial>(trials.OrderBy(t => t.Name), 1, trials.Count() + 1);
             

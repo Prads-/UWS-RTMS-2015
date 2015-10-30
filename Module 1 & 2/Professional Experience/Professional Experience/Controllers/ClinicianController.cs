@@ -7,9 +7,11 @@ using PagedList;
 
 namespace Professional_Experience.Controllers
 {
+    //Controller for clinician logic
     [Authorize(Roles = "Clinician")]
     public class ClinicianController : UIController
     {
+        //Get the Id of currently logged in clinician
         private int MyId
         {
             get
@@ -20,23 +22,27 @@ namespace Professional_Experience.Controllers
             }
         }
 
+        //Show clinician dashboard
         public ActionResult Index()
         {
             return View();
         }
 
+        //Show list of all participants in the system
         public ActionResult ParticipantList(int page = 1)
         {
             var participants = _db.Participants.Where(p => p.Participant_Clinician.FirstOrDefault(pc => pc.Clinician_Id == MyId && pc.Participant_Id == p.Id) == null);
             return View(new PagedList<PX_Model.Participant>(participants.OrderBy(p => p.Person.First_Name), page, 10));
         }
 
+        //Show list of participants assigned to the clinician
         public ActionResult MyParticipantList(int page = 1)
         {
             var participants = _db.Participants.Where(p => p.Participant_Clinician.FirstOrDefault(pc => pc.Clinician_Id == MyId && pc.Participant_Id == p.Id) != null);
             return View(new PagedList<PX_Model.Participant>(participants.OrderBy(p => p.Person.First_Name), page, 10));
         }
 
+        //Show a page that allows us to associate participant to the clinician
         public ActionResult AssignParticipant(int id)
         {
             var participant = _db.Participants.FirstOrDefault(p => p.Id == id);
@@ -48,6 +54,7 @@ namespace Professional_Experience.Controllers
             return View(participant);
         }
 
+        //Assign participant to the clinician
         public ActionResult ConnectParticipantToClinician(int id)
         {
             var participant = _db.Participants.FirstOrDefault(p => p.Id == id);
@@ -57,6 +64,7 @@ namespace Professional_Experience.Controllers
                 return View("Index");
             }
 
+            //Create Participant_Clinician in the database
             var pc = new PX_Model.Participant_Clinician();
             pc.Participant_Id = id;
             pc.Clinician_Id = MyId;
@@ -66,12 +74,15 @@ namespace Professional_Experience.Controllers
             return View("Index");
         }
 
+        //Search participants within my participant list or all the participant in the system
         public ActionResult SearchParticipant(string searchWord, bool myParticipants)
         {
             searchWord = searchWord.ToLower();
             IEnumerable<PX_Model.Participant> participants;
+
             if (myParticipants)
             {
+                //Searching through the participant list in my participant list
                 participants = _db.Participants.Where(p => p.Participant_Clinician.FirstOrDefault(pc => pc.Clinician_Id == MyId && pc.Participant_Id == p.Id) != null
                     && (p.Person.First_Name.ToLower().Contains(searchWord)
                     || p.Person.Last_Name.ToLower().Contains(searchWord)
@@ -80,6 +91,7 @@ namespace Professional_Experience.Controllers
             }
             else
             {
+                //Searching through the participant list in the whole system
                 participants = _db.Participants.Where(p => p.Participant_Clinician.FirstOrDefault(pc => pc.Clinician_Id == MyId && pc.Participant_Id == p.Id) == null
                     && (p.Person.First_Name.ToLower().Contains(searchWord)
                     || p.Person.Last_Name.ToLower().Contains(searchWord)
@@ -88,6 +100,7 @@ namespace Professional_Experience.Controllers
             }
         }
 
+        //Show participant information and trials they are performing
         public ActionResult MonitorParticipant(int id)
         {
             var participant = _db.Participants.FirstOrDefault(p => p.Id == id);
@@ -99,8 +112,11 @@ namespace Professional_Experience.Controllers
             return View(participant);
         }
 
+        //Show trial information and answers to the baseline assessment question
+        //that the participant took
         public ActionResult MonitorParticipantTrial(int pid, int tid)
         {
+            //Get trial participant
             var trialParticipant = _db.Trial_Participant.FirstOrDefault(tp => tp.Trial_Id == tid && tp.Participant_Id == pid);
             if (trialParticipant == null)
             {
@@ -112,6 +128,7 @@ namespace Professional_Experience.Controllers
             m.BaselineAssessments = new List<Models.MonitorTrialParticipantViewModel.BaselineAssessment>();
             m.Trial = trialParticipant.Trial;
 
+            //In each baseline assessment, get the answers provided by the participant
             foreach (var tpba in trialParticipant.Trial_Participant_Assessment_Type)
             {
                 var baselineAssessment = new Models.MonitorTrialParticipantViewModel.BaselineAssessment();

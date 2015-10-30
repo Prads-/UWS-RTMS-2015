@@ -13,6 +13,7 @@ using System.Collections;
 
 namespace Professional_Experience.Controllers
 {
+    //Account controller for login and participant/admin registration
     [Authorize]
     public class AccountController : UIController
     {
@@ -29,10 +30,13 @@ namespace Professional_Experience.Controllers
             SignInManager = signInManager;
         }
 
+        //This function creates the view model for the register participant view and 
+        //passes it on to the view
         [AllowAnonymous]
         public ActionResult RegisterParticipant()
         {
             RegisterParticipantViewModel m = new RegisterParticipantViewModel();
+            //Drop down list
             ArrayList gList = new ArrayList();
             gList.Add("Male");
             gList.Add("Female");
@@ -41,18 +45,25 @@ namespace Professional_Experience.Controllers
             return View(m);
         }
 
+        //This function gets back the input provided by the user and then uses it
+        //to create a participant
         [HttpPost]
         [AllowAnonymous]
         public async Task<ActionResult> RegisterParticipant(RegisterParticipantViewModel m)
         {
+            //Check if inputs were valid
             if (ModelState.IsValid)
             {
+                //Create an account so they can login using their username and password
                 var user = new ApplicationUser { UserName = m.Username, Email = m.Email };
                 var result = await UserManager.CreateAsync(user, m.Password);
+                //If the above process succeeds
                 if (result.Succeeded)
                 {
+                    //Sign in as user
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
+                    //Create a person in the database
                     var person = new PX_Model.Person();
 
                     person.First_Name = m.FirstName;
@@ -65,25 +76,31 @@ namespace Professional_Experience.Controllers
                     person.Email = m.Email;
                     person.Username = m.Username;
 
+                    //Push it on to the database
                     _db.People.Add(person);
                     _db.SaveChanges();
 
+                    //Create a participant on the database
                     var participant = new PX_Model.Participant();
 
                     participant.Person_Id = person.Id;
                     participant.Gender = m.Gender;
                     participant.Date_Of_Birth = m.DateOfBirth;
 
+                    //Push participant on to the database
                     _db.Participants.Add(participant);
                     _db.SaveChanges();
 
+                    //Assign them the role of a participant
                     var u = UserManager.FindByName(m.Username);
                     UserManager.AddToRole(u.Id, "Participant");
 
+                    //We then redirect to the participant dashboard
                     return RedirectToAction("Index", "Participant");
                 }
                 AddErrors(result);
             }
+            //if it fails, go back to the current view and display the errors
             ArrayList gList = new ArrayList();
             gList.Add("Male");
             gList.Add("Female");
@@ -91,24 +108,32 @@ namespace Professional_Experience.Controllers
             return View(m);
         }
 
+        //Call view to register administrator
         [AllowAnonymous]
         public ActionResult RegisterAdministrator()
         {
             return View();
         }
 
+        //Get the form data to register the administrator
         [HttpPost]
         [AllowAnonymous]
         public async Task<ActionResult> RegisterAdministrator(RegisterAdministratorViewModel m)
         {
+            //If input was valid
             if (ModelState.IsValid)
             {
+                //Create an account so they can login using their username and password
                 var user = new ApplicationUser { UserName = m.Username, Email = m.Email };
                 var result = await UserManager.CreateAsync(user, m.Password);
+                
+                //If creating login account succeeded
                 if (result.Succeeded)
                 {
+                    //Log in as user
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
+                    //Create person in the database
                     var person = new PX_Model.Person();
 
                     person.First_Name = m.FirstName;
@@ -121,22 +146,28 @@ namespace Professional_Experience.Controllers
                     person.Email = m.Email;
                     person.Username = m.Username;
 
+                    //Push person to the database
                     _db.People.Add(person);
                     _db.SaveChanges();
 
+                    //Create admin account
                     PX_Model.Administrator admin = new PX_Model.Administrator();
                     admin.Person_Id = person.Id;
                    
+                    //Push admin account to the database
                     _db.Administrators.Add(admin);
                     _db.SaveChanges();
 
+                    //Assign them to the role of admin
                     var u = UserManager.FindByName(m.Username);
                     UserManager.AddToRole(u.Id, "Admin");
 
+                    //Go to admin dashboard
                     return RedirectToAction("Index", "Administrator");
                 }
                 AddErrors(result);
             }
+            //If error, then show the current view with error messages
             return View(m);
         }
 
@@ -268,13 +299,6 @@ namespace Professional_Experience.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -320,13 +344,6 @@ namespace Professional_Experience.Controllers
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
                 }
-
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form

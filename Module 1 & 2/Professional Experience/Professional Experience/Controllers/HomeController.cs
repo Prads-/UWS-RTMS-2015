@@ -10,6 +10,7 @@ namespace Professional_Experience.Controllers
 {
     public class HomeController : Controller
     {
+        //Front page of the system
         public ActionResult Index()
         {
             return View();
